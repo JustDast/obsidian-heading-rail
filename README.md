@@ -12,6 +12,14 @@ Long notes are hard to move around in. Obsidian's built-in outline is a list in 
 
 It is built for people who lean on headings: long documents, research notes, specifications, books in progress, knowledge bases where a single note runs to dozens of sections.
 
+## Rebuilt from the ground up
+
+The wave that runs through the bars under your cursor used to be a fixed effect with a couple of sliders bolted onto it. It isn't anymore — the whole animation engine was rewritten from scratch, and on top of it sits one of the deepest customization systems you'll find in an Obsidian plugin. Almost nothing about how the rail moves, looks, or reacts is hardcoded; it's a setting.
+
+Shape, length, colour, opacity and thickness of the wave; where the highlight sits and how it travels when you jump to another section; where the rail lives on the page and how far it sits from the edge; how everything looks in a light theme versus a dark one — all of it can be reshaped. If you've seen a hover animation somewhere else and thought "I wish mine did that," odds are good you can build it here with sliders alone, no code involved. And once you land on a combination you like, you can save it and share it — there's a whole system built for exactly that, described further down.
+
+The goal wasn't to add one more fixed-look animation for people to admire. It was to make something flexible enough that everyone who uses it ends up with a rail that's actually theirs.
+
 ## At a glance
 
 | | |
@@ -152,6 +160,14 @@ Edit `core.js` and `styles.css` — never `main.js`, it is generated.
 По длинным заметкам трудно перемещаться. Встроенная структура Obsidian — это список в боковой панели: она показывает, какие заголовки есть, но не показывает, где вы сейчас, и занимает под это целую панель. Heading Rail ставит структуру заметки прямо рядом с текстом, размером с полосу прокрутки, и превращает её в то, чем перемещаются, а не на что смотрят.
 
 Он сделан для тех, кто опирается на заголовки: длинные документы, исследовательские заметки, спецификации, книги в работе, базы знаний, где одна заметка тянется на десятки разделов.
+
+## Переписан с нуля
+
+Волна, что бежит по полоскам под курсором, раньше была готовым эффектом с парой прикрученных к нему ползунков. Теперь это не так — весь движок анимации переписан с нуля, а поверх него выстроена, пожалуй, самая глубокая система настройки, какая есть у плагинов для Obsidian. Почти ничего в том, как рельс двигается, выглядит и откликается, не зашито в код намертво — это настройка.
+
+Форма, длина, цвет, прозрачность и толщина волны; где стоит подсветка и как она переезжает, когда вы переходите к другому разделу; где рельс живёт на странице и на каком расстоянии от края; как всё это выглядит в светлой теме и в тёмной — всё это можно перекроить. Если вы видели где-то анимацию при наведении и думали «вот бы и у меня так было» — скорее всего, её можно собрать здесь одними ползунками, без единой строчки кода. А если получилось что-то по-настоящему удачное, это можно сохранить и отправить дальше — под это тоже есть целая система, о ней ниже.
+
+Задача была не в том, чтобы добавить ещё одну красивую, но неизменную анимацию, которой можно полюбоваться. Задача была сделать её настолько гибкой, чтобы у каждого в итоге получился рельс, который по-настоящему свой.
 
 ## Коротко
 
