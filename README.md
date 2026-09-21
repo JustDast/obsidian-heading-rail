@@ -4,7 +4,7 @@
 
 *[English](#heading-rail) · [Русский](#русский)*
 
-![The rail beside a long note, with the wave under the cursor](screenshots/hr-rail-wave.png)
+![The rail beside a long note, with the wave under the cursor](screenshots/hr-wave.png)
 
 ## What it is for
 
@@ -44,7 +44,7 @@ The goal wasn't to add one more fixed-look animation for people to admire. It wa
 
 Every heading is a bar; its length reflects the heading level, so the shape of the document is visible at a glance. The bar for the section you are reading is highlighted and follows you as you scroll. Two short marks at the ends stand for the start and the end of the note. On notes too long for one column, the rail splits into several.
 
-![Halo around the current section](screenshots/hr-halo-travel.png)
+![The rail at rest: the current section lit, with the halo around it](screenshots/hr-rail.png)
 
 ### The wave
 
@@ -60,13 +60,13 @@ The current bar can be highlighted always, only while you point at the rail, or 
 
 Right-click a bar, or use the toolbar button, to pin the outline open beside the rail; hold Ctrl to peek at it for as long as the key is down. The outline has its own search field, keeps the current section centred, and shows a marker for the part of the rail it covers.
 
-![The pinned outline with search](screenshots/hr-outline-pinned.png)
+![The pinned outline with search](screenshots/hr-outline.png)
 
 ### Preview
 
 Hovering a bar shows a card with the heading and the first lines of its section, so you can find the right place without scrolling there. Its distance from the rail, width, fonts, sizes, weights, line spacing and colours are all adjustable.
 
-![Preview card beside the rail](screenshots/hr-preview-card.png)
+![Preview card beside the rail](screenshots/hr-preview.png)
 
 ### Moving through the note
 
@@ -76,12 +76,13 @@ Click a bar to jump to its heading; choose whether the heading lands at the top 
 
 Select a section in the outline, a range with Shift, or scattered sections with Alt, then copy or delete them together. A section is its heading plus everything below it down to the next heading of the same or higher level. Every deletion goes into a history with one-click restore.
 
+![Several sections selected, with the Copy, Delete and Cancel menu](screenshots/hr-sections.png)
+
 ### Mobile
 
 Everything works on phones and tablets, with touch in place of hover: tap a bar to jump, drag a finger along the rail to scrub, long-press to open the outline or select. The mobile profile only shows settings that actually do something on a touchscreen. If Obsidian's own edge-swipe gesture gets in the way on your device, the plugin can be switched off for phones alone while it keeps working on desktop.
 
-![The rail on a phone](screenshots/hr-mobile-rail.png)
-![The outline on a phone](screenshots/hr-mobile-outline.png)
+![The rail and the outline on a phone](screenshots/hr-mobile.png)
 
 ### Settings and styles
 
@@ -89,8 +90,8 @@ The settings are split into Desktop and Mobile tabs. Each mobile setting has a c
 
 A **style** is a complete set of values applied at once. The plugin ships with one, **Base**, which is on from the moment you install it. Styles made by other people will be added to the list after review: if you have arrived at something good, the Share button puts your settings into an email for you to send.
 
-![Wave settings](screenshots/hr-settings-wave.png)
-![Styles and sharing](screenshots/hr-settings-styles.png)
+![Settings: your own wave shape, step by step in pixels](screenshots/hr-custom-shape.png)
+![Ready-made styles with Base switched on](screenshots/hr-styles.png)
 
 Colours left empty come from your theme, so the rail looks right in light and dark themes without any setup. Colours that come from a style are adjusted automatically if they would disappear against your theme. Colours you set yourself are left exactly as you set them.
 
@@ -153,7 +154,7 @@ Edit `core.js` and `styles.css` — never `main.js`, it is generated.
 
 **Heading Rail — это оглавление и навигатор по заголовкам для Obsidian.** Вместо плоского списка каждый заголовок заметки становится короткой полоской у края страницы. Рельс сам отслеживает, где вы находитесь при прокрутке, откликается на курсор волной, которую можно настроить целиком, раскрывается в структуру с поиском, даёт листать документ протяжкой и умеет копировать и удалять целые разделы с историей для восстановления. Работает на компьютере и на телефоне, с отдельными настройками для каждого.
 
-![Рельс рядом с длинной заметкой, волна под курсором](screenshots/hr-rail-wave.png)
+![Рельс рядом с длинной заметкой, волна под курсором](screenshots/hr-wave.png)
 
 ## Для чего он
 
@@ -193,7 +194,7 @@ Edit `core.js` and `styles.css` — never `main.js`, it is generated.
 
 Каждый заголовок — полоска; её длина отражает уровень заголовка, так что форма документа видна сразу. Полоска раздела, который вы читаете, подсвечена и едет вслед за прокруткой. Две короткие метки по краям обозначают начало и конец заметки. На заметках, которым мало одного столбца, рельс делится на несколько.
 
-![Ореол вокруг текущего раздела](screenshots/hr-halo-travel.png)
+![Рельс в покое: текущий раздел подсвечен, вокруг него ореол](screenshots/hr-rail.png)
 
 ### Волна
 
@@ -209,13 +210,13 @@ Edit `core.js` and `styles.css` — never `main.js`, it is generated.
 
 Правый щелчок по полоске или кнопка на панели заметки закрепляют структуру рядом с рельсом; удержание Ctrl показывает её, пока клавиша нажата. У структуры свой поиск, она держит текущий раздел по центру и показывает метку той части рельса, которую сейчас охватывает.
 
-![Закреплённая структура с поиском](screenshots/hr-outline-pinned.png)
+![Закреплённая структура с поиском](screenshots/hr-outline.png)
 
 ### Подсказка
 
 При наведении на полоску появляется окошко с заголовком и первыми строками раздела — нужное место можно найти, не прокручивая к нему. Расстояние от рельса, ширина, шрифты, размеры, толщина, межстрочный интервал и цвета — всё настраивается.
 
-![Подсказка рядом с рельсом](screenshots/hr-preview-card.png)
+![Подсказка рядом с рельсом](screenshots/hr-preview.png)
 
 ### Перемещение по заметке
 
@@ -225,12 +226,13 @@ Edit `core.js` and `styles.css` — never `main.js`, it is generated.
 
 Выделите раздел в структуре, диапазон — с Shift, разрозненные разделы — с Alt, и скопируйте или удалите их разом. Раздел — это заголовок и всё под ним до следующего заголовка того же или более высокого уровня. Каждое удаление попадает в историю, откуда восстанавливается одним нажатием.
 
+![Несколько разделов выделены, рядом меню Копировать, Удалить, Отмена](screenshots/hr-sections.png)
+
 ### Телефон
 
 Всё работает на телефонах и планшетах, касанием вместо наведения: нажатие на полоску — переход, протяжка пальцем по рельсу — перемотка, долгое нажатие — открыть структуру или выделить. В мобильном профиле показаны только те настройки, которые на сенсорном экране действительно что-то делают. Если на вашем устройстве мешает собственный жест Obsidian у края экрана, плагин можно выключить только на телефоне, а на компьютере он продолжит работать.
 
-![Рельс на телефоне](screenshots/hr-mobile-rail.png)
-![Структура на телефоне](screenshots/hr-mobile-outline.png)
+![Рельс и структура на телефоне](screenshots/hr-mobile.png)
 
 ### Настройки и наборы
 
@@ -238,8 +240,8 @@ Edit `core.js` and `styles.css` — never `main.js`, it is generated.
 
 **Набор** — это полный комплект значений, применяемый разом. С плагином идёт один — **Base**, он включён с момента установки. Наборы от других людей будут добавляться в список после проверки: если у вас получилось что-то удачное, кнопка «Поделиться» сложит ваши настройки в письмо, которое вы отправите сами.
 
-![Настройки волны](screenshots/hr-settings-wave.png)
-![Наборы и отправка своего](screenshots/hr-settings-styles.png)
+![Настройки: своя форма волны, по ступеням в пикселях](screenshots/hr-custom-shape.png)
+![Готовые наборы, Base включён](screenshots/hr-styles.png)
 
 Пустые цвета берутся из вашей темы, поэтому рельс правильно выглядит и в светлой, и в тёмной теме без всякой настройки. Цвета из набора подстраиваются сами, если на вашей теме они бы пропали. Цвета, выставленные вами, остаются ровно такими, какими вы их выставили.
 

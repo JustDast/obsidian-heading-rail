@@ -18,6 +18,9 @@ Two short marks sit at the very top and bottom of the rail. They stand for the s
 
 The bar for the section you are reading is highlighted, and the highlight follows you as you scroll. "The section you are reading" means the last heading above the middle of the screen — so the highlight moves on as soon as a new heading passes the middle, without waiting for it to reach the top.
 
+![The rail at rest: bar lengths follow heading levels, the current section is lit, and the halo fades around it](screenshots/hr-rail.png)
+*The rail beside this guide. Longer bars are higher-level headings; the lit bar is the section on screen, with the halo around it.*
+
 ### Long notes
 
 If a note has more headings than fit in one column at a readable spacing, the rail adds a second column, then a third. The leftmost column is the start of the document. Within each column the bars are packed from the top.
@@ -43,6 +46,9 @@ So the wave is described in two separate parts:
 
 Change one and the other stays put.
 
+![The wave under the cursor: each bar takes its own share of the wave](screenshots/hr-wave.png)
+*The wave under the cursor. Every bar here has received its own number between 0 and 1, and its length and brightness follow it.*
+
 ### The shape
 
 The shape says how the strength falls off from the centre. The built-in shapes are:
@@ -58,6 +64,9 @@ The shape says how the strength falls off from the centre. The built-in shapes a
 Next to the shape sits its **reach** — how many bars the wave spreads over — and, in the fine-tuning section, **edge sharpness**, which narrows the shape and hardens its edges.
 
 **Your own shape** is the eighth option. Instead of a curve, you set the length of each bar directly in pixels: the centre bar, the one next to it, the one after that, and so on, mirrored above and below. You first choose how many bars the wave covers (always an odd number — one in the middle and the same count on each side), and a slider appears for every step. The lengths you set are the maximum each bar reaches; bars still grow into them gradually as the wave builds up, and the length slides smoothly between one step and the next as the cursor moves.
+
+![Settings: your own wave shape, with a slider for the length of each step](screenshots/hr-custom-shape.png)
+*Your own shape: choose how many bars the wave covers, then set each step's length in pixels.*
 
 ### Where the centre is
 
@@ -138,6 +147,9 @@ The outline keeps the current section centred as you scroll. A thin marker besid
 
 The search field above the list filters entries by heading text; Escape clears it. The bars are never filtered — they always show the whole document. The search field can be moved below the list or hidden.
 
+![The pinned outline beside the rail, with the current entry highlighted](screenshots/hr-outline.png)
+*The pinned outline. The current entry is highlighted and kept centred; the thin marker beside the bars shows which part of the rail the list covers.*
+
 ### Hovering
 
 Hovering a bar scrolls the outline to the matching heading without moving the note. Hovering an entry highlights its bar, and the other way round.
@@ -155,6 +167,9 @@ You can set its distance from the rail, its width, the number of characters it s
 The card's distance is measured from the rail, and the space bars take at their peak is added automatically, so the longest bar never lies over the card.
 
 ---
+
+![The preview card showing the start of a section](screenshots/hr-preview.png)
+*Pointing at a bar brings up the start of its section — here, this very chapter.*
 
 ## 6. Moving through the note
 
@@ -200,6 +215,9 @@ Before deleting, the plugin checks that the outline still matches the file on di
 
 With the outline pinned, the cursor on the widget and something selected, the Delete or Backspace key deletes the selection. It is limited to exactly that situation so the key behaves normally everywhere else.
 
+![Several sections selected in the outline, with the Copy, Delete and Cancel menu](screenshots/hr-sections.png)
+*A range of sections selected with Shift-click, and the menu that acts on all of them at once.*
+
 ### History
 
 The history button in the note's toolbar opens two lists: what was copied and what was deleted. A deleted section can be put back with one click; a copied one can be put back on the clipboard. Entries can be removed from the lists one by one.
@@ -222,6 +240,9 @@ Three commands are available in the command palette and can be given hotkeys: co
 - **Long-press** an entry in the outline to select it and open the action menu; after that, ordinary taps add and remove entries.
 
 The outline closes on a tap outside it. When the keyboard appears, the rail hides itself — there is no room for both.
+
+![The rail and the outline on a phone](screenshots/hr-mobile.png)
+*On a phone: the rail at the edge, and the outline opened with a long press.*
 
 ### What the phone settings contain
 
@@ -251,6 +272,9 @@ Every colour sits on the same row as its own opacity, with an arrow on the right
 
 **Follow the theme** concerns colours that come from a style. The author of a style picked its colours for their own theme; if one of them would end up light on light or dark on dark in yours, its lightness is flipped while the hue stays the same. **Colours you set yourself are never touched** — even if you deliberately put something close to the background.
 
+![Colour settings on the phone tab: colour, opacity, reset to theme and the chain button on one row](screenshots/hr-colours.png)
+*Colour settings on the phone tab. Each row holds the colour, its opacity, the arrow back to the theme, and the chain button that borrows the desktop value.*
+
 ---
 
 ## 10. Styles
@@ -259,11 +283,17 @@ A style is a complete set of values applied at once. The plugin ships with one �
 
 Applying a style only changes the profile you are editing — desktop or phone — and only the values the style contains.
 
+![The ready-made styles section with Base switched on](screenshots/hr-styles.png)
+*Base is on from the moment of installation; the line under the list says which style is active and whether you have changed it.*
+
 ### Sending in your own
 
 If you have arrived at something you like, **Share your own style** opens a window with your current settings. You can give the style a name and choose whether to send the desktop profile, the phone profile, or both — each is labelled in the letter. Copy the settings, open an email, paste them in and send.
 
 Nothing leaves your device on its own: the plugin only opens your mail app with the letter ready. Only the plugin's settings are included, never anything from your vault. Styles that are sent in are reviewed and, if they are good, added to the list in a later release.
+
+![The share window: style name, which profile to send, the settings to copy](screenshots/hr-share.png)
+*The share window. Only the plugin's settings go into the letter — you can read every line before sending.*
 
 ---
 
