@@ -8,12 +8,12 @@
 
 .hr-rail {
   position: absolute;
-  right: 0;
+  right: var(--hr-rail-edge, 0px);
   top: 26px;
   bottom: 34px;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: var(--hr-col-gap, 10px);
   z-index: 12;
 }
 
@@ -38,22 +38,67 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  /* Высота строки задана кодом. Без запрета на сжатие строки ужимались,
+     как только видимая часть экрана уменьшалась — например при появлении
+     клавиатуры, — и полоски слипались в одну сплошную линию. */
+  flex: 0 0 auto;
   padding-right: 8px;
   cursor: pointer;
   transition: padding-right 160ms ease;
 }
 
+/* Полоска. Длину, толщину, яркость и прозрачность задаёт код — каждый кадр,
+   напрямую. Переходов здесь намеренно нет: они бы догоняли значение, которое
+   к тому моменту уже сменилось, и волна отставала бы от курсора.
+
+   Три переменные приходят от волны и имеют запасные значения «в покое»:
+   --hr-wave-mix   — сколько цвета волны подмешано (запас: --hr-rest-mix)
+   --hr-wave-fade  — множитель непрозрачности (запас: --hr-rest-fade)
+   --hr-wave-thick — множитель толщины (запас: 1)
+   --hr-bar-own    — свой цвет полоски при цветовом переходе
+   --hr-glow       — доля подсветки положения в документе */
 .hr-bar {
-  height: 3px;
-  border-radius: 2px;
-  background-color: var(--text-faint);
-  transition: width 130ms cubic-bezier(0.22, 1, 0.36, 1),
-              background-color 130ms ease;
-  will-change: width;
+  /* Толщина и непрозрачность складываются из трёх частей: общей настройки,
+     своей для уровня заголовка и того, что добавляет волна. */
+  height: calc(var(--hr-bar-thickness, 3px) * var(--hr-level-thick, 1) * var(--hr-wave-thick, 1));
+  /* длинная полоска выходит за рельс, а не ужимается под его ширину */
+  flex: 0 0 auto;
+  /* нажимается строка целиком, поэтому сама полоска мышь не перехватывает */
+  pointer-events: none;
+  border-radius: 999px;
+  /* Подсветка положения не должна тонуть в общей прозрачности: она не
+     умножается на неё, а наоборот подтягивает полоску к полной плотности.
+     Раньше при непрозрачности ниже ста процентов подсвеченная зона
+     становилась почти неразличимой, и казалось, что светится только
+     выделенная полоска — та единственная, у которой прозрачность своя. */
+  --hr-op-base: calc(
+    var(--hr-bar-opacity, 1) * var(--hr-level-fade, 1) *
+    var(--hr-wave-fade, var(--hr-rest-fade, 1))
+  );
+  opacity: calc(
+    var(--hr-op-base) + (1 - var(--hr-op-base)) * var(--hr-glow, 0) * var(--hr-glow-lift, 0.7)
+  );
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    color-mix(
+      in srgb,
+      var(--hr-glow-color, var(--hr-bar-active, var(--text-normal))) calc(var(--hr-glow, 0) * 100%),
+      var(--hr-bar-own, var(--hr-bar-color, var(--text-faint)))
+    )
+  );
+  will-change: width, height, background-color;
 }
 
+/* Цвет наведения и цвет текущего заголовка не заменяют цвет волны, а служат
+   для неё основой. Иначе самая яркая полоска — та, что под курсором, —
+   теряла подсветку ровно в тот момент, когда волна на ней сильнее всего. */
 .hr-row:hover .hr-bar {
-  background-color: var(--text-muted);
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    var(--hr-bar-own, var(--hr-bar-hover, var(--text-muted)))
+  );
 }
 
 .hr-row.is-mirror .hr-bar {
@@ -61,8 +106,13 @@
 }
 
 .hr-row.is-active .hr-bar {
-  background-color: var(--text-accent);
-  height: 4px;
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    var(--hr-bar-active, var(--text-normal))
+  );
+  height: calc(var(--hr-bar-thickness, 3px) * var(--hr-level-thick, 1) * var(--hr-wave-thick, 1) + 1px);
+  opacity: var(--hr-active-fade, 1);
 }
 
 /* В закреплённом режиме ширина фиксирована — это обеспечивает сам код,
@@ -95,23 +145,34 @@
 }
 
 .hr-cap-bar {
-  height: 2px;
+  /* Раньше здесь стояли «минус пиксель» и нижний предел в два пикселя: при
+     обычной толщине в три пикселя любое значение ниже 110% упиралось в этот
+     предел, и ползунок толщины торцов переставал что-либо менять. */
+  height: max(1px, calc(var(--hr-bar-thickness, 3px) * var(--hr-cap-thick, 1) * var(--hr-wave-thick, 1)));
+  flex: 0 0 auto;
+  pointer-events: none;
   border-radius: 2px;
-  background-color: var(--text-faint);
-  opacity: 0.75;
-  transition: width 130ms cubic-bezier(0.22, 1, 0.36, 1),
-              background-color 130ms ease, opacity 130ms ease, height 130ms ease;
-  will-change: width;
+  opacity: calc(var(--hr-cap-fade, 0.75) * var(--hr-wave-fade, var(--hr-rest-fade, 1)));
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    var(--hr-bar-color, var(--text-faint))
+  );
+  will-change: width, height, background-color;
 }
 
 .hr-end:hover .hr-cap-bar {
-  background-color: var(--text-muted);
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    var(--text-muted)
+  );
   opacity: 1;
 }
 
 .hr-end:active .hr-cap-bar {
   height: 3px;
-  background-color: var(--text-accent);
+  background-color: var(--hr-bar-active, var(--text-normal));
 }
 
 /* Бегунок положения раскрытой структуры (появляется только с ней) */
@@ -143,7 +204,10 @@
 /* Обёртка: поиск и структура. Высота ограничена размахом полосок. */
 .hr-side {
   position: absolute;
-  right: calc(var(--hr-rail-w, 56px) + 8px);
+  /* --hr-panel-shift ставится кодом и равен нулю, пока полоски при раскрытой
+     структуре статичны. Как только волна при ней разрешена, список отъезжает
+     ровно на то, что полоски отбирают на пике. */
+  right: calc(var(--hr-rail-w, 56px) + var(--hr-panel-gap, 8px) + var(--hr-panel-shift, 0px));
   top: calc(50% + var(--hr-center-offset, 0px));
   transform: translateY(-50%) translateX(8px);
   width: 250px;
@@ -186,9 +250,9 @@
   box-sizing: border-box;
   padding: 0 14px;
   font-size: 13px;
-  border-radius: 999px;
+  border-radius: var(--hr-radius, 16px);
   border: 1px solid var(--background-modifier-border);
-  background-color: var(--background-primary);
+  background-color: var(--hr-panel-bg, var(--background-primary));
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
   color: var(--text-normal);
   outline: none;
@@ -196,7 +260,7 @@
 }
 
 .hr-host .hr-side .hr-search input.hr-search-input:focus {
-  border-color: var(--text-accent);
+  border-color: var(--text-muted);
 }
 
 .hr-panel-item.hr-hidden {
@@ -210,9 +274,9 @@
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: var(--background-primary);
+  background-color: var(--hr-panel-bg, var(--background-primary));
   border: 1px solid var(--background-modifier-border);
-  border-radius: 10px;
+  border-radius: var(--hr-panel-radius, 10px);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
   overflow: visible;   /* указатели парят снаружи панели */
 }
@@ -230,7 +294,7 @@
   line-height: 1.35;
   padding: 4px 8px;
   border-radius: 6px;
-  color: var(--text-muted);
+  color: var(--hr-panel-text, var(--text-muted));
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -241,15 +305,15 @@
 .hr-panel-item:hover,
 .hr-panel-item.is-hover {
   background-color: var(--background-modifier-hover);
-  color: var(--text-normal);
+  color: var(--hr-panel-text, var(--text-normal));
 }
 
 .hr-panel-item.is-active {
-  color: var(--text-accent);
+  color: var(--hr-panel-active-text, var(--text-normal));
   font-weight: 600;
 }
 
-.hr-lvl-1 { padding-left: 8px;  font-weight: 600; color: var(--text-normal); }
+.hr-lvl-1 { padding-left: 8px;  font-weight: 600; color: var(--hr-panel-text, var(--text-normal)); }
 .hr-lvl-2 { padding-left: 20px; }
 .hr-lvl-3 { padding-left: 32px; }
 .hr-lvl-4 { padding-left: 44px; font-size: 12px; }
@@ -265,7 +329,7 @@
   height: 5px;
   transform: translateX(-50%);
   border-radius: 999px;
-  background-color: var(--text-accent);
+  background-color: var(--hr-bar-active, var(--text-normal));
   opacity: 0;
   pointer-events: none;
   cursor: pointer;
@@ -303,7 +367,7 @@
 /* Выделение разделов */
 .hr-panel-item.is-selected {
   background-color: var(--background-modifier-hover);
-  box-shadow: inset 2px 0 0 var(--text-accent);
+  box-shadow: inset 2px 0 0 var(--hr-bar-active, var(--text-normal));
 }
 
 /* Всплывающие действия слева от пункта */
@@ -525,20 +589,333 @@
 
 /* Полоски выше и отзывчивее: попасть пальцем в 3 пикселя нельзя,
    а движение должно ощущаться лёгким, а не ступенчатым */
-.hr-mobile .hr-bar {
-  height: 4px;
-  transition: width 180ms cubic-bezier(0.32, 0.72, 0, 1),
-              background-color 180ms ease;
-}
-
+/* Толщина на телефоне задаётся настройкой профиля, а не жёстко здесь:
+   раньше это правило перебивало ползунок толщины и он ничего не менял. */
 .hr-mobile .hr-row.is-active .hr-bar {
-  height: 5px;
+  height: calc(var(--hr-bar-thickness, 4px) * var(--hr-wave-thick, 1) + 1px);
 }
 
 /* Открыта клавиатура: рельс убираем целиком. Раньше он пересчитывался
    под остаток высоты, и полоски слипались в сплошную линию. */
+/* Открыта клавиатура: рельс убираем целиком. Ужимать его под остаток
+   высоты бессмысленно — полоски всё равно слипаются в сплошную линию. */
 .hr-kb .hr-rail {
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms ease;
+}
+
+
+/* ============ Полоски у левого края ============ */
+
+.hr-left .hr-rail {
+  right: auto;
+  left: var(--hr-rail-edge, 0px);
+  flex-direction: row-reverse;
+}
+
+.hr-left .hr-row,
+.hr-left .hr-end,
+.hr-left .hr-cap {
+  justify-content: flex-start;
+  padding-right: 0;
+  padding-left: 8px;
+}
+
+.hr-left.hr-panel-visible .hr-row,
+.hr-left.hr-panel-visible .hr-end {
+  padding-right: 0;
+  padding-left: 17px;
+}
+
+.hr-left .hr-marker {
+  right: auto;
+  left: 7px;
+}
+
+/* структура переезжает вправо от полосок */
+.hr-left .hr-side {
+  right: auto;
+  left: calc(var(--hr-rail-w, 56px) + var(--hr-panel-gap, 8px) + var(--hr-panel-shift, 0px));
+  transform: translateY(-50%) translateX(-8px);
+}
+
+.hr-left.hr-panel-visible .hr-side {
+  transform: translateY(-50%) translateX(0);
+}
+
+.hr-left.hr-host.hr-panel-visible .markdown-source-view,
+.hr-left.hr-host.hr-panel-visible .markdown-reading-view {
+  padding-right: 0;
+  padding-left: var(--hr-push, 330px);
+}
+
+.hr-left .hr-item-menu {
+  right: auto;
+  left: calc(100% + 10px);
+}
+
+.hr-left .hr-preview {
+  right: auto;
+  left: calc(var(--hr-rail-w, 56px) + var(--hr-wave-room, 0px) + var(--hr-preview-gap, 12px));
+}
+
+/* ============ Подсказка при наведении ============ */
+
+.hr-preview {
+  position: absolute;
+  /* --hr-wave-room — запас под полоски, которые на пике длиннее рельса.
+     Без него самая длинная полоска ложилась поверх окошка. */
+  right: calc(var(--hr-rail-w, 56px) + var(--hr-wave-room, 0px) + var(--hr-preview-gap, 12px));
+  transform: translateY(-50%) scale(0.98);
+  width: var(--hr-preview-w, 260px);
+  max-width: 46vw;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border-radius: var(--hr-preview-radius, 12px);
+  background-color: var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary)));
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 130ms ease, transform 130ms cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 15;
+}
+
+.hr-preview.is-shown {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.hr-preview-title {
+  font-family: var(--hr-preview-title-font, var(--font-interface));
+  font-size: var(--hr-preview-title-size, 13px);
+  font-weight: var(--hr-preview-title-weight, 600);
+  color: var(--hr-preview-title-color, var(--text-normal));
+  margin-bottom: 5px;
+}
+
+.hr-preview-body {
+  font-family: var(--hr-preview-text-font, var(--font-interface));
+  font-size: var(--hr-preview-text-size, 12px);
+  font-weight: var(--hr-preview-text-weight, 400);
+  line-height: var(--hr-preview-line, 1.45);
+  color: var(--hr-preview-text-color, var(--text-muted));
+}
+
+
+
+/* ============ Якорь рельса по высоте ============ */
+
+.hr-rail.hr-anchor-top .hr-col { justify-content: flex-start; }
+.hr-rail.hr-anchor-bottom .hr-col { justify-content: flex-end; }
+
+/* ============ Телефон: зеркальная раскладка при левом положении ============
+
+   Мобильные правила раньше жёстко прижимали блок структуры к левому краю.
+   При переносе полосок налево они наезжали друг на друга: полоски вставали
+   на место структуры, а та уходила к центру. Здесь левый режим описан
+   симметрично правому.                                                      */
+
+.hr-mobile.hr-left .hr-side {
+  left: auto;
+  right: 8px;
+  transform: translate(10px, -6px) scale(0.96);
+  transform-origin: top right;
+}
+
+.hr-mobile.hr-left.hr-panel-visible .hr-side {
+  transform: translate(0, 0) scale(1);
+}
+
+.hr-mobile.hr-left.hr-host.hr-panel-visible .markdown-source-view,
+.hr-mobile.hr-left.hr-host.hr-panel-visible .markdown-reading-view {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* подсказка на телефоне снова работает — показывается при протяжке пальцем */
+.hr-mobile .hr-preview {
+  display: block;
+  width: min(74vw, var(--hr-preview-w, 300px));
+}
+
+/* ============ Экран настроек ============ */
+
+.hr-settings-tabs {
+  display: flex;
+  gap: 6px;
+  margin: 14px 0 4px 0;
+}
+
+.hr-settings-tab {
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--background-primary);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* Выбранная вкладка обводится, а не заливается серым: серый на кнопке
+   читается как «недоступна», а не как «выбрана». */
+.hr-settings-tab.is-active {
+  border-color: var(--text-accent);
+  box-shadow: inset 0 0 0 1px var(--text-accent);
+  background-color: transparent;
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.hr-settings-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 2px 0 8px 0;
+}
+
+/* Настройка, значение которой берётся с компьютера */
+.hr-setting-linked {
+  opacity: 0.55;
+}
+
+/* Сворачиваемый раздел настроек. Заголовок работает как кнопка, тело
+   раздела чуть отодвинуто вправо — чтобы вложенная «тонкая настройка»
+   была видна как часть своего раздела, а не как отдельный список. */
+.hr-settings-group {
+  margin: 10px 0 2px 0;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.hr-settings-summary {
+  padding: 10px 2px;
+  color: var(--text-normal);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+/* Свой треугольник вместо системного: он по-разному выглядит на разных
+   платформах, а на телефоне бывает почти незаметен */
+.hr-settings-summary::-webkit-details-marker { display: none; }
+
+.hr-settings-summary::before {
+  content: '▸';
+  display: inline-block;
+  width: 14px;
+  color: var(--text-muted);
+  transition: transform 120ms ease;
+}
+
+.hr-settings-group[open] > .hr-settings-summary::before {
+  transform: rotate(90deg);
+}
+
+.hr-settings-summary:hover {
+  color: var(--text-accent);
+}
+
+.hr-settings-body {
+  padding-left: 14px;
+}
+
+/* Вложенный раздел: тоньше и спокойнее, чтобы не спорить с верхним */
+.hr-settings-body .hr-settings-group {
+  margin-top: 4px;
+  border-top: none;
+}
+
+.hr-settings-body .hr-settings-summary {
+  padding: 8px 2px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Торцы, оставленные только для вида: нажатие на них ничего не делает,
+   поэтому и курсор не должен обещать обратное */
+.hr-end-quiet {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Окно «поделиться своим набором» */
+.hr-share-box {
+  width: 100%;
+  height: 220px;
+  margin: 8px 0;
+  padding: 8px 10px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background-color: var(--background-secondary);
+  color: var(--text-muted);
+  font-family: var(--font-monospace);
+  font-size: 12px;
+  resize: vertical;
+}
+
+.hr-share-actions {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Контакт автора внизу настроек */
+.hr-settings-contact {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--background-modifier-border);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* След переезжающего выделения. --hr-travel ставится кодом на строке рельса
+   и означает, сколько сейчас на этой полоске «метки»: единица в точке, куда
+   она едет, меньше — по дороге. */
+.hr-row .hr-bar {
+  --hr-travel-mix: calc(var(--hr-travel, 0) * 100%);
+}
+
+.hr-row[style*="--hr-travel"] .hr-bar {
+  background-color: color-mix(
+    in srgb,
+    var(--hr-bar-active, var(--text-normal)) var(--hr-travel-mix, 0%),
+    color-mix(
+      in srgb,
+      var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+      color-mix(
+        in srgb,
+        var(--hr-glow-color, var(--hr-bar-active, var(--text-normal))) calc(var(--hr-glow, 0) * 100%),
+        var(--hr-bar-own, var(--hr-bar-color, var(--text-faint)))
+      )
+    )
+  );
+  opacity: calc(
+    var(--hr-op-base) + (1 - var(--hr-op-base)) *
+    max(var(--hr-glow, 0) * var(--hr-glow-lift, 0.7), var(--hr-travel, 0))
+  );
+}
+
+/* Подсветка текущей полоски выключена настройкой: класс остаётся — он нужен
+   структуре и переходам, — а окраска полоски возвращается к обычной */
+.hr-row.is-active.hr-no-active-paint .hr-bar {
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    color-mix(
+      in srgb,
+      var(--hr-glow-color, var(--hr-bar-active, var(--text-normal))) calc(var(--hr-glow, 0) * 100%),
+      var(--hr-bar-own, var(--hr-bar-color, var(--text-faint)))
+    )
+  );
+  opacity: calc(
+    var(--hr-op-base) + (1 - var(--hr-op-base)) * var(--hr-glow, 0) * var(--hr-glow-lift, 0.7)
+  );
+}
+
+.hr-settings-contribute {
+  margin-top: 8px;
+  max-width: 560px;
+  line-height: 1.5;
 }

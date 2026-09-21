@@ -1,9 +1,9 @@
 {
   "id": "heading-rail",
   "name": "Heading Rail",
-  "version": "4.7.1",
+  "version": "8.3.0",
   "minAppVersion": "1.0.0",
-  "description": "A table of contents / outline navigator with live-tracking heading bars, in-panel search, drag-to-scroll, section copy and delete, and full mobile support.",
+  "description": "A table of contents / outline navigator with live-tracking heading bars, a fully configurable hover wave, in-panel search, drag-to-scroll, section copy and delete, and full mobile support.",
   "author": "DAST",
   "isDesktopOnly": false
 }
