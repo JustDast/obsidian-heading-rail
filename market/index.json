@@ -20,8 +20,12 @@
     ]
    },
    "shots": [
-    "shots/base-1.webp",
-    "shots/base-2.webp"
+    "base-1.webp",
+    "base-2.webp"
+   ],
+   "shotsPhone": [
+    "base-p1.webp",
+    "base-p2.webp"
    ]
   },
   {
@@ -41,8 +45,12 @@
     ]
    },
    "shots": [
-    "shots/graphite-1.webp",
-    "shots/graphite-2.webp"
+    "graphite-1.webp",
+    "graphite-2.webp"
+   ],
+   "shotsPhone": [
+    "graphite-p1.webp",
+    "graphite-p2.webp"
    ]
   },
   {
@@ -65,8 +73,12 @@
     ]
    },
    "shots": [
-    "shots/trial-contrast-1.webp",
-    "shots/trial-contrast-2.webp"
+    "trial-contrast-1.webp",
+    "trial-contrast-2.webp"
+   ],
+   "shotsPhone": [
+    "trial-contrast-p1.webp",
+    "trial-contrast-p2.webp"
    ]
   },
   {
@@ -90,8 +102,12 @@
     ]
    },
    "shots": [
-    "shots/trial-terminal-1.webp",
-    "shots/trial-terminal-2.webp"
+    "trial-terminal-1.webp",
+    "trial-terminal-2.webp"
+   ],
+   "shotsPhone": [
+    "trial-terminal-p1.webp",
+    "trial-terminal-p2.webp"
    ]
   },
   {
@@ -113,8 +129,12 @@
     ]
    },
    "shots": [
-    "shots/trial-paper-1.webp",
-    "shots/trial-paper-2.webp"
+    "trial-paper-1.webp",
+    "trial-paper-2.webp"
+   ],
+   "shotsPhone": [
+    "trial-paper-p1.webp",
+    "trial-paper-p2.webp"
    ]
   },
   {
@@ -142,8 +162,12 @@
     ]
    },
    "shots": [
-    "shots/higanbana-1.webp",
-    "shots/higanbana-2.webp"
+    "higanbana-1.webp",
+    "higanbana-2.webp"
+   ],
+   "shotsPhone": [
+    "higanbana-p1.webp",
+    "higanbana-p2.webp"
    ]
   },
   {
@@ -169,8 +193,12 @@
     ]
    },
    "shots": [
-    "shots/depth-1.webp",
-    "shots/depth-2.webp"
+    "depth-1.webp",
+    "depth-2.webp"
+   ],
+   "shotsPhone": [
+    "depth-p1.webp",
+    "depth-p2.webp"
    ]
   },
   {
@@ -190,8 +218,12 @@
     ]
    },
    "shots": [
-    "shots/higanbanaDark-1.webp",
-    "shots/higanbanaDark-2.webp"
+    "higanbanaDark-1.webp",
+    "higanbanaDark-2.webp"
+   ],
+   "shotsPhone": [
+    "higanbanaDark-p1.webp",
+    "higanbanaDark-p2.webp"
    ]
   },
   {
@@ -209,8 +241,12 @@
     ]
    },
    "shots": [
-    "shots/depthWhite-1.webp",
-    "shots/depthWhite-2.webp"
+    "depthWhite-1.webp",
+    "depthWhite-2.webp"
+   ],
+   "shotsPhone": [
+    "depthWhite-p1.webp",
+    "depthWhite-p2.webp"
    ]
   },
   {
@@ -228,8 +264,12 @@
     ]
    },
    "shots": [
-    "shots/waveBase-1.webp",
-    "shots/waveBase-2.webp"
+    "waveBase-1.webp",
+    "waveBase-2.webp"
+   ],
+   "shotsPhone": [
+    "waveBase-p1.webp",
+    "waveBase-p2.webp"
    ]
   },
   {
@@ -247,15 +287,19 @@
     ]
    },
    "shots": [
-    "shots/waveGraphite-1.webp",
-    "shots/waveGraphite-2.webp"
+    "waveGraphite-1.webp",
+    "waveGraphite-2.webp"
+   ],
+   "shotsPhone": [
+    "waveGraphite-p1.webp",
+    "waveGraphite-p2.webp"
    ]
   },
   {
    "id": "calm-wave",
    "kind": "effect",
    "ver": 1,
-   "author": "DAST & Claude",
+   "author": "DAST",
    "name": {
     "ru": "Спокойная волна",
     "en": "Calm wave",
@@ -308,12 +352,16 @@
      "calm"
     ]
    },
-   "file": "items/calm-wave.json",
+   "file": "calm-wave.json",
    "size": 169,
    "added": "2026-10-03",
    "shots": [
-    "shots/calm-wave-1.webp",
-    "shots/calm-wave-2.webp"
+    "calm-wave-1.webp",
+    "calm-wave-2.webp"
+   ],
+   "shotsPhone": [
+    "calm-wave-p1.webp",
+    "calm-wave-p2.webp"
    ]
   }
  ]
