@@ -1,35 +1,13 @@
-# Собирает main.js: ядро + встроенная копия styles.css как страховка на случай,
-# если внешний styles.css не загрузится.
-import re
-import sys
-
-css = open('styles.css').read()
-core = open('core.js').read()
-
+# Собирает main.js из core.js + styles.css (встраивает запасную копию стилей).
+# main.js руками не править — только пересобирать: python3 build.py
+import pathlib
+root = pathlib.Path(__file__).parent
+core = (root / 'core.js').read_text(encoding='utf-8')
+css = (root / 'styles.css').read_text(encoding='utf-8')
 esc = css.replace('\\', '\\\\').replace('`', '\\`').replace('${', '\\${')
-fallback = ("\n/* Страховочная копия styles.css — подключается, только если внешний файл\n"
-            "   не загрузился. Собирается автоматически из styles.css, править надо там. */\n"
-            "const FALLBACK_CSS = `" + esc + "`;\n")
-
-# Ищем строку импорта по форме, а не по точному тексту: раньше здесь была
-# записана конкретная строка, и после добавления новых импортов совпадение
-# перестало находиться — копия стилей молча переставала встраиваться.
-m = re.search(r"^const \{[^}]*\} = require\('obsidian'\);\n", core, re.M)
-if not m:
-    sys.exit("СБОЙ СБОРКИ: не найдена строка импорта obsidian — main.js не собран")
-
-out = core[:m.end()] + fallback + core[m.end():]
-
-# Проверяем результат, а не надеемся на него
-if out.count('const FALLBACK_CSS') != 1:
-    sys.exit("СБОЙ СБОРКИ: копия стилей должна объявляться ровно один раз, "
-             "найдено %d" % out.count('const FALLBACK_CSS'))
-# В исходнике переменная должна только использоваться, но не объявляться:
-# объявление появляется здесь, при сборке. Если оно уже есть — значит core.js
-# затёрли собранным файлом, и собирать из него нельзя.
-if 'const FALLBACK_CSS' in core:
-    sys.exit("СБОЙ СБОРКИ: в core.js уже есть объявление FALLBACK_CSS — "
-             "похоже, исходник затёрт собранным файлом")
-
-open('main.js', 'w').write(out)
-print("main.js собран, размер:", len(out), "| копия стилей встроена: да")
+first, rest = core.split('\n', 1)
+head = (first + '\n\n/* Страховочная копия styles.css — подключается, только если внешний файл\n'
+        '   не загрузился. Собирается автоматически из styles.css, править надо там. */\n'
+        'const FALLBACK_CSS = `' + esc + '`;')
+(root / 'main.js').write_text(head + '\n' + rest, encoding='utf-8')
+print('main.js собран')

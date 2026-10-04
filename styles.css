@@ -1,5 +1,11 @@
 /* ============ Heading Rail ============ */
 
+/* Номер версии стилей. Плагин сверяет его со своим: если styles.css остался
+   от старой версии, подключается встроенная копия. Менять вместе с HR_CSS_VER. */
+.hr-css-probe {
+  --hr-css-ver: "10.5.1";
+}
+
 .hr-host {
   position: relative;
 }
@@ -8,7 +14,7 @@
 
 .hr-rail {
   position: absolute;
-  right: var(--hr-rail-edge, 0px);
+  right: var(--hr-rail-off, var(--hr-rail-edge, 0px));
   top: 26px;
   bottom: 34px;
   display: flex;
@@ -207,11 +213,11 @@
   /* --hr-panel-shift ставится кодом и равен нулю, пока полоски при раскрытой
      структуре статичны. Как только волна при ней разрешена, список отъезжает
      ровно на то, что полоски отбирают на пике. */
-  right: calc(var(--hr-rail-w, 56px) + var(--hr-panel-gap, 8px) + var(--hr-panel-shift, 0px));
-  top: calc(50% + var(--hr-center-offset, 0px));
+  right: calc(var(--hr-rail-off, 0px) + var(--hr-rail-w, 56px) + var(--hr-panel-gap, 8px) + var(--hr-panel-shift, 0px));
+  top: calc(50% + var(--hr-side-center, var(--hr-center-offset, 0px)));
   transform: translateY(-50%) translateX(8px);
-  width: 250px;
-  max-height: var(--hr-span, 70%);
+  width: var(--hr-panel-w, 250px);
+  max-height: var(--hr-side-span, var(--hr-span, 70%));
   display: flex;
   flex-direction: column;
   gap: 26px;
@@ -253,7 +259,7 @@
   border-radius: var(--hr-radius, 16px);
   border: 1px solid var(--background-modifier-border);
   background-color: var(--hr-panel-bg, var(--background-primary));
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
   color: var(--text-normal);
   outline: none;
   transition: border-color 120ms ease;
@@ -277,7 +283,7 @@
   background-color: var(--hr-panel-bg, var(--background-primary));
   border: 1px solid var(--background-modifier-border);
   border-radius: var(--hr-panel-radius, 10px);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
   overflow: visible;   /* указатели парят снаружи панели */
 }
 
@@ -290,6 +296,10 @@
 }
 
 .hr-panel-item {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   font-size: 13px;
   line-height: 1.35;
   padding: 4px 8px;
@@ -298,7 +308,6 @@
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
   transition: background-color 90ms ease, color 90ms ease;
 }
 
@@ -382,7 +391,7 @@
   border-radius: 6px;
   background-color: var(--background-primary);
   border: 1px solid var(--background-modifier-border);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
   white-space: nowrap;
   z-index: 14;
 }
@@ -538,7 +547,7 @@
    Берём тон интерфейса — он совпадает с боковыми панелями самого Obsidian. */
 .hr-mobile .hr-panel {
   background-color: var(--background-secondary);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+  box-shadow: var(--hr-panel-shadow, 0 8px 28px rgba(0, 0, 0, 0.28));
 }
 
 .hr-mobile .hr-panel-list {
@@ -570,8 +579,34 @@
 }
 
 .hr-mobile .hr-mi {
-  padding: 9px 14px;
+  padding: 8px 10px;
   font-size: 13px;
+}
+
+/* Узкий экран: кнопки не помещались в одну строку, а выравнивание по
+   центру выталкивало их за оба края («Отмена» — вправо, стрелки уровня —
+   влево). Теперь меню переносится на вторую строку и не выходит за окно
+   структуры, а кнопки чуть компактнее. */
+.hr-mobile .hr-item-menu {
+  flex-wrap: wrap;
+  white-space: normal;
+  gap: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  max-width: calc(100% - 12px);
+}
+.hr-mobile .hr-item-menu > .hr-mi {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hr-mobile .hr-mi-level {
+  flex: 0 0 auto;
+}
+.hr-mobile .hr-mi-level .hr-mi-icon {
+  padding: 7px 8px;
 }
 
 /* Указатели у краёв крупнее, чтобы попадать пальцем */
@@ -610,7 +645,7 @@
 
 .hr-left .hr-rail {
   right: auto;
-  left: var(--hr-rail-edge, 0px);
+  left: var(--hr-rail-off, var(--hr-rail-edge, 0px));
   flex-direction: row-reverse;
 }
 
@@ -636,7 +671,7 @@
 /* структура переезжает вправо от полосок */
 .hr-left .hr-side {
   right: auto;
-  left: calc(var(--hr-rail-w, 56px) + var(--hr-panel-gap, 8px) + var(--hr-panel-shift, 0px));
+  left: calc(var(--hr-rail-off, 0px) + var(--hr-rail-w, 56px) + var(--hr-panel-gap, 8px) + var(--hr-panel-shift, 0px));
   transform: translateY(-50%) translateX(-8px);
 }
 
@@ -657,7 +692,7 @@
 
 .hr-left .hr-preview {
   right: auto;
-  left: calc(var(--hr-rail-w, 56px) + var(--hr-wave-room, 0px) + var(--hr-preview-gap, 12px));
+  left: calc(var(--hr-rail-off, 0px) + var(--hr-rail-w, 56px) + var(--hr-wave-room, 0px) + var(--hr-preview-gap, 12px));
 }
 
 /* ============ Подсказка при наведении ============ */
@@ -666,7 +701,7 @@
   position: absolute;
   /* --hr-wave-room — запас под полоски, которые на пике длиннее рельса.
      Без него самая длинная полоска ложилась поверх окошка. */
-  right: calc(var(--hr-rail-w, 56px) + var(--hr-wave-room, 0px) + var(--hr-preview-gap, 12px));
+  right: calc(var(--hr-rail-off, 0px) + var(--hr-rail-w, 56px) + var(--hr-wave-room, 0px) + var(--hr-preview-gap, 12px));
   transform: translateY(-50%) scale(0.98);
   width: var(--hr-preview-w, 260px);
   max-width: 46vw;
@@ -675,7 +710,7 @@
   border-radius: var(--hr-preview-radius, 12px);
   background-color: var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary)));
   border: 1px solid var(--background-modifier-border);
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.32);
+  box-shadow: var(--hr-preview-shadow, 0 10px 34px rgba(0, 0, 0, 0.32));
   opacity: 0;
   pointer-events: none;
   transition: opacity 130ms ease, transform 130ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -709,6 +744,10 @@
 
 .hr-rail.hr-anchor-top .hr-col { justify-content: flex-start; }
 .hr-rail.hr-anchor-bottom .hr-col { justify-content: flex-end; }
+/* 9.16.0: торцевые зоны (переход к началу / концу заметки) растягивались поровну сверху и снизу — и держали полоски
+   по центру при любом якоре. Теперь растягивается только зона с противоположной стороны. */
+.hr-rail.hr-anchor-top .hr-end-top,
+.hr-rail.hr-anchor-bottom .hr-end-bottom { flex: 0 0 auto; }
 
 /* ============ Телефон: зеркальная раскладка при левом положении ============
 
@@ -919,3 +958,4123 @@
   max-width: 560px;
   line-height: 1.5;
 }
+
+/* ---------- 8.4.0 ---------- */
+
+/* Полоса прокрутки редактора скрыта: рельс и так делает её лишней */
+.hr-hide-sb .cm-scroller,
+.hr-hide-sb .markdown-preview-view {
+  scrollbar-width: none;
+}
+.hr-hide-sb .cm-scroller::-webkit-scrollbar,
+.hr-hide-sb .markdown-preview-view::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+
+/* Режим «только структура»: полоски есть в разметке — на них держится
+   отслеживание текущего раздела, — но их не видно и они ничего не ловят */
+.hr-outline-only .hr-rail {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ----- структура: текст пункта, число слов, перенос длинных ----- */
+.hr-item-text {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hr-wrap .hr-item-text {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.hr-item-count {
+  flex: 0 0 auto;
+  min-width: max-content;   /* число никогда не сжимается в ноль рядом с длинным названием */
+  font-size: var(--hr-wc-size, 11px);
+  opacity: var(--hr-wc-op, 1);
+  font-variant-numeric: tabular-nums;
+  color: var(--hr-wc-color, var(--text-faint));
+}
+.hr-has-matches .hr-item-count {
+  opacity: 1;
+  color: var(--hr-panel-active-text, var(--text-normal));
+}
+
+/* скрытые пункты: глубже заданного уровня и внутри свёрнутого раздела */
+.hr-panel-item.hr-depth-hidden,
+.hr-panel-item.hr-fold-hidden {
+  display: none;
+}
+
+/* ----- стрелка сворачивания ----- */
+.hr-fold {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0.55;
+}
+.hr-fold::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 2px;
+  border-style: solid;
+  border-width: 4px 0 4px 6px;
+  border-color: transparent transparent transparent currentColor;
+  transform: rotate(90deg);
+  transform-origin: 3px 4px;
+  transition: transform 120ms ease;
+}
+.hr-panel-item.is-folded .hr-fold::before {
+  transform: rotate(0deg);
+}
+.hr-fold:hover {
+  opacity: 1;
+  background-color: var(--background-modifier-hover);
+}
+
+/* Телефон: зона стрелки — вся левая часть пункта до текста, чтобы в неё
+   было легко попасть пальцем и она не путалась с самим заголовком.
+   Сам треугольник рисуется там же, где на компьютере. */
+.hr-fold.hr-fold-zone {
+  top: 0;
+  bottom: 0;
+  height: auto;
+  margin-top: 0;
+  border-radius: 6px 0 0 6px;
+  opacity: 0.7;
+}
+.hr-fold.hr-fold-zone::before {
+  left: calc(var(--hr-fold-x, 0px) + 3px);
+  top: 50%;
+  margin-top: -4px;
+}
+.hr-fold.hr-fold-zone:hover {
+  background-color: transparent;
+}
+
+/* ----- направляющие вложенности ----- */
+.hr-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--hr-guide-color, var(--text-muted));
+  opacity: var(--hr-guide-alpha, 0.35);
+  pointer-events: none;
+}
+
+/* ----- поиск: кнопка режима ----- */
+.hr-search {
+  position: relative;
+}
+.hr-host .hr-side .hr-search input.hr-search-input {
+  padding-right: 34px;
+}
+.hr-search-mode {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  padding: 3px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-faint);
+  cursor: pointer;
+}
+.hr-search-mode.is-active {
+  color: var(--hr-panel-active-text, var(--text-normal));
+}
+.hr-search-mode svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ----- число слов в подсказке ----- */
+.hr-preview-meta {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+/* ----- уровень заголовка в меню действий ----- */
+.hr-mi-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+}
+.hr-mi-icon {
+  padding: 3px 5px;
+  line-height: 0;
+}
+.hr-mi-icon svg {
+  width: 14px;
+  height: 14px;
+}
+.hr-mi-icon[disabled] {
+  opacity: 0.35;
+  cursor: default;
+}
+/* кнопка выбора режима — в дальнем конце рамки и тише стрелок */
+.hr-mi-scope {
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+/* ----- плавающая кнопка ----- */
+.hr-float {
+  position: absolute;
+  z-index: 16;
+  width: var(--hr-float-size, 40px);
+  height: var(--hr-float-size, 40px);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--hr-float-radius, 50%);
+  background-color: var(--hr-float-bg, var(--hr-panel-bg, var(--background-primary)));
+  border: 1px solid var(--background-modifier-border);
+  /* у кнопки своя тень: свечение структуры теперь выключено по умолчанию,
+     и без своей тени кнопка терялась бы на фоне заметки */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  color: var(--hr-float-fg, var(--text-muted));
+  opacity: var(--hr-float-op, 1);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: transform 120ms ease, color 120ms ease, opacity 120ms ease;
+}
+.hr-float svg {
+  width: var(--hr-float-icon, 18px);
+  height: var(--hr-float-icon, 18px);
+}
+.hr-float:hover {
+  color: var(--hr-float-fg, var(--text-normal));
+  opacity: var(--hr-float-op-hover, 1);
+  transform: scale(1.06);
+}
+.hr-float.hr-float-noborder {
+  border-color: transparent;
+}
+.hr-float.hr-float-noshadow {
+  box-shadow: none;
+}
+.hr-float.is-dragging {
+  cursor: grabbing;
+  transform: scale(1.1);
+  transition: none;
+}
+
+/* кнопка «рельс в этой заметке» выключена */
+.hr-file-btn.is-off {
+  opacity: 0.6;
+}
+
+/* ----- окно истории ----- */
+.hr-trash-where {
+  font-size: 12px;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+.hr-trash-scroll {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+.hr-trash-day {
+  margin: 12px 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+.hr-trash-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+/* системная настройка «уменьшить движение»: без плавных переходов */
+@media (prefers-reduced-motion: reduce) {
+  .hr-side,
+  .hr-preview,
+  .hr-float,
+  .hr-fold::before {
+    transition: none !important;
+  }
+}
+
+/* строка, которая не действует в выбранном режиме — видна, но приглушена */
+.hr-setting-locked {
+  opacity: 0.5;
+}
+.hr-setting-locked .setting-item-description {
+  font-style: italic;
+}
+
+/* ----- найденное поиском по содержимому слово -----
+   Яркая метка на пару секунд: сперва вспыхивает, потом плавно гаснет. */
+.hr-search-flash {
+  animation: hr-search-flash 2600ms ease-out forwards;
+}
+/* анимация перебивает стиль, заданный в самой метке: так устроен CSS */
+@keyframes hr-search-flash {
+  0%   { box-shadow: 0 0 0 3px var(--hr-flash-ring, var(--text-accent, #7f6df2)); }
+  12%  { box-shadow: 0 0 0 0 transparent; }
+  24%  { box-shadow: 0 0 0 3px var(--hr-flash-ring, var(--text-accent, #7f6df2)); }
+  75%  { box-shadow: 0 0 0 2px var(--hr-flash-ring, var(--text-accent, #7f6df2)); }
+  100% { box-shadow: 0 0 0 2px transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hr-search-flash { animation: none; }
+}
+
+
+/* ======================= 8.4.2 ======================= */
+
+/* ----- своя прозрачность линий вложенности у каждого уровня ----- */
+.hr-guide-1 { opacity: var(--hr-guide-alpha-1, var(--hr-guide-alpha, 0.35)); }
+.hr-guide-2 { opacity: var(--hr-guide-alpha-2, var(--hr-guide-alpha, 0.35)); }
+.hr-guide-3 { opacity: var(--hr-guide-alpha-3, var(--hr-guide-alpha, 0.35)); }
+.hr-guide-4 { opacity: var(--hr-guide-alpha-4, var(--hr-guide-alpha, 0.35)); }
+.hr-guide-5 { opacity: var(--hr-guide-alpha-5, var(--hr-guide-alpha, 0.35)); }
+
+/* ----- уровень заголовка в подсказке: правый верхний угол ----- */
+.hr-preview-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.hr-preview-head .hr-preview-title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.hr-preview-level {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding-top: 2px;
+  font-family: var(--font-interface);
+  font-size: var(--hr-lvl-size, 11px);
+  font-weight: var(--hr-lvl-weight, 600);
+  line-height: 1.2;
+  color: var(--hr-preview-title-color, var(--text-normal));
+  opacity: var(--hr-lvl-op, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- структура выключена совсем ----- */
+.hr-no-outline .hr-side {
+  display: none;
+}
+
+/* ----- структура у другого края заметки: текст отодвигается с той стороны ----- */
+.hr-host.hr-outline-apart.hr-push-r.hr-panel-visible .markdown-source-view,
+.hr-host.hr-outline-apart.hr-push-r.hr-panel-visible .markdown-reading-view {
+  padding-left: 0;
+  padding-right: var(--hr-push, 330px);
+}
+.hr-host.hr-outline-apart.hr-push-l.hr-panel-visible .markdown-source-view,
+.hr-host.hr-outline-apart.hr-push-l.hr-panel-visible .markdown-reading-view {
+  padding-right: 0;
+  padding-left: var(--hr-push, 330px);
+}
+
+/* ----- режим плавающей кнопки: своя структура у кнопки -----
+   Не привязана к полоскам: встаёт рядом с кнопкой и вырастает из неё
+   (точку роста ставит код). Текст не отодвигается — окно лежит поверх. */
+.hr-host.hr-float-mode .hr-side {
+  right: auto;
+  bottom: auto;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 180ms ease, transform 240ms cubic-bezier(0.32, 0.72, 0, 1);
+  z-index: 17;
+}
+.hr-host.hr-float-mode.hr-panel-visible .hr-side {
+  opacity: 1;
+  transform: scale(1);
+}
+.hr-host.hr-float-mode.hr-panel-visible .markdown-source-view,
+.hr-host.hr-float-mode.hr-panel-visible .markdown-reading-view {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* полоски эту структуру не показывают и под неё не сдвигаются */
+.hr-float-mode .hr-marker {
+  display: none;
+}
+.hr-host.hr-float-mode.hr-panel-visible .hr-row,
+.hr-host.hr-float-mode.hr-panel-visible .hr-end {
+  padding-right: 8px;
+}
+.hr-host.hr-left.hr-float-mode.hr-panel-visible .hr-row,
+.hr-host.hr-left.hr-float-mode.hr-panel-visible .hr-end {
+  padding-right: 0;
+  padding-left: 8px;
+}
+.hr-float-mode .hr-float {
+  z-index: 18;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hr-host.hr-float-mode .hr-side { transition: none; }
+}
+
+/* ----- своя полоса прокрутки редактора у края ----- */
+.hr-sb {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  right: var(--hr-sb-edge, 2px);
+  width: var(--hr-sb-w, 6px);
+  z-index: 13;
+  opacity: var(--hr-sb-rest, 0.3);
+  transition: opacity 160ms ease;
+  cursor: default;
+}
+.hr-left .hr-sb {
+  right: var(--hr-sb-edge, 2px);
+}
+.hr-sb:hover,
+.hr-sb.is-dragging {
+  opacity: var(--hr-sb-hover, 0.85);
+}
+.hr-sb.hr-sb-autohide {
+  opacity: 0;
+}
+.hr-sb.hr-sb-autohide.is-active {
+  opacity: var(--hr-sb-rest, 0.3);
+}
+.hr-sb.hr-sb-autohide:hover,
+.hr-sb.hr-sb-autohide.is-dragging {
+  opacity: var(--hr-sb-hover, 0.85);
+}
+.hr-sb.is-empty {
+  display: none;
+}
+.hr-sb-thumb {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  min-height: 24px;
+  border-radius: calc(var(--hr-sb-w, 6px) / 2);
+  background-color: var(--hr-sb-color, var(--text-muted));
+  cursor: grab;
+  touch-action: none;
+}
+.hr-sb.is-dragging .hr-sb-thumb {
+  cursor: grabbing;
+}
+
+/* ----- полоса прокрутки внутри структуры ----- */
+.hr-olsb-hide .hr-panel-list {
+  scrollbar-width: none;
+}
+.hr-olsb-hide .hr-panel-list::-webkit-scrollbar {
+  display: none;
+  width: 0;
+}
+.hr-olsb-custom .hr-panel-list::-webkit-scrollbar {
+  width: calc(var(--hr-olsb-w, 5px) + 4px);
+  background: transparent;
+}
+.hr-olsb-custom .hr-panel-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.hr-olsb-custom .hr-panel-list::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
+  background-color: color-mix(in srgb, var(--hr-olsb-color, var(--text-muted)) calc(var(--hr-olsb-rest, 0.25) * 100%), transparent);
+}
+.hr-olsb-custom .hr-panel-list:hover::-webkit-scrollbar-thumb,
+.hr-olsb-custom .hr-panel-list::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--hr-olsb-color, var(--text-muted)) calc(var(--hr-olsb-hover, 0.75) * 100%), transparent);
+}
+
+/* ----- меню действий внутри окна структуры (компьютер) ----- */
+.hr-panel.hr-menu-top .hr-item-menu,
+.hr-panel.hr-menu-bottom .hr-item-menu {
+  left: 6px;
+  right: 6px;
+  transform: none;
+  flex-wrap: wrap;
+  white-space: normal;
+  justify-content: center;
+  box-sizing: border-box;
+  background-color: var(--background-secondary);
+}
+.hr-panel.hr-menu-top .hr-item-menu {
+  top: 6px;
+  bottom: auto;
+}
+.hr-panel.hr-menu-bottom .hr-item-menu {
+  top: auto;
+  bottom: 6px;
+}
+
+/* ----- окно истории: путь к файлу и кнопки ----- */
+.hr-trash-where-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.hr-trash-where-row .hr-trash-where {
+  flex: 1 1 240px;
+  margin: 0;
+}
+.hr-trash-where-btns {
+  display: flex;
+  gap: 6px;
+}
+.hr-trash-hidden-note {
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 4px;
+}
+
+/* ----- поиск по настройкам ----- */
+.hr-settings-search {
+  margin-bottom: 14px;
+}
+.hr-settings-search-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+.hr-settings-search-empty {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+
+/* ======================= 8.4.3 ======================= */
+
+/* ----- незакрытые задачи у пункта структуры ----- */
+.hr-item-tasks {
+  flex: 0 0 auto;
+  display: none;
+  min-width: 16px;
+  padding: 0 5px;
+  border-radius: 8px;
+  font-size: 10px;
+  line-height: 16px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--hr-task-text, var(--text-on-accent, #fff));
+  background-color: color-mix(in srgb, var(--hr-task-fill, var(--interactive-accent, var(--text-accent))) var(--hr-task-fill-op, 85%), transparent);
+  border: var(--hr-task-bw, 0px) solid var(--hr-task-border, var(--interactive-accent, var(--text-accent)));
+  box-sizing: border-box;
+  align-self: center;
+}
+.hr-item-tasks.is-shown {
+  display: inline-block;
+}
+
+/* ----- перетаскивание разделов ----- */
+.hr-panel-item.is-drag-src {
+  opacity: 0.4;
+}
+.hr-panel-item.hr-drop-before {
+  box-shadow: inset 0 2px 0 0 var(--interactive-accent, var(--text-accent));
+}
+.hr-panel-item.hr-drop-after {
+  box-shadow: inset 0 -2px 0 0 var(--interactive-accent, var(--text-accent));
+}
+
+/* ----- переименование прямо в структуре ----- */
+.hr-panel-item.is-renaming {
+  flex-wrap: wrap;
+  white-space: normal;
+  overflow: visible;
+  cursor: default;
+  background-color: var(--background-modifier-hover);
+}
+.hr-panel-item.is-renaming .hr-item-text,
+.hr-panel-item.is-renaming .hr-item-count,
+.hr-panel-item.is-renaming .hr-item-tasks {
+  display: none;
+}
+.hr-rename {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+.hr-host .hr-rename input.hr-rename-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 26px;
+  padding: 2px 6px;
+  font-size: 13px;
+  border-radius: 5px;
+}
+.hr-rename-warn {
+  margin-top: 4px;
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text-muted);
+}
+.hr-rename-warn.is-risky {
+  color: var(--text-error, #c0392b);
+}
+.hr-rename-keys {
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+
+/* ======================= 8.4.4 ======================= */
+
+/* ----- закладки: значок у пункта ----- */
+.hr-item-bm {
+  display: none;
+  flex: 0 0 auto;
+  align-self: center;
+  color: var(--interactive-accent, var(--text-accent));
+  line-height: 0;
+}
+.hr-item-bm svg {
+  width: 12px;
+  height: 12px;
+  fill: currentColor;
+}
+.hr-panel-item.is-bookmarked .hr-item-bm {
+  display: inline-block;
+}
+.hr-panel-item.is-renaming .hr-item-bm {
+  display: none;
+}
+
+/* ----- закладки: список вверху структуры ----- */
+.hr-bm-list {
+  display: none;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  max-height: 30%;
+  overflow-y: auto;
+}
+.hr-bm-list.is-shown {
+  display: flex;
+}
+.hr-bm-chip {
+  max-width: 100%;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+  border: 1px solid var(--background-modifier-border);
+}
+.hr-bm-chip:hover {
+  border-color: var(--interactive-accent, var(--text-accent));
+}
+.hr-mobile .hr-bm-chip {
+  font-size: 13px;
+  padding: 4px 10px;
+}
+
+
+/* ======================= 8.4.5 ======================= */
+
+/* пересборка при открытой структуре — без плавного появления (нет мигания) */
+.hr-instant .hr-side,
+.hr-instant .hr-side *,
+.hr-instant .markdown-source-view,
+.hr-instant .markdown-reading-view,
+.hr-instant .hr-row,
+.hr-instant .hr-end {
+  transition: none !important;
+}
+
+/* раздел, с которым только что работали: короткая вспышка */
+.hr-panel-item.hr-item-flash {
+  animation: hr-item-flash 1400ms ease-out;
+}
+@keyframes hr-item-flash {
+  0%   { background-color: color-mix(in srgb, var(--hr-move-c) var(--hr-flash-o, 35%), transparent); }
+  100% { background-color: transparent; }
+}
+
+/* перенос внутрь пункта: рамка вокруг него */
+.hr-panel-item.hr-drop-into {
+  box-shadow: inset 0 0 0 2px var(--hr-move-c);
+  background-color: color-mix(in srgb, var(--hr-move-c) var(--hr-into-o, 12%), transparent);
+}
+
+/* что внутри свёрнутого раздела */
+.hr-item-kids {
+  display: none;
+  flex: 0 0 auto;
+  align-self: center;
+  padding: 0 5px;
+  border-radius: 8px;
+  font-size: 10px;
+  line-height: 16px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  border: 1px solid var(--background-modifier-border);
+}
+.hr-item-kids.is-shown {
+  display: inline-block;
+}
+.hr-panel-item.is-renaming .hr-item-kids {
+  display: none;
+}
+
+/* меню действий: треугольник «ещё» и вторая строка */
+.hr-mi-more {
+  display: none;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+.hr-item-menu.has-more-open {
+  flex-wrap: wrap;
+  max-width: min(420px, 90vw);
+  white-space: normal;
+}
+.hr-item-menu.has-more-open .hr-mi-more {
+  display: flex;
+}
+.hr-mi-more-btn svg {
+  width: 14px;
+  height: 14px;
+}
+.hr-mi-nowhere {
+  display: none;
+}
+
+
+/* ======================= 8.4.6 ======================= */
+
+/* ----- перенос разделов: одна линия на промежуток -----
+   Раньше нижняя кромка верхнего пункта и верхняя кромка нижнего
+   подсвечивались по отдельности — две отметки одного и того же места.
+   Теперь линия одна, и её отступ показывает, каким уровнем встанет раздел. */
+.hr-panel-list {
+  position: relative;
+}
+.hr-drop-line {
+  display: none;
+  position: absolute;
+  right: 8px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: var(--hr-move-c);
+  pointer-events: none;
+  z-index: 3;
+}
+.hr-drop-line.is-shown {
+  display: block;
+}
+.hr-drop-line::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 2px solid var(--hr-move-c);
+  background-color: var(--hr-panel-bg, var(--background-primary));
+}
+.hr-drop-line::after {
+  content: attr(data-level);
+  position: absolute;
+  right: 0;
+  top: -15px;
+  padding: 0 4px;
+  border-radius: 4px;
+  font-size: 9px;
+  line-height: 12px;
+  font-weight: 600;
+  color: var(--text-on-accent, #fff);
+  background-color: var(--hr-move-c);
+}
+
+/* ----- меню действий: список «⋯» -----
+   Кнопка «⋯» стоит в конце закреплённых; остальные действия раскрываются
+   под меню (или над ним) аккуратным списком, а не второй строкой вразброс. */
+.hr-item-menu.has-more-open {
+  flex-wrap: nowrap;
+  max-width: none;
+  white-space: nowrap;
+}
+.hr-item-menu:not(.hr-menu-strip) .hr-mi-more {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  flex: none;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 2px;
+  min-width: 170px;
+  padding: 4px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  background-color: var(--hr-panel-bg, var(--background-primary));
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 15;
+}
+.hr-item-menu.has-more-open:not(.hr-menu-strip) .hr-mi-more {
+  display: flex;
+}
+.hr-item-menu.hr-more-up .hr-mi-more {
+  top: auto;
+  bottom: calc(100% + 6px);
+}
+.hr-mi-more > .hr-mi {
+  width: 100%;
+  text-align: left;
+  background-color: transparent;
+}
+.hr-mi-more > .hr-mi:hover {
+  background-color: var(--background-modifier-hover);
+}
+.hr-mi-more > .hr-mi-danger {
+  color: var(--text-error, #c0392b);
+}
+.hr-mi-more > .hr-mi-danger:hover {
+  filter: none;
+  background-color: color-mix(in srgb, var(--text-error, #c0392b) 12%, transparent);
+}
+.hr-mi-more > .hr-mi-level {
+  align-self: flex-start;
+  margin: 2px 4px;
+}
+.hr-mi-more-btn.is-active {
+  background-color: var(--background-modifier-hover);
+  color: var(--text-normal);
+}
+.hr-mobile .hr-mi-more > .hr-mi {
+  padding: 9px 12px;
+}
+
+/* ----- меню действий: полоса с прокруткой вбок ----- */
+.hr-item-menu.hr-menu-strip {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+}
+.hr-strip-track {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  overscroll-behavior: contain;
+}
+.hr-strip-track::-webkit-scrollbar {
+  display: none;
+}
+.hr-strip-track > * {
+  flex: 0 0 auto;
+}
+.hr-menu-strip.hr-strip-more-r .hr-strip-track {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+}
+.hr-menu-strip.hr-strip-more-l .hr-strip-track {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to left, #000 calc(100% - 28px), transparent);
+}
+.hr-menu-strip.hr-strip-more-l.hr-strip-more-r .hr-strip-track {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent);
+}
+.hr-strip-sep {
+  flex: 0 0 1px;
+  align-self: stretch;
+  margin: 3px 2px;
+  background-color: var(--background-modifier-border);
+}
+.hr-strip-nav {
+  flex: 0 0 auto;
+  padding: 4px 2px;
+  background-color: transparent;
+}
+.hr-strip-nav[disabled] {
+  opacity: 0.3;
+  cursor: default;
+}
+.hr-strip-cancel {
+  flex: 0 0 auto;
+}
+
+/* Полоса над или под структурой: отдельный блок, как строка поиска, только
+   толще. Стоит в той же колонке, что поиск и структура, поэтому структура
+   под неё раздвигается, а не перекрывается. */
+.hr-side > .hr-search { order: 0; }
+.hr-side > .hr-panel { order: 2; }
+.hr-item-menu.hr-menu-col {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  flex: 0 0 auto;
+  min-height: 40px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  justify-content: center;
+  white-space: normal;
+  border-radius: var(--hr-radius, 16px);
+  background-color: var(--hr-panel-bg, var(--background-primary));
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+  padding: 4px 6px;
+  z-index: auto;
+}
+.hr-item-menu.hr-menu-col.is-ghost {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.hr-item-menu.hr-menu-strip-top {
+  order: 1;
+  margin-bottom: -6px;
+}
+.hr-item-menu.hr-menu-strip-bottom {
+  order: 3;
+  margin-top: -6px;
+}
+/* поиск снизу: колонка перевёрнута, порядок полосы — тоже */
+.hr-side.hr-search-bottom > .hr-item-menu.hr-menu-strip-top { order: 3; }
+.hr-side.hr-search-bottom > .hr-item-menu.hr-menu-strip-bottom { order: 1; }
+
+/* ----- как структура появляется из плавающей кнопки ----- */
+/* «Вырастает» — как было: переход стилей, время из настройки */
+.hr-host.hr-float-mode.hr-fanim-scale .hr-side {
+  transition: opacity calc(var(--hr-fanim-ms, 240ms) * 0.75) ease,
+              transform var(--hr-fanim-ms, 240ms) cubic-bezier(0.32, 0.72, 0, 1);
+}
+.hr-host.hr-float-mode.hr-fanim-instant .hr-side,
+.hr-host.hr-float-mode.hr-fanim-instant.hr-panel-visible .hr-side {
+  transition: none;
+  transform: none;
+}
+/* ----- значок закладки: свой цвет и «только контур» ----- */
+.hr-item-bm {
+  color: var(--hr-bm-color, var(--interactive-accent, var(--text-accent)));
+}
+.hr-bm-outline .hr-item-bm svg {
+  fill: none;
+}
+
+/* ----- метки задач: скругление и столбец одной ширины ----- */
+.hr-item-tasks {
+  border-radius: var(--hr-task-radius, 8px);
+  min-width: max(16px, calc(var(--hr-task-w, 1ch) + 10px));
+}
+.hr-item-tasks.is-slot {
+  display: inline-block;
+  visibility: hidden;
+}
+
+/* ----- число слов: столбец одной ширины, прижат вправо ----- */
+.hr-item-count {
+  min-width: var(--hr-wc-w, max-content);
+  text-align: right;
+}
+.hr-has-wc .hr-item-count {
+  margin-left: calc(var(--hr-wc-gap, 6px) - 6px);
+}
+
+/* ----- пустая зона торцов без отклика на наведение ----- */
+.hr-cap-void-quiet .hr-end.is-void:hover .hr-cap-bar {
+  opacity: calc(var(--hr-cap-fade, 0.75) * var(--hr-wave-fade, var(--hr-rest-fade, 1)));
+  background-color: color-mix(
+    in srgb,
+    var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+    var(--hr-bar-color, var(--text-faint))
+  );
+}
+
+
+/* ======================= 8.4.7 ======================= */
+
+/* ----- меню над / под структурой -----
+   Строками: основные действия переносятся на вторую строку, «⋯» раскрывает
+   остальные сбоку от структуры, вровень с меню. Значками: короткие кнопки. */
+.hr-item-menu.hr-menu-col {
+  row-gap: 5px;
+}
+.hr-item-menu.hr-menu-col.hr-more-side-l .hr-mi-more,
+.hr-item-menu.hr-menu-col.hr-more-side-r .hr-mi-more {
+  top: 0;
+  bottom: auto;
+}
+.hr-item-menu.hr-menu-col.hr-menu-strip-bottom.hr-more-side-l .hr-mi-more,
+.hr-item-menu.hr-menu-col.hr-menu-strip-bottom.hr-more-side-r .hr-mi-more {
+  top: auto;
+  bottom: 0;
+}
+.hr-item-menu.hr-menu-col.hr-more-side-l .hr-mi-more {
+  left: auto;
+  right: calc(100% + 10px);
+}
+.hr-item-menu.hr-menu-col.hr-more-side-r .hr-mi-more {
+  right: auto;
+  left: calc(100% + 10px);
+}
+.hr-item-menu.hr-menu-icons {
+  gap: 3px;
+}
+.hr-item-menu.hr-menu-icons > .hr-mi-icon,
+.hr-item-menu.hr-menu-icons .hr-mi-level .hr-mi-icon {
+  padding: 5px 6px;
+}
+.hr-item-menu.hr-menu-icons > .hr-mi-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.hr-item-menu.hr-menu-icons > .hr-mi-danger {
+  background-color: transparent;
+  color: var(--text-error, #c0392b);
+}
+.hr-item-menu.hr-menu-icons > .hr-mi-danger:hover {
+  filter: none;
+  background-color: color-mix(in srgb, var(--text-error, #c0392b) 12%, transparent);
+}
+.hr-item-menu.hr-menu-icons > .hr-mi-icon:not(.hr-mi-danger) {
+  background-color: transparent;
+}
+.hr-item-menu.hr-menu-icons > .hr-mi-icon:not(.hr-mi-danger):hover {
+  background-color: var(--background-modifier-hover);
+}
+
+/* ----- метки у пунктов: один размер и один спокойный стиль -----
+   Задачи, закрепление и «что внутри свёрнутого» — одной высоты, с тонкой
+   обводкой и приглушённым цветом темы, чтобы не спорить с заголовками. */
+.hr-item-tasks,
+.hr-item-kids,
+.hr-panel-item .hr-item-bm {
+  height: var(--hr-mark-h, 16px);
+  min-width: var(--hr-mark-h, 16px);
+  box-sizing: border-box;
+  border-radius: var(--hr-task-radius, 8px);
+  font-size: calc(var(--hr-mark-h, 16px) * 0.62);
+  line-height: 1;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+}
+.hr-item-tasks {
+  min-width: max(var(--hr-mark-h, 16px), calc(var(--hr-task-w, 1ch) + 10px));
+  padding: 0 4px;
+  color: var(--hr-task-text, var(--text-muted));
+  background-color: color-mix(in srgb, var(--hr-task-fill, var(--interactive-accent, var(--text-accent))) var(--hr-task-fill-op, 0%), transparent);
+  border: var(--hr-task-bw, 1px) solid var(--hr-task-border, var(--background-modifier-border));
+}
+.hr-item-tasks.is-shown,
+.hr-item-kids.is-shown {
+  display: inline-flex;
+}
+.hr-item-kids {
+  padding: 0 5px;
+  line-height: 1;
+  color: var(--text-muted);
+  border: 1px solid var(--background-modifier-border);
+}
+.hr-panel-item .hr-item-bm {
+  gap: 2px;
+  padding: 0 2px;
+  color: var(--hr-bm-color, var(--text-muted));
+  border: 1px solid var(--background-modifier-border);
+  cursor: default;
+}
+.hr-panel-item.is-bookmarked .hr-item-bm {
+  display: inline-flex;
+}
+.hr-pin-icon {
+  display: inline-flex;
+  line-height: 0;
+}
+.hr-panel-item .hr-item-bm svg {
+  width: calc(var(--hr-mark-h, 16px) * 0.62);
+  height: calc(var(--hr-mark-h, 16px) * 0.62);
+}
+
+/* ----- открепить долгим наведением: корзина и красная обводка ----- */
+.hr-pin-trash {
+  display: none;
+  line-height: 0;
+  color: var(--text-error, #c0392b);
+}
+.hr-pin-trash svg {
+  width: calc(var(--hr-mark-h, 16px) * 0.62);
+  height: calc(var(--hr-mark-h, 16px) * 0.62);
+  fill: none !important;
+}
+.hr-item-bm.is-armed,
+.hr-bm-chip.is-armed {
+  border-color: var(--text-error, #c0392b);
+  box-shadow: 0 0 0 1px var(--text-error, #c0392b);
+  cursor: pointer;
+}
+.hr-item-bm.is-armed .hr-pin-trash,
+.hr-bm-chip.is-armed .hr-pin-trash {
+  display: inline-flex;
+}
+.hr-bm-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.hr-bm-chip-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hr-bm-chip .hr-pin-trash svg {
+  width: 12px;
+  height: 12px;
+}
+
+
+/* ======================= 8.4.8 ======================= */
+
+/* ----- уголок для изменения размера плавающей структуры -----
+   Рисуется у угла, дальнего от кнопки: дуга повторяет скругление окна,
+   концы круглые. Появляется, когда курсор рядом; на телефоне виден всегда,
+   пока структура открыта. */
+.hr-resize {
+  position: absolute;
+  display: none;
+  z-index: 19;
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  transition: opacity 140ms ease;
+}
+.hr-resize::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+}
+.hr-resize svg {
+  position: relative;
+  display: block;
+  overflow: visible;
+}
+.hr-resize path {
+  fill: none;
+  stroke: var(--hr-resize-color, var(--text-muted));
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 120ms ease;
+}
+.hr-host.hr-float-mode.hr-panel-visible .hr-resize {
+  display: block;
+}
+.hr-host.hr-panel-visible .hr-resize.is-near,
+.hr-host.hr-panel-visible .hr-resize.is-dragging,
+.hr-mobile.hr-panel-visible .hr-resize {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+.hr-resize:hover path,
+.hr-resize.is-dragging path {
+  stroke: var(--hr-resize-color, var(--interactive-accent, var(--text-accent)));
+  filter: brightness(1.15);
+}
+
+
+/* ======================= 8.4.9 ======================= */
+
+/* ----- крестик в строке поиска: виден, когда что-то набрано ----- */
+.hr-search-clear {
+  display: none;
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  padding: 3px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-faint);
+  cursor: pointer;
+}
+.hr-search-clear:hover {
+  color: var(--text-normal);
+}
+.hr-search-clear svg {
+  width: 14px;
+  height: 14px;
+}
+.hr-search.has-text .hr-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.hr-host .hr-side .hr-search.has-text input.hr-search-input {
+  padding-right: 58px;
+}
+
+/* ----- телефон: меню действий значками ----- */
+.hr-mobile .hr-item-menu.hr-menu-icons {
+  justify-content: center;
+  gap: 4px;
+}
+.hr-mobile .hr-item-menu.hr-menu-icons > .hr-mi {
+  flex: 0 0 auto;
+  padding: 8px 9px;
+}
+.hr-mobile .hr-item-menu.hr-menu-icons > .hr-mi svg {
+  width: 18px;
+  height: 18px;
+}
+
+
+/* ======================= 8.4.10 ======================= */
+
+/* ----- полоска высоты у дальнего края плавающей структуры -----
+   Тот же стиль, что у уголка: цвет, толщина, круглые концы. Есть, только
+   когда список прокручивается (is-able); видна, когда курсор рядом, на
+   телефоне — всегда. */
+.hr-resize-h {
+  position: absolute;
+  display: none;
+  z-index: 19;
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  transition: opacity 140ms ease;
+}
+.hr-resize-h::before {
+  content: '';
+  position: absolute;
+  inset: -10px -8px;
+}
+.hr-resize-h-bar {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--hr-resize-color, var(--text-muted));
+  transition: filter 120ms ease;
+}
+.hr-host.hr-float-mode.hr-panel-visible .hr-resize-h.is-able {
+  display: block;
+}
+.hr-host.hr-panel-visible .hr-resize-h.is-able.is-near,
+.hr-host.hr-panel-visible .hr-resize-h.is-dragging,
+.hr-mobile.hr-panel-visible .hr-resize-h.is-able {
+  opacity: 0.9;
+  pointer-events: auto;
+}
+.hr-resize-h:hover .hr-resize-h-bar,
+.hr-resize-h.is-dragging .hr-resize-h-bar {
+  background-color: var(--hr-resize-color, var(--interactive-accent, var(--text-accent)));
+  filter: brightness(1.15);
+}
+
+/* ---------- 8.4.11: Ctrl + наведение — ползунок внутри раздела ----------
+   Пункт не подсвечивается целиком: заливка только слева до курсора, как
+   уровень заряда. Рамок нет, правый конец — прямой и чёткий. Точки на
+   верхней грани — насечки шкалы. */
+.hr-panel-item.is-sliding {
+  isolation: isolate;
+}
+.hr-panel-item.is-sliding,
+.hr-panel-item.is-sliding:hover,
+.hr-panel-item.is-sliding.is-hover {
+  background-color: transparent;
+}
+.hr-slide {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  --hr-slide-c: var(--hr-move-c);
+}
+.hr-slide-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: color-mix(in srgb, var(--hr-slide-c) var(--hr-slide-o, 30%), transparent);
+  border-radius: 6px 0 0 6px;
+  /* конец заливки под курсором — ровная чёткая линия */
+  box-shadow: inset -1px 0 0 var(--hr-slide-c);
+}
+.hr-slide-dot {
+  position: absolute;
+  top: 1px;
+  width: 3px;
+  height: 3px;
+  margin-left: -1.5px;
+  border-radius: 50%;
+  background: var(--hr-slide-c);
+  opacity: 0;
+  transition: opacity 90ms ease;
+}
+.hr-slide-dot.is-on {
+  opacity: 0.85;
+}
+.hr-num-input { width: 90px; }
+
+/* 8.4.12: один цвет переноса и ползунка (--hr-move-color ставит код) */
+.hr-host {
+  --hr-move-c: var(--hr-move-color, var(--interactive-accent, var(--text-accent)));
+}
+
+/* ======================= 8.4.13 ======================= */
+
+/* Телефон: уголок размера и полоска высоты ловят палец шире самой черты.
+   Зона касания — прозрачная подложка вокруг (::before), вид прежний. */
+.hr-mobile .hr-resize::before {
+  inset: -20px;
+}
+.hr-mobile .hr-resize-h::before {
+  inset: -20px -16px;
+}
+
+/* Закреплённая плавающая кнопка не тащится — и курсор это показывает */
+.hr-float.is-locked,
+.hr-float.is-locked:active {
+  cursor: pointer;
+}
+
+/* Стрелка уровня: сам заголовок сдвинуть можно, а всю ветку — нет */
+.hr-mi.is-branch-stuck {
+  opacity: 0.55;
+}
+
+/* Кнопки внутри уведомления (уровень: «только этот заголовок») */
+.hr-notice-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.hr-notice-btns button {
+  font-size: var(--font-ui-smaller, 12px);
+}
+
+/* Окно «сделать или нет» (отмена после поздних правок) */
+.hr-confirm-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* ======================= 8.4.14 ======================= */
+
+/* Меню действий ждёт перестройки структуры после действия: остаётся на
+   месте (не мигает), но нажатия не принимает */
+.hr-item-menu.is-busy {
+  pointer-events: none;
+}
+
+/* ======================= 8.5.0 ======================= */
+
+/* Карточка подсказки масштабируется вместе с плавающей структурой (--hr-pk
+   ставит код). Свои размеры карточки продолжают работать — они задают
+   пропорции внутри неё. */
+.hr-preview {
+  width: calc(var(--hr-preview-w, 260px) * var(--hr-pk, 1));
+  padding: calc(12px * var(--hr-pk, 1)) calc(14px * var(--hr-pk, 1));
+  border-radius: calc(var(--hr-preview-radius, 12px) * var(--hr-pk, 1));
+}
+.hr-mobile .hr-preview {
+  width: min(74vw, calc(var(--hr-preview-w, 300px) * var(--hr-pk, 1)));
+}
+.hr-preview-title {
+  font-size: calc(var(--hr-preview-title-size, 13px) * var(--hr-pk, 1));
+  margin-bottom: calc(5px * var(--hr-pk, 1));
+}
+.hr-preview-body {
+  font-size: calc(var(--hr-preview-text-size, 12px) * var(--hr-pk, 1));
+}
+.hr-preview-level {
+  font-size: calc(var(--hr-lvl-size, 11px) * var(--hr-pk, 1));
+}
+.hr-preview-meta {
+  font-size: calc(11px * var(--hr-pk, 1));
+  margin-top: calc(6px * var(--hr-pk, 1));
+}
+.hr-preview-head {
+  gap: calc(10px * var(--hr-pk, 1));
+}
+/* найденное слово в карточке при поиске по тексту */
+.hr-preview-mark {
+  background-color: var(--hr-flash-fill, rgba(255, 200, 0, 0.55));
+  color: var(--hr-preview-title-color, var(--text-normal));
+  border-radius: 3px;
+  padding: 0 1px;
+}
+
+/* Уголок размера принимает нажатия только своей дугой: квадрат вокруг неё
+   больше не закрывает кнопки строки поиска. */
+.hr-host .hr-resize,
+.hr-host.hr-panel-visible .hr-resize.is-near,
+.hr-host.hr-panel-visible .hr-resize.is-dragging,
+.hr-mobile.hr-panel-visible .hr-resize {
+  pointer-events: none;
+}
+.hr-resize::before { content: none; }
+.hr-resize svg { pointer-events: none; }
+.hr-resize path { pointer-events: none; }
+.hr-host.hr-panel-visible .hr-resize.is-near path.hr-resize-hit,
+.hr-host.hr-panel-visible .hr-resize.is-dragging path.hr-resize-hit,
+.hr-mobile.hr-panel-visible .hr-resize path.hr-resize-hit {
+  pointer-events: stroke;
+  stroke: transparent;
+}
+.hr-resize.hr-resize-hit-hover path:not(.hr-resize-hit),
+.hr-resize:has(.hr-resize-hit:hover) path:not(.hr-resize-hit) {
+  stroke: var(--hr-resize-color, var(--interactive-accent, var(--text-accent)));
+}
+
+/* Меню действий сверху, снизу и на телефоне (полосой по низу структуры):
+   скругление самой области — общее, как у структуры и поиска. Кнопки
+   внутри скругляются по-своему. */
+.hr-item-menu.hr-menu-col,
+.hr-mobile .hr-item-menu {
+  border-radius: var(--hr-radius, 16px);
+}
+
+/* ----- 8.5.0: строка поиска и кнопка режима ----- */
+/* Поле и кнопка стоят рядом; поле уступает кнопке место. Высота — общая
+   (--hr-search-h), кнопка квадратная и растёт вместе с ней. */
+.hr-host .hr-side .hr-search {
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  position: relative;
+}
+.hr-search-field {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.hr-host .hr-side .hr-search input.hr-search-input,
+.hr-mobile.hr-host .hr-side .hr-search input.hr-search-input {
+  height: var(--hr-search-h, 32px);
+  padding-right: 14px;
+  background-color: var(--hr-panel-bg, var(--background-primary));
+}
+.hr-mobile.hr-host .hr-side .hr-search input.hr-search-input {
+  background-color: var(--hr-panel-bg, var(--background-secondary));
+}
+.hr-host .hr-side .hr-search.has-text input.hr-search-input {
+  padding-right: calc(var(--hr-search-h, 32px) * 0.75);
+}
+.hr-search-clear {
+  right: calc(var(--hr-search-h, 32px) * 0.15);
+}
+.hr-host .hr-side .hr-search .hr-search-mode {
+  position: relative;
+  right: auto;
+  top: auto;
+  transform: none;
+  flex: 0 0 auto;
+  width: var(--hr-sbtn-w, var(--hr-search-h, 32px));
+  height: var(--hr-search-h, 32px);
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: min(var(--hr-radius, 16px), calc(var(--hr-search-h, 32px) / 2));
+  border: 1px solid var(--background-modifier-border);
+  background-color: var(--hr-panel-bg, var(--background-primary));
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+  color: var(--hr-sbtn-fg, var(--hr-panel-text, var(--text-muted)));
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.hr-mobile.hr-host .hr-side .hr-search .hr-search-mode {
+  background-color: var(--hr-panel-bg, var(--background-secondary));
+}
+.hr-host .hr-side .hr-search .hr-search-mode svg {
+  width: calc(var(--hr-search-h, 32px) * 0.5);
+  height: calc(var(--hr-search-h, 32px) * 0.5);
+  opacity: var(--hr-sbtn-op, 0.55);
+  transition: opacity 120ms ease;
+}
+/* фон кнопки не меняется ни при наведении, ни при нажатии — меняется значок */
+.hr-host .hr-side .hr-search .hr-search-mode:hover,
+.hr-host .hr-side .hr-search .hr-search-mode:active {
+  background-color: var(--hr-panel-bg, var(--background-primary));
+}
+.hr-mobile.hr-host .hr-side .hr-search .hr-search-mode:hover,
+.hr-mobile.hr-host .hr-side .hr-search .hr-search-mode:active {
+  background-color: var(--hr-panel-bg, var(--background-secondary));
+}
+.hr-host:not(.hr-mobile) .hr-side .hr-search .hr-search-mode:hover {
+  color: var(--hr-sbtn-fg-hover, var(--hr-panel-active-text, var(--text-normal)));
+}
+.hr-host:not(.hr-mobile) .hr-side .hr-search .hr-search-mode:hover svg {
+  opacity: var(--hr-sbtn-op-hover, 0.85);
+}
+/* нажата — ищем по тексту: обводка и значок ярче */
+.hr-host .hr-side .hr-search .hr-search-mode.is-active {
+  color: var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent)));
+  border-color: var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent)));
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent))) inset, var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+}
+.hr-host .hr-side .hr-search .hr-search-mode.is-active svg {
+  opacity: var(--hr-sbtn-op-on, 1);
+}
+/* кнопка слева */
+.hr-host.hr-sbtn-left .hr-side .hr-search .hr-search-mode { order: -1; }
+
+/* Второй вид: одно скруглённое поле, разделённое прямой полоской */
+.hr-host.hr-sbtn-joined .hr-side .hr-search { gap: 0; }
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode {
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+  border-radius: 0 var(--hr-radius, 16px) var(--hr-radius, 16px) 0;
+  border-left: var(--hr-sdiv-w, 1px) solid var(--background-modifier-border);
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search input.hr-search-input {
+  border-radius: var(--hr-radius, 16px) 0 0 var(--hr-radius, 16px);
+  border-right: none;
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode {
+  border-radius: var(--hr-radius, 16px) 0 0 var(--hr-radius, 16px);
+  border-left: 1px solid var(--background-modifier-border);
+  border-right: var(--hr-sdiv-w, 1px) solid var(--background-modifier-border);
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search input.hr-search-input {
+  border-radius: 0 var(--hr-radius, 16px) var(--hr-radius, 16px) 0;
+  border-left: none;
+  border-right: 1px solid var(--background-modifier-border);
+}
+/* в общем поле нажатая кнопка — без двойной рамки, только значок и разделитель */
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active {
+  border-color: var(--background-modifier-border);
+  border-left-color: var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent)));
+  box-shadow: var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode.is-active {
+  border-left-color: var(--background-modifier-border);
+  border-right-color: var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent)));
+}
+
+/* Телефон: фон структуры, поиска, меню и плавающей кнопки — один и тот же:
+   свой цвет фона структуры (если задан) или тон интерфейса. */
+.hr-mobile .hr-panel,
+.hr-mobile .hr-item-menu {
+  background-color: var(--hr-panel-bg, var(--background-secondary));
+}
+.hr-mobile .hr-float {
+  background-color: var(--hr-float-bg, var(--hr-panel-bg, var(--background-secondary)));
+}
+/* Кнопка структуры при наведении и нажатии не меняет фон — тот же, что у
+   структуры (тема иначе подкрашивала её своим цветом нажатия). */
+.hr-host .hr-float:hover,
+.hr-host .hr-float:active,
+.hr-host .hr-float.is-open {
+  background-color: var(--hr-float-bg, var(--hr-panel-bg, var(--background-primary)));
+}
+.hr-mobile.hr-host .hr-float:hover,
+.hr-mobile.hr-host .hr-float:active,
+.hr-mobile.hr-host .hr-float.is-open {
+  background-color: var(--hr-float-bg, var(--hr-panel-bg, var(--background-secondary)));
+}
+
+/* 8.5.0: точки под плотной заливкой — белые, при светлой заливке тёмно-серые */
+.hr-slide.hr-dots-light .hr-slide-dot.is-under { background: #ffffff; opacity: 0.95; }
+.hr-slide.hr-dots-dark .hr-slide-dot.is-under { background: #3a3a3a; opacity: 0.95; }
+
+/* ----- 8.5.0: окно истории ----- */
+.hr-trash-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.hr-trash-top h3 { margin: 0; }
+.hr-trash-scope { display: inline-flex; gap: 4px; }
+.hr-scope-btn.is-active {
+  border-color: var(--interactive-accent, var(--text-accent));
+  color: var(--text-normal);
+  font-weight: 600;
+}
+/* заголовки со стрелкой: стрелка поворачивается, число — отдельной плашкой */
+.hr-trash-fold {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  user-select: none;
+}
+.hr-trash-arrow {
+  display: inline-flex;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  transition: transform 120ms ease;
+}
+.hr-trash-arrow svg { width: 14px; height: 14px; }
+.hr-trash-fold.is-folded .hr-trash-arrow { transform: rotate(-90deg); }
+.hr-trash-label { min-width: 0; }
+.hr-trash-count {
+  flex: 0 0 auto;
+  margin-left: 2px;
+  padding: 0 7px;
+  min-width: 18px;
+  text-align: center;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 18px;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+  background-color: var(--background-modifier-hover);
+}
+/* блоки по датам и группы по времени — вложенность линиями, как в структуре */
+.hr-trash-block {
+  margin: 10px 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.hr-trash-tgroup, .hr-trash-setgroup {
+  margin: 6px 0 2px;
+  font-size: 12px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.hr-trash-setgroup { font-weight: 600; }
+.hr-trash-tree {
+  margin-left: 6px;
+  padding-left: 12px;
+  border-left: 1px solid var(--background-modifier-border);
+}
+.hr-trash-tree > .hr-trash-row:first-child { border-top: none; }
+.hr-set-clear { margin-left: auto; font-size: 11px; padding: 1px 8px; }
+.hr-set-more { display: flex; gap: 6px; margin: 6px 0 8px; }
+.hr-set-backview { margin-bottom: 8px; }
+.hr-set-change { display: flex; align-items: center; gap: 4px; }
+.hr-set-val { font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; gap: 4px; }
+.hr-set-swatch {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  border: 1px solid var(--background-modifier-border);
+}
+.hr-set-arrow { color: var(--text-faint); }
+/* «назад» у настройки: пока менять нечего — бледная */
+.hr-set-back.is-empty { opacity: 0.35; }
+
+/* ======================= 8.5.1 ======================= */
+
+/* Окно истории: ясная иерархия размеров, линии вложенности с верхнего уровня,
+   переключатель «все / эта» — своей строкой. */
+.hr-trash-modal .hr-trash-title-main { margin: 0 0 8px; }
+.hr-trash-modal .hr-trash-scope {
+  display: flex;
+  gap: 4px;
+  margin: 0 0 10px;
+  flex-wrap: wrap;
+}
+.hr-trash-modal .hr-trash-head {
+  margin: 14px 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-normal);
+}
+.hr-trash-modal .hr-trash-block {
+  margin: 8px 0 2px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+.hr-trash-modal .hr-trash-tgroup {
+  margin: 6px 0 0;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-faint);
+}
+.hr-trash-modal .hr-trash-setgroup {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.hr-trash-modal .hr-trash-tree {
+  margin-left: 6px;
+  padding-left: 14px;
+  border-left: 1px solid var(--background-modifier-border);
+}
+.hr-trash-modal .hr-trash-row {
+  padding: 5px 0;
+  gap: 6px;
+  border-top: none;
+}
+.hr-trash-modal .hr-trash-title { font-size: 13px; }
+.hr-trash-modal .hr-trash-meta { font-size: 11px; color: var(--text-faint); }
+.hr-trash-modal .hr-trash-row .hr-btn {
+  font-size: 11px;
+  padding: 2px 8px;
+  flex: 0 0 auto;
+}
+.hr-trash-modal .hr-trash-hint,
+.hr-trash-modal .hr-trash-empty { font-size: 12px; margin: 4px 0; }
+.hr-trash-modal .hr-trash-count { font-size: 10.5px; line-height: 16px; padding: 0 6px; }
+
+/* Плавающая кнопка: рука «перенести» — только когда уже тянут */
+.hr-float,
+.hr-float-mode .hr-float { cursor: pointer; }
+.hr-float.is-dragging { cursor: grabbing; }
+
+/* Строка поиска и кнопка режима: скругление растёт вместе с высотой, так что
+   при наибольшем скруглении поле и кнопка остаются «таблеткой» и кругом на
+   любой высоте, а не превращаются в скруглённые квадраты. */
+.hr-host .hr-side .hr-search input.hr-search-input,
+.hr-mobile.hr-host .hr-side .hr-search input.hr-search-input {
+  border-radius: var(--hr-search-r, 16px);
+}
+.hr-host .hr-side .hr-search .hr-search-mode {
+  border-radius: var(--hr-search-r, 16px);
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode {
+  border-radius: 0 var(--hr-search-r) var(--hr-search-r) 0;
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search input.hr-search-input {
+  border-radius: var(--hr-search-r) 0 0 var(--hr-search-r);
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode {
+  border-radius: var(--hr-search-r) 0 0 var(--hr-search-r);
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search input.hr-search-input {
+  border-radius: 0 var(--hr-search-r) var(--hr-search-r) 0;
+}
+
+/* Структура ближе к поиску */
+.hr-host .hr-side { gap: 8px; }
+
+/* ======================= 8.5.2 ======================= */
+
+/* Общее поле: включённый поиск по тексту — одна обводка вокруг всей строки
+   (поле, разделитель и кнопка), без обрыва на стыке. */
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode.is-active {
+  border-color: var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent)));
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input {
+  border-right: none;
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent))) inset;
+  clip-path: inset(0 0 0 0);
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search.is-content input.hr-search-input {
+  border-left: none;
+  border-right: 1px solid var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent)));
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode.is-active {
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent))) inset;
+}
+
+/* Полосок «вернуться к текущему разделу» сверху и снизу структуры больше нет */
+.hr-edge { display: none !important; }
+
+/* Стрелка «к текущему разделу» — в правой части строки поиска */
+.hr-host .hr-side .hr-search .hr-back-arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: calc(var(--hr-search-h, 32px) * 0.15);
+  width: calc(var(--hr-search-h, 32px) * 0.7);
+  height: calc(var(--hr-search-h, 32px) * 0.7);
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--hr-back-fg, var(--hr-panel-active-text, var(--text-accent)));
+  opacity: var(--hr-back-op, 0.6);
+  transform: translateY(-50%) scale(1);
+  transition: transform 120ms ease, opacity 120ms ease, color 120ms ease;
+  cursor: pointer;
+  z-index: 1;
+}
+.hr-host .hr-side .hr-search .hr-back-arrow.is-shown { display: inline-flex; }
+.hr-host .hr-side .hr-search .hr-back-arrow svg {
+  width: calc(var(--hr-search-h, 32px) * 0.45);
+  height: calc(var(--hr-search-h, 32px) * 0.45);
+}
+.hr-host .hr-side .hr-search .hr-back-arrow:hover {
+  color: var(--hr-back-fg-hover, var(--hr-back-fg, var(--hr-panel-active-text, var(--text-accent))));
+  opacity: var(--hr-back-op-hover, 1);
+  transform: translateY(-50%) scale(var(--hr-back-scale, 1.15));
+  background: transparent;
+}
+.hr-host .hr-side .hr-search.has-text .hr-back-arrow {
+  right: calc(var(--hr-search-h, 32px) * 0.85);
+}
+.hr-host .hr-side .hr-search-field.has-back input.hr-search-input {
+  padding-right: calc(var(--hr-search-h, 32px) * 0.95);
+}
+.hr-host .hr-side .hr-search.has-text .hr-search-field.has-back input.hr-search-input {
+  padding-right: calc(var(--hr-search-h, 32px) * 1.6);
+}
+
+/* ======================= 8.5.3 ======================= */
+/* Анимации появления: направление (класс хоста) и сила эффекта.
+   --hr-*-d — расстояние выезда, --hr-*-s — масштаб «из центра», их ставит код
+   из настройки силы. Сила, а не время, делает эффект заметным. */
+.hr-host .hr-preview {
+  --hr-pv-x: 0px;
+  --hr-pv-y: 0px;
+  --hr-pv-k0: 1;
+  transform: translateY(-50%) translate(var(--hr-pv-x), var(--hr-pv-y)) scale(var(--hr-pv-k0));
+  transition: opacity var(--hr-pv-ms, 180ms) ease, transform var(--hr-pv-ms, 180ms) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hr-host.hr-pv-side .hr-preview[data-from="right"] { --hr-pv-x: var(--hr-pv-d, 28px); }
+.hr-host.hr-pv-side .hr-preview[data-from="left"] { --hr-pv-x: calc(-1 * var(--hr-pv-d, 28px)); }
+.hr-host.hr-pv-top .hr-preview { --hr-pv-y: calc(-1 * var(--hr-pv-d, 28px)); }
+.hr-host.hr-pv-bottom .hr-preview { --hr-pv-y: var(--hr-pv-d, 28px); }
+.hr-host.hr-pv-center .hr-preview { --hr-pv-k0: var(--hr-pv-s, 0.8); }
+.hr-host .hr-preview.is-shown { transform: translateY(-50%); }
+.hr-host.hr-pv-none .hr-preview,
+.hr-host.hr-pv-none .hr-preview.is-shown { transform: translateY(-50%); transition: none; }
+
+/* Боковая полоска действий */
+@keyframes hr-mn-in {
+  from { opacity: 0; transform: translateY(-50%) translate(var(--hr-mn-x, 0px), var(--hr-mn-y, 0px)) scale(var(--hr-mn-k0, 1)); }
+  to { opacity: 1; transform: translateY(-50%); }
+}
+.hr-host:not(.hr-mn-none) .hr-item-menu.is-shown:not(.hr-menu-col):not(.is-busy) {
+  animation: hr-mn-in var(--hr-mn-ms, 180ms) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hr-host.hr-mn-side .hr-item-menu[data-dir="left"] { --hr-mn-x: var(--hr-mn-d, 24px); }
+.hr-host.hr-mn-side .hr-item-menu[data-dir="right"] { --hr-mn-x: calc(-1 * var(--hr-mn-d, 24px)); }
+.hr-host.hr-mn-top .hr-item-menu { --hr-mn-y: calc(-1 * var(--hr-mn-d, 24px)); }
+.hr-host.hr-mn-bottom .hr-item-menu { --hr-mn-y: var(--hr-mn-d, 24px); }
+.hr-host.hr-mn-center .hr-item-menu { --hr-mn-k0: var(--hr-mn-s, 0.8); }
+
+/* Меню сверху или снизу структуры */
+@keyframes hr-mc-in {
+  from { opacity: 0; transform: translateY(var(--hr-mc-y, 0px)) scale(var(--hr-mc-k0, 1)); }
+  to { opacity: 1; transform: none; }
+}
+.hr-host:not(.hr-mc-none) .hr-item-menu.hr-menu-col.is-shown:not(.is-busy):not(.is-ghost) {
+  animation: hr-mc-in var(--hr-mc-ms, 180ms) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hr-host.hr-mc-top .hr-item-menu.hr-menu-col { --hr-mc-y: calc(-1 * var(--hr-mc-d, 16px)); }
+.hr-host.hr-mc-bottom .hr-item-menu.hr-menu-col { --hr-mc-y: var(--hr-mc-d, 16px); }
+.hr-host.hr-mc-center .hr-item-menu.hr-menu-col { --hr-mc-k0: var(--hr-mc-s, 0.8); }
+
+.hr-mobile.hr-host .hr-item-menu.is-shown { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .hr-host .hr-preview { transition: none !important; }
+  .hr-host .hr-item-menu.is-shown { animation: none !important; }
+}
+
+/* Стрелка «к текущему разделу» — слева в поле поиска */
+.hr-host.hr-back-left .hr-side .hr-search .hr-back-arrow,
+.hr-host.hr-back-left .hr-side .hr-search.has-text .hr-back-arrow {
+  right: auto;
+  left: calc(var(--hr-search-h, 32px) * 0.15);
+}
+.hr-host.hr-back-left .hr-side .hr-search-field.has-back input.hr-search-input,
+.hr-host.hr-back-left .hr-side .hr-search.has-text .hr-search-field.has-back input.hr-search-input {
+  padding-left: calc(var(--hr-search-h, 32px) * 0.95);
+  padding-right: 14px;
+}
+.hr-host.hr-back-left .hr-side .hr-search.has-text .hr-search-field.has-back input.hr-search-input {
+  padding-right: calc(var(--hr-search-h, 32px) * 0.75);
+}
+
+/* ======================= 8.5.5 ======================= */
+/* 8.5.4 здесь стояла изоляция раскладки (contain: layout) у рельса и строк
+   полосок. Она сделала строку точкой отсчёта для полоски: offsetTop всех
+   полосок стал ~0, центры совпали, и волна вытягивала на максимум сразу все
+   полоски. Убрано; центры полосок считаются от столбца, как раньше. */
+
+/* ======================= 8.5.7 ======================= */
+/* Меню действий: появление проигрывается, только когда меню действительно
+   появляется. Меню, которое уже было на экране (перестройка после действия,
+   выделение с Shift/Alt), не анимируется заново — раньше между действиями
+   казалось, что оно пропадает и появляется. */
+.hr-host .hr-item-menu.hr-still { animation: none !important; }
+.hr-host:not(.hr-mobile):not(.hr-mn-none) .hr-item-menu.is-shown:not(.hr-menu-col):not(.is-busy):not(.hr-still) {
+  animation: hr-mn-in var(--hr-mn-ms, 180ms) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hr-host.hr-mobile .hr-item-menu.is-shown:not(.hr-menu-leave) { animation: none; }
+/* меню сверху / снизу и на телефоне (внизу структуры) — анимация «сверху/снизу»,
+   в режиме «авто» — с той стороны, где меню стоит */
+.hr-host:not(.hr-mc-none) .hr-item-menu.hr-menu-col.is-shown:not(.is-busy):not(.is-ghost):not(.hr-still),
+.hr-host.hr-mobile:not(.hr-mc-none) .hr-item-menu.is-shown:not(.is-busy):not(.hr-still):not(.hr-menu-leave) {
+  animation: hr-mc-in var(--hr-mc-ms, 180ms) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hr-host.hr-mc-auto .hr-item-menu[data-mc="top"] { --hr-mc-y: calc(-1 * var(--hr-mc-d, 24px)); }
+.hr-host.hr-mc-auto .hr-item-menu[data-mc="bottom"] { --hr-mc-y: var(--hr-mc-d, 24px); }
+.hr-host.hr-mobile.hr-mc-top .hr-item-menu { --hr-mc-y: calc(-1 * var(--hr-mc-d, 24px)); }
+.hr-host.hr-mobile.hr-mc-bottom .hr-item-menu { --hr-mc-y: var(--hr-mc-d, 24px); }
+.hr-host.hr-mobile.hr-mc-center .hr-item-menu { --hr-mc-k0: var(--hr-mc-s, 0.8); }
+
+/* сворачивание — та же анимация в обратную сторону (на копии-«призраке») */
+.hr-item-menu.hr-menu-leave {
+  pointer-events: none !important;
+  z-index: 40;
+}
+.hr-host:not(.hr-mobile) .hr-item-menu.hr-menu-leave:not(.hr-menu-col) {
+  animation: hr-mn-in var(--hr-mn-ms, 180ms) cubic-bezier(0.64, 0, 0.78, 0) reverse forwards !important;
+}
+.hr-host .hr-item-menu.hr-menu-leave.hr-menu-col,
+.hr-host.hr-mobile .hr-item-menu.hr-menu-leave {
+  animation: hr-mc-in var(--hr-mc-ms, 180ms) cubic-bezier(0.64, 0, 0.78, 0) reverse forwards !important;
+}
+
+/* Уголок размера: невидимая «попадающая» дуга прозрачна ВСЕГДА. Раньше она
+   была прозрачной только пока уголок «рядом»; пока уголок гас, она на долю
+   секунды рисовалась толстой полупрозрачной линией. */
+.hr-resize path.hr-resize-hit,
+.hr-host .hr-resize path.hr-resize-hit {
+  stroke: transparent !important;
+  fill: none !important;
+}
+/* появление уголка и полоски высоты: время и «из центра» */
+.hr-host .hr-resize,
+.hr-host .hr-resize-h {
+  transition: opacity var(--hr-rs-ms, 160ms) ease;
+}
+.hr-host.hr-rs-center .hr-resize svg,
+.hr-host.hr-rs-center .hr-resize-h .hr-resize-h-bar {
+  transform: scale(0.4);
+  transition: transform var(--hr-rs-ms, 160ms) cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hr-host.hr-rs-center.hr-panel-visible .hr-resize.is-near svg,
+.hr-host.hr-rs-center.hr-panel-visible .hr-resize.is-dragging svg,
+.hr-host.hr-rs-center.hr-mobile.hr-panel-visible .hr-resize svg,
+.hr-host.hr-rs-center.hr-panel-visible .hr-resize-h.is-able.is-near .hr-resize-h-bar,
+.hr-host.hr-rs-center.hr-panel-visible .hr-resize-h.is-dragging .hr-resize-h-bar,
+.hr-host.hr-rs-center.hr-mobile.hr-panel-visible .hr-resize-h.is-able .hr-resize-h-bar {
+  transform: scale(1);
+}
+
+/* Плавающая кнопка: свечение из настроек (как у структуры и подсказки) */
+.hr-host .hr-float { box-shadow: var(--hr-float-shadow, 0 4px 16px rgba(0, 0, 0, 0.18)); }
+.hr-host .hr-float.hr-float-noshadow { box-shadow: none; }
+
+/* Свечение структуры — и у строки поиска с кнопкой во всех состояниях
+   (в общем поле при включённом поиске по тексту его теряли) */
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input {
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent))) inset, var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active {
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent))) inset, var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18));
+}
+
+/* Экран настроек: подсветка названий групп — без цвета акцента (он бывает
+   почти белым), а при плохом контрасте акцента — и переключатели своим
+   контрастным цветом. */
+.hr-settings-summary:hover {
+  color: var(--text-normal);
+  background-color: var(--background-modifier-hover);
+  border-radius: 6px;
+}
+.hr-accent-poor .checkbox-container.is-enabled {
+  background-color: var(--text-normal);
+}
+.hr-accent-poor .checkbox-container.is-enabled::after {
+  background-color: var(--background-primary);
+}
+.hr-accent-poor .hr-scope-btn.is-active,
+.hr-accent-poor .hr-settings-tab.is-active {
+  border-color: var(--text-normal);
+  color: var(--text-normal);
+}
+
+/* Поле числа рядом с ползунком: ввод до десятых, колесо — быстро, ▲▼ — по 0,1 */
+.hr-num {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 6px;
+}
+.hr-num-input {
+  width: 58px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  padding: 2px 6px;
+}
+.hr-num-btn {
+  padding: 0 4px;
+  min-width: 18px;
+  height: 14px;
+  font-size: 8px;
+  line-height: 14px;
+  box-shadow: none;
+}
+.hr-num { flex-wrap: nowrap; }
+.hr-num .hr-num-btn:first-of-type { margin-left: 2px; }
+
+/* ======================= 8.5.8 ======================= */
+/* Меню сверху / снизу и на телефоне появляется «раздвиганием» (кодом, через
+   высоту): прежние выезды и рост из центра для него выключены. */
+.hr-host .hr-item-menu.hr-menu-col.is-shown,
+.hr-host.hr-mobile .hr-item-menu.is-shown,
+.hr-host .hr-item-menu.hr-menu-col.hr-menu-leave,
+.hr-host.hr-mobile .hr-item-menu.hr-menu-leave {
+  animation: none !important;
+}
+.hr-host .hr-item-menu.hr-splitting {
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+/* содержимое держится за границу со структурой — едет вместе с ней */
+.hr-host .hr-item-menu.hr-splitting.hr-split-bottom { align-content: flex-start; align-items: flex-start; }
+.hr-host .hr-item-menu.hr-splitting.hr-split-top { align-content: flex-end; align-items: flex-end; }
+.hr-host .hr-item-menu.hr-split-leave { display: flex !important; pointer-events: none !important; }
+
+/* Телефон: меню — внутри окна структуры, в потоке под списком. Растёт —
+   список ужимается в тех же границах, а не лежит под меню. */
+.hr-host.hr-mobile .hr-panel > .hr-item-menu {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  transform: none;
+  flex: 0 0 auto;
+  margin: 0 6px 6px;
+  max-width: none;
+  z-index: auto;
+  box-shadow: none;
+}
+
+/* Свечения структуры, меню и поиска — в одном слое ПОД фоном всех блоков.
+   Раньше каждое свечение рисовалось вместе со своим блоком, и свечение
+   структуры ложилось поверх поиска (поиск снизу казался светлее сверху).
+   Теперь свечения никогда не накладываются на соседние блоки. */
+.hr-host .hr-side .hr-panel,
+.hr-host .hr-side .hr-search input.hr-search-input,
+.hr-host .hr-side .hr-search .hr-search-mode,
+.hr-host .hr-side .hr-item-menu.hr-menu-col,
+.hr-host.hr-mobile .hr-side .hr-panel,
+.hr-host.hr-mobile .hr-side .hr-item-menu {
+  box-shadow: none !important;
+}
+/* обводки нажатого состояния остаются — они внутри блока */
+.hr-host .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input {
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--interactive-accent, var(--text-accent))) inset !important;
+}
+.hr-host .hr-side .hr-search .hr-search-mode { position: relative; }
+.hr-host .hr-side .hr-panel::before,
+.hr-host .hr-side .hr-item-menu.hr-menu-col::before,
+.hr-host .hr-side .hr-search-field::before,
+.hr-host .hr-side .hr-search .hr-search-mode::before,
+.hr-host.hr-sbtn-joined .hr-side .hr-search::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  pointer-events: none;
+  box-shadow: var(--hr-panel-shadow, none);
+}
+.hr-host .hr-side .hr-search-field::before,
+.hr-host .hr-side .hr-search .hr-search-mode::before,
+.hr-host.hr-sbtn-joined .hr-side .hr-search::before {
+  box-shadow: var(--hr-search-shadow, var(--hr-panel-shadow, none));
+}
+.hr-host .hr-side .hr-search-field::before,
+.hr-host.hr-sbtn-joined .hr-side .hr-search::before {
+  border-radius: var(--hr-search-r, 16px);
+}
+/* общее поле — одна форма, значит и свечение одно на всё поле */
+.hr-host.hr-sbtn-joined .hr-side .hr-search-field::before,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode::before,
+.hr-host .hr-side .hr-item-menu.is-ghost::before,
+.hr-host .hr-side .hr-search-mode[hidden]::before {
+  display: none;
+}
+
+/* Уголок и полоска высоты при наведении — цветом текста темы (на тёмной
+   светлые, на светлой почти чёрные), а не акцентом: он бывает белым. */
+.hr-resize:hover path,
+.hr-resize.is-dragging path,
+.hr-resize.hr-resize-hit-hover path:not(.hr-resize-hit),
+.hr-resize:has(.hr-resize-hit:hover) path:not(.hr-resize-hit) {
+  stroke: var(--hr-resize-color, var(--text-normal));
+}
+.hr-resize-h:hover .hr-resize-h-bar,
+.hr-resize-h.is-dragging .hr-resize-h-bar {
+  background-color: var(--hr-resize-color, var(--text-normal));
+}
+
+/* Ползунки настроек: если акцент темы плохо виден на фоне (белое на белом),
+   пройденная часть рисуется цветом текста. --hr-rng-p ставит код. */
+.hr-accent-poor input[type="range"],
+.hr-accent-poor input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--text-normal) 0 var(--hr-rng-p, 0%), var(--background-modifier-border) var(--hr-rng-p, 0%) 100%) !important;
+}
+.hr-accent-poor input[type="range"]::-webkit-slider-thumb {
+  border-color: var(--text-normal);
+}
+
+/* Ползунок внутри раздела: подразделы заливаются вместе с ним — пройденные
+   целиком, текущий на свою долю. Без точек шкалы. */
+.hr-panel-item.is-sub-sliding > .hr-slide .hr-slide-dot { display: none; }
+
+/* ======================= 8.5.9 ======================= */
+/* Единицы размера — обычный выпадающий список рядом с числом */
+.hr-settings-root select.hr-unit {
+  margin-left: 6px;
+  max-width: 150px;
+  font-size: 12px;
+}
+
+/* Экран настроек: если элементы управления не помещаются рядом с текстом,
+   они переносятся под него, а не сжимают описание в узкий столбик */
+.hr-settings-root .setting-item {
+  flex-wrap: wrap;
+  row-gap: 8px;
+}
+.hr-settings-root .setting-item-info {
+  flex: 1 1 260px;
+  min-width: 200px;
+}
+.hr-settings-root .setting-item-control {
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: 6px;
+  max-width: 100%;
+  margin-left: auto;
+}
+.hr-settings-root .setting-item-control input[type="range"] {
+  flex: 1 1 120px;
+  min-width: 100px;
+  max-width: 220px;
+}
+
+/* Переключатели: кружок сливался с корпусом (белое на белом) — берём цвет
+   текста для корпуса и цвет фона для кружка. Включается проверкой по
+   настоящим цветам (hr-toggle-poor). */
+.hr-toggle-poor .checkbox-container.is-enabled {
+  background-color: var(--text-normal) !important;
+}
+.hr-toggle-poor .checkbox-container.is-enabled::after {
+  background-color: var(--background-primary) !important;
+}
+
+/* Стрелка «к текущему разделу»: цветом текста, а не акцентом (он бывает белым) */
+.hr-host .hr-side .hr-search .hr-back-arrow {
+  color: var(--hr-back-fg, var(--hr-panel-active-text, var(--text-normal)));
+}
+.hr-host .hr-side .hr-search .hr-back-arrow:hover {
+  color: var(--hr-back-fg-hover, var(--hr-back-fg, var(--hr-panel-active-text, var(--text-normal))));
+}
+
+/* Размытие того, что под структурой, поиском, меню и подсказкой. Для
+   структуры — на том же нижнем слое, что свечение, поэтому соседние блоки
+   по-прежнему не перекрывают друг друга. */
+.hr-host .hr-side .hr-panel::before,
+.hr-host .hr-side .hr-item-menu.hr-menu-col::before,
+.hr-host .hr-side .hr-search-field::before,
+.hr-host .hr-side .hr-search .hr-search-mode::before,
+.hr-host.hr-sbtn-joined .hr-side .hr-search::before {
+  -webkit-backdrop-filter: var(--hr-panel-blur, none);
+  backdrop-filter: var(--hr-panel-blur, none);
+}
+.hr-host .hr-preview {
+  -webkit-backdrop-filter: var(--hr-preview-blur, none);
+  backdrop-filter: var(--hr-preview-blur, none);
+}
+/* заявленная заранее прозрачность отрезала бы размытие от заметки */
+.hr-host.hr-bg-blur.hr-mobile .hr-side { will-change: transform; }
+
+/* ======================= 8.5.10 ======================= */
+/* Пока идёт поиск, структура короче — уголок и полоска высоты не нужны */
+.hr-host.hr-searching .hr-resize,
+.hr-host.hr-searching .hr-resize-h {
+  display: none !important;
+}
+
+/* Кнопка режима поиска «включена» и общее поле: цвет и обводка — цветом
+   текста темы (акцент бывает белым: на светлой теме кнопка была белой, а
+   обводки не было видно ни на телефоне, ни на компьютере). */
+.hr-host .hr-side .hr-search .hr-search-mode.is-active {
+  color: var(--hr-sbtn-fg-on, var(--text-normal));
+  border-color: var(--hr-sbtn-fg-on, var(--text-normal));
+}
+.hr-host .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input {
+  box-shadow: 0 0 0 1px var(--hr-sbtn-fg-on, var(--text-normal)) inset !important;
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode.is-active {
+  border-color: var(--hr-sbtn-fg-on, var(--text-normal));
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search.is-content input.hr-search-input {
+  border-right-color: var(--hr-sbtn-fg-on, var(--text-normal));
+}
+/* на телефоне «нажатое» состояние касания не красит кнопку */
+.hr-mobile.hr-host .hr-side .hr-search .hr-search-mode:not(.is-active),
+.hr-mobile.hr-host .hr-side .hr-search .hr-search-mode:not(.is-active):hover,
+.hr-mobile.hr-host .hr-side .hr-search .hr-search-mode:not(.is-active):active {
+  color: var(--hr-sbtn-fg, var(--hr-panel-text, var(--text-muted)));
+}
+
+/* Экран настроек на телефоне: перенос строк из 8.5.9 только для компьютера.
+   На телефоне строка идёт столбиком, и «ширина» 260 пкс становилась высотой —
+   квадрат с пустотой посередине. */
+.is-mobile .hr-settings-root .setting-item {
+  row-gap: 0;
+}
+.is-mobile .hr-settings-root .setting-item-info {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.is-mobile .hr-settings-root .setting-item-control {
+  flex: 0 0 auto;
+  margin-left: 0;
+}
+.is-mobile .hr-settings-root .setting-item-control input[type="range"] {
+  flex: 1 1 auto;
+  max-width: none;
+}
+
+/* Почта автора: цветом текста и с подчёркиванием — акцент темы бывает белым */
+.hr-settings-contact a {
+  color: var(--text-normal) !important;
+  text-decoration: underline;
+}
+
+/* «Свернуть раздел» внизу каждого раскрытого раздела */
+.hr-settings-root .hr-group-close {
+  display: block;
+  margin: 6px 0 2px auto;
+  padding: 2px 6px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller, 12px);
+  cursor: pointer;
+}
+.hr-settings-root .hr-group-close:hover { color: var(--text-normal); text-decoration: underline; }
+.hr-settings-root.hr-groups-hover .hr-group-close { display: none; }
+
+/* «Все цвета»: ссылка на раздел, где цвет живёт вместе с прозрачностью */
+.hr-settings-root .hr-colour-go {
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller, 12px);
+  text-decoration: none;
+}
+.hr-settings-root .hr-colour-go:hover { color: var(--text-normal); text-decoration: underline; }
+
+/* переход к настройке — короткая подсветка строки */
+@keyframes hr-set-flash {
+  0%, 30% { background-color: var(--background-modifier-hover); }
+  100% { background-color: transparent; }
+}
+.hr-settings-root .setting-item.hr-set-flash {
+  animation: hr-set-flash 1.6s ease;
+  border-radius: 6px;
+}
+
+/* ======================= 8.5.11 ======================= */
+/* Общее поле поиска — ОДНО целое: одна рамка вокруг всей строки (поле,
+   разделитель, кнопка), одна толщина во всех состояниях, общий цвет рамки
+   при наведении и при включённом поиске по тексту. У частей внутри своих рамок
+   и теней больше нет — раньше они давали рамки разной толщины и «не одно целое». */
+.hr-host.hr-sbtn-joined .hr-side .hr-search {
+  box-sizing: border-box;
+  border: var(--hr-sb-bw, 1px) solid var(--hr-sb-border, color-mix(in srgb, var(--text-normal) 24%, transparent));
+  border-radius: var(--hr-search-r, 16px);
+  background-color: var(--hr-panel-bg, var(--background-primary));
+  transition: border-color 120ms ease;
+  /* 9.17.0 (автор): картинка фона поля выходила углом за скругление рамки — обрезаем по рамке */
+  overflow: clip;
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search:hover,
+.hr-host.hr-sbtn-joined .hr-side .hr-search:focus-within {
+  border-color: var(--hr-sb-border-hover, color-mix(in srgb, var(--text-normal) 45%, transparent));
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content:hover {
+  border-color: var(--hr-sb-border-on, var(--hr-sbtn-fg-on, var(--text-normal)));
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search input.hr-search-input,
+.hr-host.hr-sbtn-joined .hr-side .hr-search input.hr-search-input:focus,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content input.hr-search-input,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode:hover,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode:active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode.is-active,
+.hr-host.hr-sbtn-joined.hr-mobile .hr-side .hr-search .hr-search-mode {
+  border: none !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  clip-path: none !important;
+  height: calc(var(--hr-search-h, 32px) - 2 * var(--hr-sb-bw, 1px));
+}
+/* разделитель — того же цвета, что рамка в текущем состоянии */
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active {
+  border-left: var(--hr-sdiv-w, 1px) solid var(--hr-sb-border, color-mix(in srgb, var(--text-normal) 24%, transparent)) !important;
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search:hover .hr-search-mode,
+.hr-host.hr-sbtn-joined .hr-side .hr-search:focus-within .hr-search-mode {
+  border-left-color: var(--hr-sb-border-hover, color-mix(in srgb, var(--text-normal) 45%, transparent)) !important;
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content .hr-search-mode {
+  border-left-color: var(--hr-sb-border-on, var(--hr-sbtn-fg-on, var(--text-normal))) !important;
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode {
+  border-left: none !important;
+  border-right: var(--hr-sdiv-w, 1px) solid var(--hr-sb-border, color-mix(in srgb, var(--text-normal) 24%, transparent)) !important;
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search:hover .hr-search-mode { border-right-color: var(--hr-sb-border-hover, color-mix(in srgb, var(--text-normal) 45%, transparent)) !important; }
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search.is-content .hr-search-mode { border-right-color: var(--hr-sb-border-on, var(--hr-sbtn-fg-on, var(--text-normal))) !important; }
+/* свечение общего поля — снаружи рамки */
+.hr-host.hr-sbtn-joined .hr-side .hr-search::before { inset: calc(-1 * var(--hr-sb-bw, 1px)); }
+
+/* Значок кнопки режима: по умолчанию цвет текста темы (приглушённо), включён —
+   полным цветом текста. Цвета, выбранные в настройках, по-прежнему главнее. */
+.hr-host .hr-side .hr-search .hr-search-mode {
+  color: var(--hr-sbtn-fg, var(--text-muted));
+}
+.hr-host .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host .hr-side .hr-search .hr-search-mode.is-active:hover {
+  color: var(--hr-sbtn-fg-on, var(--text-normal));
+}
+/* отдельные поле и кнопка: рамка поля видна и на светлой теме */
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search input.hr-search-input,
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search .hr-search-mode:not(.is-active) {
+  border-color: var(--hr-sb-border, color-mix(in srgb, var(--text-normal) 24%, transparent));
+}
+
+/* Ползунки настроек: своя заливка всегда (своя — значит всегда до бегунка) */
+.hr-settings-root input[type="range"],
+.hr-settings-root input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--hr-rng-fill, var(--interactive-accent)) 0 var(--hr-rng-p, 0%), var(--background-modifier-border) var(--hr-rng-p, 0%) 100%) !important;
+}
+.hr-accent-poor input[type="range"] { --hr-rng-fill: var(--text-normal); }
+/* число вписано за пределами ползунка — ползунок ждёт, серый и неактивный */
+.hr-settings-root input[type="range"].hr-rng-out {
+  opacity: 0.35;
+  filter: grayscale(1);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+/* подсказка у поля: «только нечётные», «только целые» */
+.hr-num { position: relative; }
+.hr-num-note {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 2px);
+  white-space: nowrap;
+  font-size: var(--font-ui-smaller, 11px);
+  color: var(--text-muted);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  z-index: 2;
+}
+.hr-num-note.is-shown { opacity: 1; }
+
+/* Телефон: ползунок — справа и чуть ниже текста (ближе к пальцу) */
+.is-mobile .hr-settings-root .setting-item:has(input[type="range"]) {
+  flex-wrap: wrap;
+}
+.is-mobile .hr-settings-root .setting-item:has(input[type="range"]) .setting-item-control {
+  flex: 1 0 100%;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 10px;
+  margin-left: 0;
+}
+.is-mobile .hr-settings-root .setting-item:has(input[type="range"]) .setting-item-control input[type="range"] {
+  flex: 0 1 60%;
+  max-width: 60%;
+}
+
+/* Цвет «по теме» — отдельное, сразу заметное состояние */
+.hr-settings-root .hr-colour-auto input[type="color"] {
+  opacity: 0.45;
+  outline: 1px dashed var(--text-muted);
+  outline-offset: 2px;
+}
+.hr-settings-root .hr-auto-tag {
+  margin-right: 6px;
+  padding: 0 6px;
+  border: 1px dashed var(--text-muted);
+  border-radius: 8px;
+  font-size: var(--font-ui-smaller, 11px);
+  color: var(--text-muted);
+  line-height: 18px;
+}
+
+/* Полоса прокрутки структуры: цвет «при наведении» — только когда курсор на
+   самой полосе (раньше — на всём списке, и цвет «залипал») */
+.hr-olsb-custom .hr-panel-list:hover::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--hr-olsb-color, var(--text-muted)) calc(var(--hr-olsb-rest, 0.25) * 100%), transparent);
+}
+.hr-olsb-custom .hr-panel-list::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--hr-olsb-color, var(--text-muted)) calc(var(--hr-olsb-hover, 0.75) * 100%), transparent);
+}
+
+/* ======================= 8.5.12 ======================= */
+/* Кнопка структуры в одном слое со структурой и поиском: сама кнопка — над
+   ними, её свечение — отдельным слоем под ними. Ничьё свечение не ложится на
+   чужое тело. */
+.hr-host.hr-float-mode .hr-float {
+  z-index: 18;
+  box-shadow: none !important;
+}
+.hr-host .hr-float-glow {
+  position: absolute;
+  z-index: 15;
+  width: var(--hr-float-size, 40px);
+  height: var(--hr-float-size, 40px);
+  border-radius: var(--hr-float-radius, 50%);
+  box-shadow: var(--hr-float-shadow, 0 4px 16px rgba(0, 0, 0, 0.18));
+  opacity: var(--hr-float-op, 1);
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+.hr-host .hr-float:hover + .hr-float-glow { opacity: var(--hr-float-op-hover, 1); }
+.hr-host .hr-float-glow.is-off,
+.hr-host:not(.hr-float-mode) .hr-float-glow { display: none; }
+
+/* Боковая ручка ширины — как полоска высоты, только стоя */
+.hr-host.hr-searching .hr-resize-w { display: none !important; }
+
+/* Прозрачность текстов структуры и подсказки */
+.hr-host .hr-panel-item {
+  color: color-mix(in srgb, var(--hr-panel-text, var(--text-muted)) var(--hr-panel-text-op, 100%), transparent);
+}
+.hr-host .hr-panel-item.hr-lvl-1,
+.hr-host .hr-panel-item:hover,
+.hr-host .hr-panel-item.is-hover {
+  color: color-mix(in srgb, var(--hr-panel-text, var(--text-normal)) var(--hr-panel-text-op, 100%), transparent);
+}
+.hr-host .hr-panel-item.is-active,
+.hr-host .hr-panel-item.is-active:hover {
+  color: color-mix(in srgb, var(--hr-panel-active-text, var(--text-normal)) var(--hr-panel-active-op, 100%), transparent);
+}
+.hr-host .hr-preview .hr-preview-title {
+  color: color-mix(in srgb, var(--hr-preview-title-color, var(--text-normal)) var(--hr-preview-title-op, 100%), transparent);
+}
+.hr-host .hr-preview .hr-preview-body {
+  color: color-mix(in srgb, var(--hr-preview-text-color, var(--text-muted)) var(--hr-preview-text-op, 100%), transparent);
+}
+
+/* Метки: прозрачность текста, значков и обводки — общая (заливка своя) */
+.hr-host .hr-item-tasks {
+  color: color-mix(in srgb, var(--hr-task-text, var(--text-muted)) var(--hr-mark-ink, 100%), transparent);
+  border-color: color-mix(in srgb, var(--hr-task-border, var(--background-modifier-border)) var(--hr-mark-ink, 100%), transparent);
+}
+.hr-host .hr-panel-item .hr-item-bm {
+  color: color-mix(in srgb, var(--hr-bm-color, var(--text-muted)) var(--hr-mark-ink, 100%), transparent);
+  border-color: color-mix(in srgb, var(--background-modifier-border) var(--hr-mark-ink, 100%), transparent);
+}
+/* Метка свёрнутого раздела — всё то же, что у меток задач */
+.hr-host .hr-item-kids {
+  color: color-mix(in srgb, var(--hr-fold-text, var(--text-muted)) var(--hr-mark-ink, 100%), transparent);
+  background-color: color-mix(in srgb, var(--hr-fold-fill, var(--interactive-accent, var(--text-accent))) var(--hr-fold-fill-op, 0%), transparent);
+  border: var(--hr-fold-bw, 1px) solid color-mix(in srgb, var(--hr-fold-border, var(--background-modifier-border)) var(--hr-mark-ink, 100%), transparent);
+}
+
+/* Найденное слово в подсказке: подчёркиванием, если так выбрано */
+.hr-host.hr-flash-ul .hr-preview-mark {
+  background-color: transparent;
+  text-decoration: underline;
+  text-decoration-color: var(--hr-flash-ul);
+  text-decoration-thickness: var(--hr-flash-ul-w, 2px);
+  text-underline-offset: var(--hr-flash-ul-off, 2px);
+  text-decoration-skip-ink: none;
+}
+
+/* ======================= 8.5.13 ======================= */
+/* Текущая полоска «вместе с ореолом»: пока к ней едет метка, она не горит
+   своим цветом — её освещает только сама метка (след) и ореол, как соседей. */
+.hr-row.is-active.hr-wait-halo .hr-bar {
+  background-color: color-mix(
+    in srgb,
+    var(--hr-bar-active, var(--text-normal)) var(--hr-travel-mix, 0%),
+    color-mix(
+      in srgb,
+      var(--hr-wave-color, var(--text-normal)) var(--hr-wave-mix, var(--hr-rest-mix, 0%)),
+      color-mix(
+        in srgb,
+        var(--hr-glow-color, var(--hr-bar-active, var(--text-normal))) calc(var(--hr-glow, 0) * 100%),
+        var(--hr-bar-own, var(--hr-bar-color, var(--text-faint)))
+      )
+    )
+  );
+  height: calc(var(--hr-bar-thickness, 3px) * var(--hr-level-thick, 1) * var(--hr-wave-thick, 1));
+}
+
+/* Подборка эффектов: наложенный эффект заметен */
+.hr-settings-root .setting-item.hr-effect-on .setting-item-name::after {
+  content: ' ✓';
+  color: var(--text-muted);
+}
+
+/* ======================= 8.5.14 ======================= */
+/* Рамка строки поиска — одна переменная «рамка сейчас» с тремя состояниями:
+   покой, наведение (или фокус), поиск по тексту. Раньше в раздельном режиме
+   толщина и состояния не доходили до поля и кнопки, а в общем поле у кнопки
+   при наведении и нажатии пропадал разделитель (правила «без рамки» были
+   сильнее правила разделителя). */
+.hr-host .hr-side .hr-search { --hr-sb-now: var(--hr-sb-border, color-mix(in srgb, var(--text-normal) 24%, transparent)); }
+.hr-host .hr-side .hr-search:hover,
+.hr-host .hr-side .hr-search:focus-within { --hr-sb-now: var(--hr-sb-border-hover, color-mix(in srgb, var(--text-normal) 45%, transparent)); }
+.hr-host .hr-side .hr-search.is-content,
+.hr-host .hr-side .hr-search.is-content:hover,
+.hr-host .hr-side .hr-search.is-content:focus-within { --hr-sb-now: var(--hr-sb-border-on, var(--text-normal)) !important; }
+
+/* общее поле: одна рамка вокруг всего и разделитель её цвета во всех состояниях */
+.hr-host.hr-sbtn-joined .hr-side .hr-search,
+.hr-host.hr-sbtn-joined .hr-side .hr-search:hover,
+.hr-host.hr-sbtn-joined .hr-side .hr-search:focus-within,
+.hr-host.hr-sbtn-joined .hr-side .hr-search.is-content {
+  border: var(--hr-sb-bw, 1px) solid var(--hr-sb-now) !important;
+}
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode:hover,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode:active,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode:focus,
+.hr-host.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active {
+  border-top: none !important;
+  border-bottom: none !important;
+  border-right: none !important;
+  border-left: var(--hr-sdiv-w, 1px) solid var(--hr-sb-now) !important;
+}
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode:hover,
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode:active,
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode:focus,
+.hr-host.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode.is-active {
+  border-left: none !important;
+  border-right: var(--hr-sdiv-w, 1px) solid var(--hr-sb-now) !important;
+}
+
+/* раздельные поле и кнопка: у каждого своя рамка с той же толщиной и своими
+   состояниями (наведение — на нём самом; поиск по тексту — у обоих) */
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search input.hr-search-input,
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search .hr-search-mode {
+  border: var(--hr-sb-bw, 1px) solid var(--hr-sb-border, color-mix(in srgb, var(--text-normal) 24%, transparent)) !important;
+  box-shadow: none !important;
+}
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search input.hr-search-input:hover,
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search input.hr-search-input:focus,
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search .hr-search-mode:hover {
+  border-color: var(--hr-sb-border-hover, color-mix(in srgb, var(--text-normal) 45%, transparent)) !important;
+}
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search.is-content input.hr-search-input,
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search .hr-search-mode.is-active,
+.hr-host:not(.hr-sbtn-joined) .hr-side .hr-search .hr-search-mode.is-active:hover {
+  border-color: var(--hr-sb-border-on, var(--text-normal)) !important;
+}
+
+/* Боковая ручка на телефоне: палец попадает шире, жест системы не мешает */
+.hr-mobile .hr-resize-w::before { inset: -8px -18px; }
+.hr-host .hr-resize-w { touch-action: none; }
+
+/* Выбор раздела стрелками (режим «подсказка»): отметка на полоске */
+.hr-row.hr-kb-pick .hr-bar {
+  outline: 1px solid color-mix(in srgb, var(--text-normal) 55%, transparent);
+  outline-offset: 2px;
+}
+
+/* ======================= 8.5.16 ======================= */
+/* Метки у пунктов прижаты к правому краю. Пустое место столбца меток задач
+   (оно держит ширину, чтобы числа слов стояли ровно) встаёт СРАЗУ ПОСЛЕ
+   текста — поэтому закрепление и свёрнутое, когда других меток у пункта нет,
+   уезжают вправо, к числу слов, а не стоят перед пустым местом. */
+.hr-panel-item > .hr-item-tasks.is-slot { order: 1; }
+.hr-panel-item > .hr-item-bm,
+.hr-panel-item > .hr-item-kids { order: 2; }
+.hr-panel-item > .hr-item-tasks:not(.is-slot) { order: 3; }
+.hr-panel-item > .hr-item-count { order: 4; }
+
+/* Обводка значка закрепления: свой цвет и толщина, как у остальных меток */
+.hr-host .hr-panel-item .hr-item-bm {
+  border: var(--hr-bm-bw, 1px) solid color-mix(in srgb, var(--hr-bm-border, var(--background-modifier-border)) var(--hr-mark-ink, 100%), transparent);
+}
+/* «открепить» — красная обводка главнее своей */
+.hr-host .hr-panel-item .hr-item-bm.is-armed {
+  border-color: var(--text-error, #c0392b);
+}
+
+/* «Сообщить об ошибке»: абзац от автора под описанием */
+.hr-bug-note {
+  margin-top: 6px;
+}
+
+/* ======================= 8.5.17 ======================= */
+/* Кнопка структуры в шапке, когда структура открыта: цвет акцента, фон — как у
+   нажатой кнопки темы. Не is-active: на телефоне у Obsidian для него белый
+   значок, и в светлой теме выходило белое на белом. */
+.hr-action-btn.hr-on,
+.hr-action-btn.hr-on:hover,
+.is-mobile .hr-action-btn.hr-on,
+.is-mobile .view-action.hr-action-btn.hr-on {
+  color: var(--text-accent) !important;
+  background-color: var(--background-modifier-hover);
+}
+.hr-action-btn.hr-on svg,
+.is-mobile .hr-action-btn.hr-on svg {
+  color: var(--text-accent) !important;
+  stroke: currentColor;
+}
+.is-mobile .hr-action-btn:active {
+  color: var(--text-accent) !important;
+}
+
+/* ======================= 8.5.20 ======================= */
+/* Плавающая кнопка, пока её структура открыта, не блёкнет: работаешь в
+   структуре — курсор не на кнопке, и она уходила в «покой» (почти прозрачная). */
+.hr-host .hr-float.is-open { opacity: var(--hr-float-op-hover, 1); }
+.hr-host .hr-float.is-open + .hr-float-glow { opacity: var(--hr-float-op-hover, 1); }
+/* Мигающий курсор в поле поиска — всегда виден, цветом текста темы */
+.hr-host .hr-side .hr-search input.hr-search-input {
+  caret-color: var(--caret-color, var(--text-normal));
+}
+.hr-mobile.hr-host .hr-side .hr-search-field::before {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+/* Поиск снизу: найденное прижато к низу окна, к полю поиска */
+.hr-host.hr-searching .hr-side.hr-search-bottom .hr-panel > .hr-bm-list.is-shown,
+.hr-host.hr-searching .hr-side.hr-search-bottom .hr-panel > .hr-bm-list:not(.is-shown) + .hr-panel-list {
+  margin-top: auto;
+}
+/* Телефон: подсказка по ширине экрана, содержимое масштабируется целиком */
+.hr-mobile .hr-preview.hr-pv-fit {
+  max-width: none;
+  padding: calc(12px * var(--hr-pv-k, 1)) calc(14px * var(--hr-pv-k, 1));
+  border-radius: calc(var(--hr-preview-radius, 12px) * var(--hr-pv-k, 1));
+}
+.hr-mobile .hr-preview.hr-pv-fit > * {
+  zoom: var(--hr-pv-k, 1);
+}
+
+/* ----- 8.5.20: указатель уровня в подсказке ----- */
+/* нижний край указателя — на одной строке с названием */
+.hr-preview-head { align-items: baseline; }
+.hr-preview-level {
+  --hr-lvl-c: var(--hr-lvl-color, var(--hr-preview-title-color, var(--text-normal)));
+  position: relative;
+  padding: var(--hr-lvl-pad, 4px) calc(var(--hr-lvl-pad, 4px) * 1.6);
+  padding-top: var(--hr-lvl-pad, 4px);
+  border-radius: var(--hr-lvl-radius, 6px);
+  /* заливка-кнопка: контрастный к фону цвет, очень слабо */
+  background-color: color-mix(in srgb, var(--hr-lvl-bg, var(--hr-lvl-c)) calc(var(--hr-lvl-bg-op, 0.08) * 100%), transparent);
+  color: color-mix(in srgb, var(--hr-lvl-c) calc(var(--hr-lvl-op, 0.55) * 100%), transparent);
+  opacity: 1;
+  line-height: 1;
+}
+.hr-preview-level.hr-lvl-h {
+  font-size: calc(var(--hr-lvl-size, 11px) * var(--hr-pk, 1) * var(--hr-lvl-k, 1));
+}
+/* точки: первая справа и дальше влево — или слева направо с запасом под все шесть */
+.hr-lvl-dotrow {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: var(--hr-dot-gap, 4px);
+}
+.hr-dots-ltr > .hr-lvl-dotrow,
+.hr-lvl-dotrow.hr-dots-ltr { flex-direction: row; }
+.hr-lvl-dot {
+  width: var(--hr-dot-size, 6px);
+  height: var(--hr-dot-size, 6px);
+  border-radius: 50%;
+  background-color: var(--hr-lvl-c);
+  /* неактивные — тем же цветом, что активные, но слабо: над заливкой они
+     чуть темнее в светлой теме и чуть светлее в тёмной */
+  opacity: var(--hr-dot-off-op, 0.25);
+  box-sizing: border-box;
+  flex: 0 0 auto;
+}
+.hr-lvl-dot.is-on { opacity: var(--hr-lvl-op, 1); }
+.hr-dots-hide-off .hr-lvl-dot:not(.is-on) { visibility: hidden; }
+/* ПК: указатель — кнопка */
+.hr-host .hr-preview.hr-pv-keep.is-shown { pointer-events: auto; }
+.hr-lvl-btn { cursor: pointer; transition: background-color 120ms ease; }
+.hr-lvl-btn:hover {
+  background-color: color-mix(in srgb, var(--hr-lvl-bg, var(--hr-lvl-c)) calc(min(1, var(--hr-lvl-bg-op, 0.08) * 2 + 0.06) * 100%), transparent);
+}
+/* долгое наведение на точки: все шесть — обводкой, до точки под курсором — залиты */
+.hr-lvl-dots.is-edit .hr-lvl-dot {
+  visibility: visible;
+  opacity: 1;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 max(1px, calc(var(--hr-dot-size, 6px) * 0.2)) var(--hr-lvl-c);
+}
+.hr-lvl-dots.is-edit .hr-lvl-dot.is-pick { background-color: var(--hr-lvl-c); }
+/* выпадающее меню уровня */
+.hr-lvl-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding-top: 4px;   /* мостик: курсор идёт в меню, не покидая указатель */
+  z-index: 20;
+  font-size: var(--hr-lvl-size, 11px);
+}
+.hr-lvl-menu-in {
+  display: flex;
+  gap: 2px;
+  padding: 4px;
+  background-color: var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary)));
+  border: 1px solid var(--background-modifier-border);
+  border-radius: calc(var(--hr-lvl-radius, 6px) + 2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+.hr-lvl-menu.is-col .hr-lvl-menu-in { flex-direction: column; }
+.hr-lvl-opt {
+  padding: 4px 7px;
+  border-radius: var(--hr-lvl-radius, 6px);
+  color: var(--hr-lvl-c);
+  white-space: nowrap;
+  font-weight: 600;
+  cursor: pointer;
+}
+.hr-lvl-opt:hover { background-color: var(--background-modifier-hover); }
+.hr-lvl-opt.is-current { color: var(--interactive-accent, var(--text-accent)); }
+.hr-lvl-opt.is-current .hr-lvl-dot { background-color: var(--interactive-accent, var(--text-accent)); }
+.hr-lvl-opt .hr-lvl-dot { opacity: 0.3; }
+.hr-lvl-opt .hr-lvl-dot.is-on { opacity: 1; }
+
+/* ======================= 8.5.21 ======================= */
+/* Точки уровня: ровно круглые, по центру заливки (не на строке текста) */
+.hr-preview-level.hr-lvl-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+  align-self: center;
+}
+.hr-lvl-dots > .hr-lvl-dotrow { display: flex; }
+.hr-lvl-dot {
+  display: block;
+  flex: none;
+  min-width: var(--hr-dot-size, 6px);
+  min-height: var(--hr-dot-size, 6px);
+  max-height: var(--hr-dot-size, 6px);
+  aspect-ratio: 1 / 1;
+}
+/* столбиком: H1 сверху … H6 снизу; указатель прижат к верху карточки справа */
+.hr-lvl-dots.hr-dots-down > .hr-lvl-dotrow { flex-direction: column; }
+.hr-preview-level.hr-lvl-dots.hr-dots-down { align-self: flex-start; }
+/* указатель слева от названия */
+.hr-preview-head.hr-lvl-left { flex-direction: row-reverse; }
+.hr-preview-head.hr-lvl-left .hr-preview-level { margin-left: 0; margin-right: auto; }
+.hr-preview-head.hr-lvl-left .hr-lvl-menu { right: auto; left: 0; }
+/* Телефон, «по ширине экрана»: без запаса под волну — ближе к полоскам */
+.hr-mobile .hr-preview.hr-pv-fit {
+  right: calc(var(--hr-rail-off, 0px) + var(--hr-rail-w, 56px) + var(--hr-preview-gap, 12px));
+}
+.hr-mobile.hr-left .hr-preview.hr-pv-fit {
+  right: auto;
+  left: calc(var(--hr-rail-off, 0px) + var(--hr-rail-w, 56px) + var(--hr-preview-gap, 12px));
+}
+
+/* ======================= 8.5.22 ======================= */
+/* Вертикальные точки уровня — отдельный элемент подсказки: сбоку карточки, по
+   центру её высоты. С текстом не взаимодействуют: у карточки с их стороны
+   просто оставлено место, текст идёт своим порядком сверху. */
+.hr-preview.hr-pv-vlvl {
+  --hr-vcol-w: calc(var(--hr-dot-size, 6px) + var(--hr-lvl-pad, 4px) * 2);
+  --hr-vcol-h: calc(var(--hr-dot-size, 6px) * 6 + var(--hr-dot-gap, 4px) * 5 + var(--hr-lvl-pad, 4px) * 2);
+  padding-right: calc(24px * var(--hr-pk, 1) + var(--hr-vcol-w));
+  min-height: calc(var(--hr-vcol-h) + 24px * var(--hr-pk, 1));
+}
+.hr-preview.hr-pv-vlvl.hr-pv-vlvl-left {
+  padding-right: calc(14px * var(--hr-pk, 1));
+  padding-left: calc(24px * var(--hr-pk, 1) + var(--hr-vcol-w));
+}
+.hr-preview > .hr-preview-level.hr-dots-vert {
+  position: absolute;
+  top: 50%;
+  right: calc(12px * var(--hr-pk, 1));
+  left: auto;
+  margin: 0;
+  transform: translateY(-50%);
+  padding: var(--hr-lvl-pad, 4px);
+  align-self: auto;
+}
+.hr-preview.hr-pv-vlvl-left > .hr-preview-level.hr-dots-vert {
+  right: auto;
+  left: calc(12px * var(--hr-pk, 1));
+}
+.hr-dots-vert > .hr-lvl-dotrow,
+.hr-lvl-dotrow.hr-dots-vert { flex-direction: column; }
+/* телефон «по ширине экрана»: всё внутри масштабируется — место под точки тоже */
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl {
+  padding-right: calc((24px + var(--hr-vcol-w)) * var(--hr-pv-k, 1));
+  min-height: calc((var(--hr-vcol-h) + 24px) * var(--hr-pv-k, 1));
+}
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl.hr-pv-vlvl-left {
+  padding-right: calc(14px * var(--hr-pv-k, 1));
+  padding-left: calc((24px + var(--hr-vcol-w)) * var(--hr-pv-k, 1));
+}
+.hr-mobile .hr-preview.hr-pv-fit > .hr-preview-level.hr-dots-vert { right: 12px; }
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl-left > .hr-preview-level.hr-dots-vert { right: auto; left: 12px; }
+
+/* При наведении (ПК): свои цвет и яркость указателя, неактивных точек и заливки.
+   Пусто — как в покое. */
+.hr-host .hr-lvl-btn:hover {
+  --hr-lvl-c: var(--hr-lvl-color-h, var(--hr-lvl-color, var(--hr-preview-title-color, var(--text-normal))));
+  --hr-lvl-op: var(--hr-lvl-op-h, 1);
+  --hr-dot-off-op: var(--hr-dot-off-op-h, 0.4);
+  background-color: color-mix(in srgb, var(--hr-lvl-bg-h, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-lvl-bg-op-h, 0.22) * 100%), transparent);
+}
+/* точки: без обводки — точка под курсором просто чуть больше; своя (текущая) — нет */
+.hr-host .hr-lvl-pick > .hr-lvl-dotrow > .hr-lvl-dot {
+  position: relative;
+  transition: transform 110ms ease, opacity 110ms ease;
+  cursor: pointer;
+}
+.hr-host .hr-lvl-pick > .hr-lvl-dotrow > .hr-lvl-dot::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--hr-dot-gap, 4px) / -2 - 1px);
+}
+.hr-host .hr-lvl-pick > .hr-lvl-dotrow > .hr-lvl-dot:hover:not(.is-cur) { transform: scale(1.4); }
+.hr-host .hr-lvl-pick > .hr-lvl-dotrow > .hr-lvl-dot.is-cur { cursor: default; }
+/* неактивные спрятаны — при наведении на указатель видны (иначе их не нажать) */
+.hr-host .hr-lvl-btn.hr-dots-hide-off:hover .hr-lvl-dot:not(.is-on) { visibility: visible; }
+.hr-host .hr-lvl-dots.is-edit .hr-lvl-dot { box-shadow: none; }
+
+/* меню уровня: текущий — приглушён и не нажимается (цветом не выделяется) */
+.hr-host .hr-lvl-opt.is-current,
+.hr-host .hr-lvl-opt.is-current:hover {
+  color: var(--hr-lvl-c);
+  opacity: 0.35;
+  background-color: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+.hr-host .hr-lvl-opt.is-current .hr-lvl-dot { background-color: var(--hr-lvl-c); }
+/* у вертикальных точек меню — сбоку, варианты в строку */
+.hr-lvl-dots.hr-dots-vert .hr-lvl-menu.is-side {
+  top: 50%;
+  right: 100%;
+  left: auto;
+  transform: translateY(-50%);
+  padding-top: 0;
+  padding-right: 6px;
+}
+.hr-pv-vlvl-left .hr-lvl-dots.hr-dots-vert .hr-lvl-menu.is-side {
+  right: auto;
+  left: 100%;
+  padding-right: 0;
+  padding-left: 6px;
+}
+.hr-lvl-menu.is-side .hr-lvl-menu-in { flex-direction: row; }
+
+/* ======================= 8.5.23 ======================= */
+/* Точки уровня: яркость — смешением цвета, а не прозрачностью, чтобы номер
+   внутри точки (ниже) не блёк вместе с ней. На вид — как раньше. */
+.hr-preview-level > .hr-lvl-dotrow > .hr-lvl-dot {
+  opacity: 1;
+  background-color: color-mix(in srgb, var(--hr-lvl-c) calc(var(--hr-dot-off-op, 0.25) * 100%), transparent);
+}
+.hr-preview-level > .hr-lvl-dotrow > .hr-lvl-dot.is-on {
+  background-color: color-mix(in srgb, var(--hr-lvl-c) calc(var(--hr-lvl-op, 1) * 100%), transparent);
+}
+/* Номер уровня в точках (ПК): при наведении на точки — в каждой её номер 1…6,
+   контрастным цветом: в яркой — цветом фона карточки, в бледной — цветом точек */
+.hr-host .hr-dot-nums > .hr-lvl-dotrow > .hr-lvl-dot { position: relative; }
+.hr-host .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot::before {
+  content: attr(data-n);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-interface);
+  font-size: var(--hr-dotnum-size, calc(var(--hr-dot-size, 6px) * 0.72));
+  font-weight: var(--hr-dotnum-w, 700);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--hr-lvl-c);
+  pointer-events: none;
+  animation: hr-dotnum-in var(--hr-dotnum-ms, 140ms) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hr-host .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot.is-on::before {
+  color: var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary)));
+}
+.hr-host.hr-dotnum-still .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot::before { animation: none; }
+@keyframes hr-dotnum-in {
+  from { opacity: 0; transform: scale(var(--hr-dotnum-s0, 0.55)); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* «И то и другое»: буква и точки одним указателем */
+.hr-preview-level.hr-lvl-both {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--hr-lvl-pad, 4px) + 2px);
+  line-height: 1;
+}
+.hr-preview-level.hr-lvl-both.hr-both-hright { flex-direction: row-reverse; }
+.hr-lvl-both > .hr-lvl-text {
+  font-size: calc(var(--hr-lvl-size, 11px) * var(--hr-pk, 1) * var(--hr-lvl-k, 1));
+  font-weight: var(--hr-lvl-weight, 600);
+  color: color-mix(in srgb, var(--hr-lvl-c) calc(var(--hr-lvl-op, 0.55) * 100%), transparent);
+  line-height: 1;
+}
+/* вертикально: буква внизу слева от столбика (как «⅃»); у левой стороны — справа */
+.hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert { display: flex; }
+.hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  position: absolute;
+  right: calc(100% + 2px);
+  bottom: var(--hr-lvl-pad, 4px);
+  white-space: nowrap;
+}
+.hr-preview.hr-pv-vlvl-left > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  right: auto;
+  left: calc(100% + 2px);
+}
+/* место под букву у карточки — с той же стороны, что и точки */
+.hr-preview.hr-pv-vlvl.hr-pv-vboth {
+  padding-right: calc(28px * var(--hr-pk, 1) + var(--hr-vcol-w) + var(--hr-lvl-size, 11px) * 1.7);
+}
+.hr-preview.hr-pv-vlvl.hr-pv-vboth.hr-pv-vlvl-left {
+  padding-right: calc(14px * var(--hr-pk, 1));
+  padding-left: calc(28px * var(--hr-pk, 1) + var(--hr-vcol-w) + var(--hr-lvl-size, 11px) * 1.7);
+}
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl.hr-pv-vboth {
+  padding-right: calc((28px + var(--hr-vcol-w) + var(--hr-lvl-size, 11px) * 1.7) * var(--hr-pv-k, 1));
+}
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl.hr-pv-vboth.hr-pv-vlvl-left {
+  padding-right: calc(14px * var(--hr-pv-k, 1));
+  padding-left: calc((28px + var(--hr-vcol-w) + var(--hr-lvl-size, 11px) * 1.7) * var(--hr-pv-k, 1));
+}
+
+/* Указатель внизу карточки: справа снизу или слева снизу, в строке с числом слов */
+.hr-preview-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(10px * var(--hr-pk, 1));
+  margin-top: calc(8px * var(--hr-pk, 1));
+}
+.hr-preview-foot > .hr-preview-meta { margin-top: 0; }
+.hr-preview-foot > .hr-preview-level { margin-left: auto; padding-top: var(--hr-lvl-pad, 4px); }
+.hr-preview-foot.hr-foot-left { flex-direction: row-reverse; }
+.hr-preview-foot.hr-foot-left > .hr-preview-level { margin-left: 0; margin-right: auto; }
+.hr-preview-foot .hr-lvl-menu { top: auto; bottom: 100%; padding-top: 0; padding-bottom: 4px; }
+.hr-preview-foot.hr-foot-left .hr-lvl-menu { right: auto; left: 0; }
+
+/* ======================= 8.6.0 ======================= */
+/* Номер уровня в точках: свой цвет и прозрачность; «Авто» — контраст к точке */
+.hr-host .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot::before {
+  color: color-mix(in srgb, var(--hr-dotnum-off-c, var(--hr-lvl-c)) var(--hr-dotnum-op, 100%), transparent);
+}
+.hr-host.hr-dotnum-off-dark .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot::before {
+  color: color-mix(in srgb, var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary))) var(--hr-dotnum-op, 100%), transparent);
+}
+.hr-host .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot.is-on::before {
+  color: color-mix(in srgb, var(--hr-dotnum-c, var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary)))) var(--hr-dotnum-op, 100%), transparent);
+}
+
+/* Подсказка закреплённого пункта — в обводке (чтобы не путать с обычной) */
+.hr-host .hr-preview.hr-pv-pin {
+  outline: var(--hr-pvpin-w, 1.5px) solid color-mix(in srgb, var(--hr-pvpin-c, var(--interactive-accent, var(--text-accent))) var(--hr-pvpin-op, 70%), transparent);
+  outline-offset: 0;
+}
+
+/* Закреплённые: без красной обводки; кнопка открепления — справа рядом */
+.hr-host .hr-bm-chip.is-armed,
+.hr-host .hr-item-bm.is-armed {
+  box-shadow: none;
+}
+.hr-host .hr-bm-chip.is-armed { border-color: var(--interactive-accent, var(--text-accent)); }
+.hr-host .hr-panel-item .hr-item-bm.is-armed {
+  border-color: color-mix(in srgb, var(--hr-bm-border, var(--background-modifier-border)) var(--hr-mark-ink, 100%), transparent);
+}
+.hr-host .hr-pin-trash {
+  align-items: center;
+  justify-content: center;
+  margin-left: 2px;
+  padding: 1px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.hr-host .hr-pin-trash:hover {
+  color: var(--text-error, #c0392b);
+  background-color: var(--background-modifier-hover);
+}
+
+/* Полоска ширины у структуры рядом с полосками (ПК) */
+.hr-dock-w {
+  position: absolute;
+  top: 50%;
+  display: none;
+  width: var(--hr-dockw-th, 3px);
+  height: var(--hr-dockw-len, 46px);
+  transform: translateY(-50%);
+  cursor: ew-resize;
+  z-index: 3;
+  opacity: 0.35;
+  transition: opacity 140ms ease;
+  touch-action: none;
+}
+.hr-dock-w::before { content: ''; position: absolute; inset: -10px -8px; }
+.hr-dock-w-bar {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background-color: var(--hr-resize-color, var(--text-muted));
+}
+.hr-host:not(.hr-float-mode):not(.hr-mobile).hr-panel-visible .hr-side .hr-dock-w { display: block; }
+.hr-host:not(.hr-searching) .hr-side:hover .hr-dock-w { opacity: 0.7; }
+.hr-dock-w:hover, .hr-dock-w.is-dragging { opacity: 1 !important; }
+.hr-side.hr-dockw-left > .hr-dock-w { left: calc(-1 * (var(--hr-dockw-th, 3px) + var(--hr-dockw-gap, 6px))); }
+.hr-side.hr-dockw-right > .hr-dock-w { right: calc(-1 * (var(--hr-dockw-th, 3px) + var(--hr-dockw-gap, 6px))); }
+
+/* Окно истории: выбранная область («Все заметки» / «Эта заметка») видна сразу */
+.hr-trash-modal .hr-trash-scope .hr-scope-btn {
+  color: var(--text-muted);
+  background-color: transparent;
+  border: 1px solid var(--background-modifier-border);
+  box-shadow: none;
+}
+.hr-trash-modal .hr-trash-scope .hr-scope-btn.is-active {
+  color: var(--text-normal);
+  font-weight: 600;
+  background-color: color-mix(in srgb, var(--text-normal) 14%, transparent);
+  border-color: color-mix(in srgb, var(--text-normal) 55%, transparent);
+}
+
+/* Настройки: разделители блоков — что к чему относится */
+.hr-settings-root .setting-item + .setting-item {
+  border-top: 1px solid var(--background-modifier-border);
+}
+.hr-settings-root .setting-item.hr-set-div-top {
+  border-top: none;
+  margin-top: 10px;
+}
+.hr-set-divider {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  padding-top: 8px;
+  border-top: 2px solid color-mix(in srgb, var(--text-normal) 22%, transparent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ======================= 8.7.0 ======================= */
+/* Номер в точке — ровно по центру: без «воздуха» над и под цифрой */
+.hr-host .hr-dot-nums > .hr-lvl-dotrow:hover > .hr-lvl-dot::before {
+  line-height: 1;
+  letter-spacing: 0;
+  text-indent: 0;
+  text-align: center;
+  text-box: trim-both cap alphabetic;
+}
+/* где text-box не поддерживается — цифры шрифта интерфейса и так почти по центру при line-height 1 */
+.hr-host .hr-dot-nums > .hr-lvl-dotrow > .hr-lvl-dot { display: grid; place-items: center; }
+
+/* «Буква и точки», горизонтально: две подложки с промежутком между ними */
+.hr-host .hr-preview-level.hr-lvl-both.hr-both-split,
+.hr-host .hr-lvl-btn.hr-lvl-both.hr-both-split:hover {
+  background-color: transparent;
+  padding: 0;
+  gap: var(--hr-both-gap, 6px);
+}
+.hr-host .hr-lvl-both.hr-both-split > .hr-lvl-text,
+.hr-host .hr-lvl-both.hr-both-split > .hr-lvl-dotrow {
+  padding: var(--hr-lvl-pad, 4px) calc(var(--hr-lvl-pad, 4px) * 1.6);
+  border-radius: var(--hr-lvl-radius, 6px);
+  background-color: color-mix(in srgb, var(--hr-lvl-bg, var(--hr-lvl-c)) calc(var(--hr-lvl-bg-op, 0.08) * 100%), transparent);
+}
+.hr-host .hr-lvl-btn.hr-lvl-both.hr-both-split:hover > .hr-lvl-text,
+.hr-host .hr-lvl-btn.hr-lvl-both.hr-both-split:hover > .hr-lvl-dotrow {
+  background-color: color-mix(in srgb, var(--hr-lvl-bg-h, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-lvl-bg-op-h, 0.22) * 100%), transparent);
+}
+/* «Буква и точки», вертикально: букву можно сдвинуть вправо-влево и вверх-вниз */
+.hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  translate: var(--hr-both-vx, 0px) var(--hr-both-vy, 0px);
+}
+
+/* Настройки: заметка автора об идеях — заметно */
+.hr-idea-note {
+  margin-top: 10px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--interactive-accent, var(--text-accent));
+  border-radius: 4px;
+  background-color: color-mix(in srgb, var(--interactive-accent, var(--text-accent)) 9%, transparent);
+  color: var(--text-normal);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* ======================= 8.8.0 ======================= */
+/* Телефон, полоски слева: строки с задачами — от полосок, чтобы чекбоксы
+   не лежали под ними. Сдвигается строка целиком (margin: отступы списков
+   Obsidian задаёт своим padding прямо в строке — его не трогаем). */
+.hr-host.hr-task-shift .markdown-source-view .cm-line.HyperMD-task-line {
+  margin-left: var(--hr-task-shift, 0px);
+}
+/* чтение: список с задачами целиком (вложенные уже внутри — второй раз не сдвигаются) */
+.hr-host.hr-task-shift .markdown-rendered ul.contains-task-list:not(li ul),
+.hr-host.hr-task-shift .markdown-rendered ol.contains-task-list:not(li ol) {
+  margin-left: var(--hr-task-shift, 0px);
+}
+
+/* ======================= 8.9.0 ======================= */
+/* Буква у вертикальных точек («⅃») — своя подложка, как у самих точек */
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  padding: var(--hr-lvl-pad, 4px) calc(var(--hr-lvl-pad, 4px) * 1.4);
+  border-radius: var(--hr-lvl-radius, 6px);
+  background-color: color-mix(in srgb, var(--hr-lvl-bg, var(--hr-lvl-c)) calc(var(--hr-lvl-bg-op, 0.08) * 100%), transparent);
+}
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-btn.hr-lvl-both.hr-dots-vert:hover > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text:hover {
+  background-color: color-mix(in srgb, var(--hr-lvl-bg-h, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-lvl-bg-op-h, 0.22) * 100%), transparent);
+}
+/* меню у буквы — под ней, к её краю; невидимый мостик — чтобы курсор дошёл до меню */
+.hr-lvl-text > .hr-lvl-menu {
+  top: 100%;
+  right: 0;
+  left: auto;
+  padding-top: 6px;
+  font-size: var(--hr-lvl-size, 11px);
+}
+.hr-pv-vlvl-left .hr-lvl-text > .hr-lvl-menu { right: auto; left: 0; }
+.hr-preview-level .hr-lvl-menu::before {
+  content: '';
+  position: absolute;
+  inset: -10px -10px auto -10px;
+  height: 14px;
+}
+
+/* Буква кнопкой у названия, точки — вертикально сбоку: буква — обычная «H» в шапке */
+.hr-preview-head > .hr-preview-level.hr-both-htitle { margin-left: auto; }
+
+/* Заливка пункта структуры при наведении и при выделении (ПКМ / Shift) — своя, не от темы */
+.hr-host .hr-panel-item:hover,
+.hr-host .hr-panel-item.is-hover {
+  background-color: color-mix(in srgb, var(--hr-ihover-c, var(--background-modifier-hover)) var(--hr-ihover-op, 100%), transparent);
+}
+.hr-host .hr-panel-item.is-selected {
+  background-color: color-mix(in srgb, var(--hr-isel-c, var(--hr-ihover-c, var(--background-modifier-hover))) var(--hr-isel-op, 100%), transparent);
+}
+
+/* ======================= 8.9.1 ======================= */
+/* Наведение на указатель уровня — у любой его части (буква и точки по отдельности) */
+.hr-host .hr-lvl-hov:hover {
+  --hr-lvl-c: var(--hr-lvl-color-h, var(--hr-lvl-color, var(--hr-preview-title-color, var(--text-normal))));
+  --hr-lvl-op: var(--hr-lvl-op-h, 1);
+  --hr-dot-off-op: var(--hr-dot-off-op-h, 0.4);
+  background-color: color-mix(in srgb, var(--hr-lvl-bg-h, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-lvl-bg-op-h, 0.22) * 100%), transparent);
+}
+.hr-host .hr-lvl-hov.hr-dots-hide-off:hover .hr-lvl-dot:not(.is-on) { visibility: visible; }
+
+/* Телефон, полоски слева: задачи от полосок — строки задач находятся по самому
+   чекбоксу (:has), а не только по классу Obsidian; сдвиг сильнее отступов темы */
+.hr-host.hr-task-shift .markdown-source-view .cm-line.HyperMD-task-line,
+.hr-host.hr-task-shift .markdown-source-view .cm-line:has(.task-list-item-checkbox) {
+  margin-left: var(--hr-task-shift, 0px) !important;
+}
+.hr-host.hr-task-shift .markdown-rendered ul.contains-task-list:not(li ul),
+.hr-host.hr-task-shift .markdown-rendered ol.contains-task-list:not(li ol),
+.hr-host.hr-task-shift .markdown-rendered ul:has(> li > .task-list-item-checkbox):not(li ul),
+.hr-host.hr-task-shift .markdown-rendered ol:has(> li > .task-list-item-checkbox):not(li ol) {
+  margin-left: var(--hr-task-shift, 0px) !important;
+}
+
+/* ======================= 8.10.0 ======================= */
+/* Буква у вертикальных точек — поверх текста, у столбика точек */
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  translate: none;
+  bottom: auto;
+  z-index: 2;
+}
+/* сбоку: по высоте — в пределах столбика (0 — у верхней точки, 1 — у нижней) */
+.hr-host .hr-preview > .hr-preview-level.hr-bothv-side > .hr-lvl-text {
+  top: calc(var(--hr-bh-pos, 0.5) * 100%);
+  right: calc(100% + var(--hr-bh-gap, 6px));
+  left: auto;
+  transform: translateY(calc(var(--hr-bh-pos, 0.5) * -100%));
+}
+.hr-host .hr-preview.hr-pv-vlvl-left > .hr-preview-level.hr-bothv-side > .hr-lvl-text {
+  right: auto;
+  left: calc(100% + var(--hr-bh-gap, 6px));
+}
+/* над / под точками: по середине столбика, со сдвигом к тексту */
+.hr-host .hr-preview > .hr-preview-level.hr-bothv-above > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-bothv-below > .hr-lvl-text {
+  left: 50%;
+  right: auto;
+  transform: translateX(calc(-50% - var(--hr-bh-shift, 0px)));
+}
+.hr-host .hr-preview.hr-pv-vlvl-left > .hr-preview-level.hr-bothv-above > .hr-lvl-text,
+.hr-host .hr-preview.hr-pv-vlvl-left > .hr-preview-level.hr-bothv-below > .hr-lvl-text {
+  transform: translateX(calc(-50% + var(--hr-bh-shift, 0px)));
+}
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert.hr-bothv-above > .hr-lvl-text { top: auto; bottom: calc(100% + var(--hr-bv-gap, 4px)); }
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert.hr-bothv-below > .hr-lvl-text { top: calc(100% + var(--hr-bv-gap, 4px)); bottom: auto; }
+/* над / под: место под букву по высоте — карточка выше, столбик точек сдвинут от буквы */
+.hr-preview.hr-pv-vlvl.hr-pv-vbothv {
+  --hr-bh-h: calc(var(--hr-lvl-size, 11px) * 1.15 + var(--hr-lvl-pad, 4px) * 2);
+  min-height: calc(var(--hr-vcol-h) + var(--hr-bh-h) + var(--hr-bv-gap0, 4px) + 24px * var(--hr-pk, 1));
+}
+.hr-host .hr-preview.hr-pv-vbothv > .hr-preview-level.hr-dots-vert {
+  transform: translateY(calc(-50% + (var(--hr-bh-h) + var(--hr-bv-gap0, 4px)) / 2));
+}
+.hr-host .hr-preview.hr-pv-vbothv.hr-pv-vboth-below > .hr-preview-level.hr-dots-vert {
+  transform: translateY(calc(-50% - (var(--hr-bh-h) + var(--hr-bv-gap0, 4px)) / 2));
+}
+/* буква с меню (уровень меняют и точками, и буквой) */
+.hr-host .hr-lvl-hmenu { cursor: pointer; }
+
+/* Поиск в настройках: «→ раздел» у найденной строки */
+.hr-set-goto {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-accent, var(--interactive-accent));
+  text-decoration: none;
+  cursor: pointer;
+}
+.hr-set-goto:hover { text-decoration: underline; }
+
+/* ======================= 9.0.0 ======================= */
+/* Шкала: зона указателя, поделённая линиями на шесть равных ячеек */
+/* 9.2.0 (автор): у шкалы — своя подсветка зоны (та же «Заливка вокруг» в покое и при наведении) */
+.hr-host .hr-preview-level.hr-lvl-seg {
+  padding: var(--hr-lvl-pad, 4px);
+  line-height: 1;
+}
+/* 9.2.0 (автор): линии между ячейками — не линии, а РАЗРЕЗЫ в заливке: сквозь них виден фон.
+   Только толщина и прозрачность разреза (100 % — насквозь); обводки снаружи нет. */
+.hr-seg-row {
+  display: flex;
+  box-sizing: border-box;
+  gap: var(--hr-seg-line, 1px);
+  background-color: color-mix(in srgb, var(--hr-seg-foff, var(--hr-lvl-c)) var(--hr-seg-cutfill, 0%), transparent);
+  border-radius: var(--hr-lvl-radius, 6px);
+}
+.hr-seg-vert > .hr-seg-row { flex-direction: column; width: var(--hr-seg-w, 24px); height: var(--hr-seg-hv, 144px); }
+.hr-seg-horz > .hr-seg-row { flex-direction: row; height: var(--hr-seg-hh, 24px); }
+.hr-seg-horz > .hr-seg-row.hr-seg-rtl { flex-direction: row-reverse; }
+.hr-seg-horz .hr-seg-cell { width: var(--hr-seg-w, 24px); }
+.hr-seg-cell {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  background-color: color-mix(in srgb, var(--hr-seg-foff, var(--hr-lvl-c)) var(--hr-seg-foff-op, 6%), transparent);
+  transition: background-color 110ms ease;
+}
+.hr-seg-cell.is-on { background-color: color-mix(in srgb, var(--hr-seg-fon, var(--hr-lvl-c)) var(--hr-seg-fon-op, 22%), transparent); }
+.hr-seg-num {
+  font-family: var(--font-interface);
+  font-size: var(--hr-segn-s, 11px);
+  font-weight: var(--hr-segn-w, 500);
+  color: color-mix(in srgb, var(--hr-segn-c, var(--hr-lvl-c)) var(--hr-segn-op, 60%), transparent);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  text-box: trim-both cap alphabetic;
+  pointer-events: none;
+}
+/* ПК: наведение и нажатие на ячейку (своя, текущая, — без реакции) */
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur) { cursor: pointer; }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover { background-color: color-mix(in srgb, var(--hr-seg-fhover, var(--hr-lvl-c)) var(--hr-seg-fhover-op, 40%), transparent); }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover .hr-seg-num {
+  font-size: var(--hr-segn-sh, 12px);
+  font-weight: var(--hr-segn-wh, 700);
+  color: color-mix(in srgb, var(--hr-segn-ch, var(--hr-lvl-c)) var(--hr-segn-oph, 100%), transparent);
+}
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):active { background-color: color-mix(in srgb, var(--hr-seg-fpress, var(--hr-lvl-c)) var(--hr-seg-fpress-op, 65%), transparent); }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):active .hr-seg-num {
+  font-size: var(--hr-segn-sp, 12px);
+  font-weight: var(--hr-segn-wp, 800);
+  color: color-mix(in srgb, var(--hr-segn-cp, var(--hr-lvl-c)) var(--hr-segn-opp, 100%), transparent);
+}
+/* вертикальная шкала — сбоку карточки: место под неё, высота карточки не меньше шкалы */
+.hr-preview.hr-pv-vlvl.hr-pv-vseg {
+  padding-right: calc(24px * var(--hr-pk, 1) + var(--hr-seg-w, 24px) + var(--hr-lvl-pad, 4px) * 2);
+  min-height: calc(var(--hr-seg-hv, 144px) + var(--hr-lvl-pad, 4px) * 2 + 24px * var(--hr-pk, 1));
+}
+.hr-preview.hr-pv-vlvl.hr-pv-vseg.hr-pv-vlvl-left {
+  padding-right: calc(14px * var(--hr-pk, 1));
+  padding-left: calc(24px * var(--hr-pk, 1) + var(--hr-seg-w, 24px) + var(--hr-lvl-pad, 4px) * 2);
+}
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl.hr-pv-vseg {
+  padding-right: calc((24px + var(--hr-seg-w, 24px) + var(--hr-lvl-pad, 4px) * 2) * var(--hr-pv-k, 1));
+  min-height: calc((var(--hr-seg-hv, 144px) + var(--hr-lvl-pad, 4px) * 2 + 24px) * var(--hr-pv-k, 1));
+}
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl.hr-pv-vseg.hr-pv-vlvl-left {
+  padding-right: calc(14px * var(--hr-pv-k, 1));
+  padding-left: calc((24px + var(--hr-seg-w, 24px) + var(--hr-lvl-pad, 4px) * 2) * var(--hr-pv-k, 1));
+}
+
+/* Состояния, которых не хватало: цвет полос прокрутки при наведении, фон и значок плавающей кнопки при наведении */
+.hr-sb:hover .hr-sb-thumb,
+.hr-sb.is-dragging .hr-sb-thumb { background-color: var(--hr-sb-color-h, var(--hr-sb-color, var(--text-muted))); }
+.hr-olsb-custom .hr-panel-list::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--hr-olsb-color-h, var(--hr-olsb-color, var(--text-muted))) calc(var(--hr-olsb-hover, 0.75) * 100%), transparent);
+}
+.hr-host .hr-float:hover {
+  background-color: var(--hr-float-bg-h, var(--hr-float-bg, var(--hr-panel-bg, var(--background-primary))));
+  color: var(--hr-float-fg-h, var(--hr-float-fg, var(--text-normal)));
+}
+
+
+/* ======================= 9.1.0 ======================= */
+/* Фон окна структуры, подсказки и плавающей кнопки — градиент или своя картинка поверх цвета */
+.hr-host .hr-side .hr-panel {
+  background-image: var(--hr-panel-bgimg, none);
+  background-size: var(--hr-panel-bgsize, auto);
+  background-repeat: var(--hr-panel-bgrep, no-repeat);
+  background-position: var(--hr-panel-bgpos, center);   /* 9.16.0 */
+}
+.hr-host .hr-preview {
+  background-image: var(--hr-preview-bgimg, none);
+  background-size: var(--hr-preview-bgsize, auto);
+  background-repeat: var(--hr-preview-bgrep, no-repeat);
+  background-position: var(--hr-preview-bgpos, center);   /* 9.16.0 */
+}
+.hr-host .hr-float {
+  background-image: var(--hr-float-bgimg, none);
+  background-size: var(--hr-float-bgsize, auto);
+  background-repeat: var(--hr-float-bgrep, no-repeat);
+  background-position: var(--hr-float-bgpos, center);   /* 9.16.0 */
+}
+
+/* ======================= 9.2.0 ======================= */
+/* Настройки: строка поиска и вкладки «Компьютер / Телефон» закреплены сверху; крестик в поиске */
+.hr-settings-root .hr-settings-head {
+  position: sticky;
+  top: 0;
+  z-index: 6;
+  margin: 0 0 10px;
+  padding: 8px 0 6px;
+  background-color: var(--background-primary);
+  border-bottom: 1px solid var(--background-modifier-border);
+}
+.hr-settings-root .hr-settings-head .hr-settings-tabs { margin: 8px 0 0; }
+.hr-settings-search { position: relative; }
+.hr-settings-search-clear {
+  position: absolute;
+  top: 8px;
+  right: 6px;
+  display: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  line-height: 24px;
+  cursor: pointer;
+}
+.hr-settings-head .hr-settings-search-clear { top: 12px; }
+.hr-settings-search.has-text .hr-settings-search-clear { display: block; }
+.hr-settings-search-clear:hover { color: var(--text-normal); background-color: var(--background-modifier-hover); }
+.hr-settings-search.has-text .hr-settings-search-input { padding-right: 30px; }
+/* есть только на другом устройстве */
+.hr-settings-search-other,
+.hr-tab-missing {
+  margin: 8px 0;
+  padding: 6px 10px;
+  border-left: 3px solid var(--interactive-accent, var(--text-accent));
+  border-radius: 4px;
+  background-color: color-mix(in srgb, var(--interactive-accent, var(--text-accent)) 8%, transparent);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.hr-settings-search-other a,
+.hr-tab-missing a { color: var(--text-accent, var(--interactive-accent)); cursor: pointer; }
+
+/* ======================= 9.3.0 ======================= */
+/* Подсветка (свечение) при наведении: на время наведения переменная тени
+   подменяется «наведённой» — все части окна берут её сами */
+/* 9.6.0: у структуры и у поиска — каждая своя: наведение на структуру не трогает поиск, и наоборот */
+.hr-host .hr-side .hr-panel:hover { --hr-panel-shadow: var(--hr-panel-shadow-h); }
+.hr-host .hr-side .hr-search:hover {
+  --hr-panel-shadow: var(--hr-search-shadow-h);
+  --hr-search-shadow: var(--hr-search-shadow-h);
+}
+.hr-host .hr-preview:hover { --hr-preview-shadow: var(--hr-preview-shadow-h); }
+.hr-host .hr-float:hover { --hr-float-shadow: var(--hr-float-shadow-h); }
+.hr-host .hr-side .hr-panel::before { transition: box-shadow 180ms ease; }
+
+/* ======================= 9.4.0 ======================= */
+/* Шапка настроек — у самого верха окна: поднята на внутренний отступ окна и
+   закрывает его фоном (над ней не видно прокручивающихся настроек) */
+.hr-settings-root .hr-settings-head {
+  padding-top: calc(var(--hr-head-pt, 0px) + 8px);
+  margin-top: calc(-1 * var(--hr-head-pt, 0px));
+}
+
+/* ======================= 9.5.0 ======================= */
+/* Фон поля поиска — как у структуры или свой (градиент / картинка поверх цвета) */
+.hr-host .hr-side .hr-search input.hr-search-input {
+  background-image: var(--hr-search-bgimg, none);
+  background-size: var(--hr-search-bgsize, auto);
+  background-repeat: var(--hr-search-bgrep, no-repeat);
+  background-position: var(--hr-search-bgpos, center);   /* 9.16.0 */
+}
+
+/* ======================= 9.6.0 ======================= */
+/* Фон поля поиска — свой цвет */
+.hr-host .hr-side .hr-search input.hr-search-input { background-color: var(--hr-search-bg, var(--hr-panel-bg, var(--background-primary))); }
+/* 10.5.1 (автор: «в Глубине на телефоне строка поиска совсем тёмная, а на компьютере нормальная»): на телефоне правило с .hr-mobile
+   перебивало цвет поиска цветом структуры — теперь и там цвет поиска из настроек */
+.hr-mobile.hr-host .hr-side .hr-search input.hr-search-input { background-color: var(--hr-search-bg, var(--hr-panel-bg, var(--background-secondary))); }
+
+/* Размытие сразу: при включённом размытии окна появляются без изменения прозрачности
+   (браузер не размывает то, что под элементом, пока прозрачность меньше 1) */
+.hr-host.hr-blur-on .hr-side,
+.hr-host.hr-blur-on.hr-float-mode .hr-side {
+  opacity: 1 !important;
+  visibility: hidden;
+}
+.hr-host.hr-blur-on.hr-panel-visible .hr-side { visibility: visible; }
+.hr-host.hr-blur-on .hr-item-menu { opacity: 1 !important; }
+.hr-host.hr-pv-blur-on .hr-preview { opacity: 1 !important; visibility: hidden; }
+.hr-host.hr-pv-blur-on .hr-preview.is-shown { visibility: visible; }
+
+/* Шкала: скругление ячеек (50 % — круг), увеличение под курсором, число — всегда / при наведении / нет */
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover { transform: scale(var(--hr-seg-hs, 1)); }
+.hr-host.hr-segnum-hover .hr-seg-num { opacity: 0; transition: opacity 120ms ease; }
+.hr-host.hr-segnum-hover .hr-lvl-seg:hover .hr-seg-num { opacity: 1; }
+.hr-host.hr-segnum-none .hr-seg-num { display: none; }
+
+/* ======================= 9.7.0 ======================= */
+/* Выбранная ячейка (текущий уровень) — своя заливка и своё число */
+.hr-seg-cell.is-cur { background-color: color-mix(in srgb, var(--hr-seg-fcur, var(--hr-seg-fon, var(--hr-lvl-c))) var(--hr-seg-fcur-op, 40%), transparent); }
+.hr-seg-cell.is-cur .hr-seg-num {
+  font-size: var(--hr-segn-sc, var(--hr-segn-s, 11px));
+  font-weight: var(--hr-segn-wc, 700);
+  color: color-mix(in srgb, var(--hr-segn-cc, var(--hr-segn-c, var(--hr-lvl-c))) var(--hr-segn-opc, 100%), transparent);
+}
+/* текущий уровень в меню «H1…H6» — своя непрозрачность */
+.hr-host .hr-lvl-opt.is-current,
+.hr-host .hr-lvl-opt.is-current:hover { opacity: var(--hr-menu-cur-op, 0.35); }
+/* у «буквы с ячейками» — две подложки у букв и у ряда ячеек */
+.hr-host .hr-lvl-both.hr-both-split > .hr-seg-row {
+  padding: var(--hr-lvl-pad, 4px);
+  border-radius: var(--hr-lvl-radius, 6px);
+}
+.hr-host .hr-panel-item.is-active:not(:hover):not(.is-hover):not(.is-selected) {
+  background-color: color-mix(in srgb, var(--hr-icur-c, var(--hr-ihover-c, var(--background-modifier-hover))) var(--hr-icur-op, 0%), transparent);
+}
+
+/* ======================= 9.8.0 ======================= */
+/* Скругление ячеек — по состояниям (покой / наведение / нажатие / выбранная). Ряд больше не обрезает ячейки
+   (раньше при наведении обрезка снималась, чтобы увеличенная ячейка не резалась, — и крайние теряли скругление).
+   Вместо этого внешние углы 1-й и 6-й ячеек никогда не меньше скругления области под ними. */
+.hr-seg-cell {
+  --r: var(--hr-seg-r, 0%);
+  border-radius: var(--r);
+  position: relative;
+  transition: background-color 110ms ease, transform 110ms ease, border-radius 110ms ease;
+}
+.hr-seg-cell.is-cur { --r: var(--hr-seg-rc, var(--hr-seg-r, 0%)); }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover { --r: var(--hr-seg-rh, var(--hr-seg-r, 0%)); z-index: 1; }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):active { --r: var(--hr-seg-rp, var(--hr-seg-rh, var(--hr-seg-r, 0%))); }
+/* внешние углы крайних ячеек */
+.hr-seg-vert .hr-seg-cell:first-child { border-top-left-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); border-top-right-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); }
+.hr-seg-vert .hr-seg-cell:last-child { border-bottom-left-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); border-bottom-right-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); }
+.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:first-child { border-top-left-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); border-bottom-left-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); }
+.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:last-child { border-top-right-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); border-bottom-right-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); }
+.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:first-child { border-top-right-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); border-bottom-right-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); }
+.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:last-child { border-top-left-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); border-bottom-left-radius: min(max(var(--r), var(--hr-lvl-radius, 6px)), 50%); }
+
+/* ======================= 9.8.1 ======================= */
+/* Скругление ячеек — в пикселях, одинаковое по горизонтали и вертикали (никаких овалов): 50 % = половина меньшей
+   стороны ячейки, дальше скругление «упирается» и получается капсула. Ряд и внешние углы крайних ячеек —
+   концентрично подложке (её скругление минус отступ), чтобы линии шли параллельно на любом размере.
+   Внешний угол крайней ячейки: не меньше скругления ряда, не больше половины ширины ряда и не больше, чем
+   оставляют её внутренние углы по длине (иначе браузер сжал бы все углы ячейки). */
+.hr-seg-row { border-radius: var(--hr-seg-ro, 0px); }
+.hr-host .hr-lvl-both.hr-both-split > .hr-seg-row { border-radius: var(--hr-lvl-radius, 6px); }
+.hr-seg-cell { --r: var(--hr-seg-r, 0px); --ro: min(max(var(--r), var(--hr-seg-ro, 0px)), var(--hr-seg-oside, 999px), calc(var(--hr-seg-along, 999px) - var(--r))); }
+.hr-seg-cell.is-cur { --r: var(--hr-seg-rc, var(--hr-seg-r, 0px)); }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover { --r: var(--hr-seg-rh, var(--hr-seg-r, 0px)); }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):active { --r: var(--hr-seg-rp, var(--hr-seg-rh, var(--hr-seg-r, 0px))); }
+.hr-seg-vert .hr-seg-cell:first-child { border-top-left-radius: var(--ro); border-top-right-radius: var(--ro); }
+.hr-seg-vert .hr-seg-cell:last-child { border-bottom-left-radius: var(--ro); border-bottom-right-radius: var(--ro); }
+.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:first-child,
+.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:last-child { border-top-left-radius: var(--ro); border-bottom-left-radius: var(--ro); }
+.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:last-child,
+.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:first-child { border-top-right-radius: var(--ro); border-bottom-right-radius: var(--ro); }
+/* под-подразделы (третий уровень и глубже): чуть мельче и с тонкой линией принадлежности слева */
+.hr-settings-body .hr-settings-body .hr-settings-group > .hr-settings-summary { font-size: 12.5px; }
+.hr-settings-body .hr-settings-body .hr-settings-group > .hr-settings-body {
+  border-left: 1px solid color-mix(in srgb, var(--text-normal) 14%, transparent);
+  margin-left: 4px;
+  padding-left: 12px;
+}
+/* 9.8.2: у карточки со шкалой ячеек размер «столбика» — по ячейкам, а не по старым точкам
+   (нужен «Букве и ячейкам»: над / под шкалой карточка выше ровно на шкалу + букву) */
+.hr-preview.hr-pv-vlvl.hr-pv-vseg {
+  --hr-vcol-w: calc(var(--hr-seg-w, 24px) + var(--hr-lvl-pad, 4px) * 2);
+  --hr-vcol-h: calc(var(--hr-seg-hv, 144px) + var(--hr-lvl-pad, 4px) * 2);
+}
+.hr-preview.hr-pv-vlvl.hr-pv-vseg.hr-pv-vbothv {
+  min-height: calc(var(--hr-vcol-h) + var(--hr-bh-h) + var(--hr-bv-gap0, 4px) + 24px * var(--hr-pk, 1));
+}
+.hr-mobile .hr-preview.hr-pv-fit.hr-pv-vlvl.hr-pv-vseg.hr-pv-vbothv {
+  min-height: calc((var(--hr-vcol-h) + var(--hr-bh-h) + var(--hr-bv-gap0, 4px) + 24px) * var(--hr-pv-k, 1));
+}
+/* 9.9.0: число в крайних ячейках — в оптической середине (чуть к плоскому концу), см. --hr-seg-nshift */
+.hr-seg-vert .hr-seg-cell:first-child .hr-seg-num { translate: 0 var(--hr-seg-nshift, 0px); }
+.hr-seg-vert .hr-seg-cell:last-child .hr-seg-num { translate: 0 calc(var(--hr-seg-nshift, 0px) * -1); }
+.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:first-child .hr-seg-num,
+.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:last-child .hr-seg-num { translate: var(--hr-seg-nshift, 0px) 0; }
+.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:last-child .hr-seg-num,
+.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:first-child .hr-seg-num { translate: calc(var(--hr-seg-nshift, 0px) * -1) 0; }
+
+/* ======================= 9.9.1 ======================= */
+/* Подложка номера (H4): наименьшие ширина и высота, номер — посередине. 0 — по тексту, как раньше. */
+.hr-host .hr-preview-level.hr-lvl-h,
+.hr-host .hr-lvl-both.hr-both-split > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  min-width: calc(var(--hr-lvlh-w, 0px) * var(--hr-pk, 1));
+  min-height: calc(var(--hr-lvlh-h, 0px) * var(--hr-pk, 1));
+  box-sizing: border-box;
+  text-align: center;
+}
+.hr-host .hr-preview-level.hr-lvl-h { display: inline-flex; align-items: center; justify-content: center; }
+.hr-host .hr-lvl-both.hr-both-split > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text { display: inline-flex; align-items: center; justify-content: center; }
+
+/* ======================= 9.10.0 ======================= */
+/* Ячейка под курсором растёт (или уменьшается) ОДИНАКОВО со всех сторон, в пикселях (--hr-seg-g). Раньше — scale в %:
+   у вытянутой ячейки ширина и высота прибавляли разное, и крайняя доходила до боковых краёв подложки раньше, чем до
+   торца. Рост — заливку под курсором рисует ::before, выступающий на рост со всех сторон; его углы = скругление
+   ячейки + рост (концентрично), поэтому при росте, равном полям подложки, крайняя ячейка ложится ровно по краю
+   подложки. (Тень-продолжение заливки давала тонкий шов на стыке — от сглаживания двух полупрозрачных краёв.)
+   Уменьшение — обрезка внутрь. Цвет при наведении меняется сразу, плавно — только размер. */
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover { transform: none; }
+.hr-host .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover .hr-seg-num { scale: var(--hr-seg-nk, 1); }
+.hr-seg-cell { transition: background-color 110ms ease, border-radius 110ms ease, clip-path 110ms ease; }
+.hr-host.hr-seg-grow .hr-lvl-btn .hr-seg-cell { transition: border-radius 110ms ease; }
+.hr-host.hr-seg-grow .hr-lvl-btn .hr-seg-cell::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  --g: 0px;
+  border-radius: calc(var(--r) + var(--g));
+  transition: inset 110ms ease, border-radius 110ms ease;
+}
+.hr-host.hr-seg-grow .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover,
+.hr-host.hr-seg-grow .hr-lvl-btn .hr-seg-cell:not(.is-cur):active { background-color: transparent; }
+.hr-host.hr-seg-grow .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover::before {
+  --g: var(--hr-seg-g, 0px);
+  inset: calc(var(--g) * -1);
+  background-color: color-mix(in srgb, var(--hr-seg-fhover, var(--hr-lvl-c)) var(--hr-seg-fhover-op, 40%), transparent);
+}
+.hr-host.hr-seg-grow .hr-lvl-btn .hr-seg-cell:not(.is-cur):active::before {
+  background-color: color-mix(in srgb, var(--hr-seg-fpress, var(--hr-lvl-c)) var(--hr-seg-fpress-op, 65%), transparent);
+}
+/* внешние углы крайних — от их скругления (--ro), как у самой ячейки */
+.hr-host.hr-seg-grow .hr-seg-vert .hr-seg-cell:first-child::before { border-top-left-radius: calc(var(--ro) + var(--g)); border-top-right-radius: calc(var(--ro) + var(--g)); }
+.hr-host.hr-seg-grow .hr-seg-vert .hr-seg-cell:last-child::before { border-bottom-left-radius: calc(var(--ro) + var(--g)); border-bottom-right-radius: calc(var(--ro) + var(--g)); }
+.hr-host.hr-seg-grow .hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:first-child::before,
+.hr-host.hr-seg-grow .hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:last-child::before { border-top-left-radius: calc(var(--ro) + var(--g)); border-bottom-left-radius: calc(var(--ro) + var(--g)); }
+.hr-host.hr-seg-grow .hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:last-child::before,
+.hr-host.hr-seg-grow .hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:first-child::before { border-top-right-radius: calc(var(--ro) + var(--g)); border-bottom-right-radius: calc(var(--ro) + var(--g)); }
+.hr-host.hr-seg-shrink .hr-lvl-btn .hr-seg-cell:not(.is-cur):hover {
+  --gs: var(--hr-seg-gs, 0px);
+  --ri: max(0px, calc(var(--r) - var(--gs)));
+  --rio: max(0px, calc(var(--ro) - var(--gs)));
+  clip-path: inset(var(--gs) round var(--ri));
+}
+.hr-host.hr-seg-shrink .hr-lvl-btn.hr-seg-vert .hr-seg-cell:not(.is-cur):first-child:hover { clip-path: inset(var(--gs) round var(--rio) var(--rio) var(--ri) var(--ri)); }
+.hr-host.hr-seg-shrink .hr-lvl-btn.hr-seg-vert .hr-seg-cell:not(.is-cur):last-child:hover { clip-path: inset(var(--gs) round var(--ri) var(--ri) var(--rio) var(--rio)); }
+.hr-host.hr-seg-shrink .hr-lvl-btn.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:not(.is-cur):first-child:hover,
+.hr-host.hr-seg-shrink .hr-lvl-btn.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:not(.is-cur):last-child:hover { clip-path: inset(var(--gs) round var(--rio) var(--ri) var(--ri) var(--rio)); }
+.hr-host.hr-seg-shrink .hr-lvl-btn.hr-seg-horz .hr-seg-row:not(.hr-seg-rtl) .hr-seg-cell:not(.is-cur):last-child:hover,
+.hr-host.hr-seg-shrink .hr-lvl-btn.hr-seg-horz .hr-seg-row.hr-seg-rtl .hr-seg-cell:not(.is-cur):first-child:hover { clip-path: inset(var(--gs) round var(--ri) var(--rio) var(--rio) var(--ri)); }
+
+/* Подложка уровня при наведении — больше (+) или меньше (−), одинаково со всех сторон и плавно (--hr-lvl-bg-g).
+   Её рисует ::before под содержимым; у самого указателя заливки тогда нет. Только у основной подложки указателя
+   (у «двух подложек» — не трогаем). Включается, только когда число не 0. */
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split) { background-color: transparent !important; z-index: 2; }
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split)::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--hr-lvl-radius, 6px);
+  background-color: color-mix(in srgb, var(--hr-lvl-bg, var(--hr-lvl-c)) calc(var(--hr-lvl-bg-op, 0.08) * 100%), transparent);
+  transition: inset 120ms ease, border-radius 120ms ease, background-color 120ms ease;
+}
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split):hover::before {
+  inset: calc(var(--hr-lvl-bg-g, 0px) * -1);
+  border-radius: max(0px, calc(var(--hr-lvl-radius, 6px) + var(--hr-lvl-bg-g, 0px)));
+  background-color: color-mix(in srgb, var(--hr-lvl-bg-h, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-lvl-bg-op-h, 0.22) * 100%), transparent);
+}
+
+/* ======================= 9.11.0 ======================= */
+/* Подсказка под курсором увеличивается (previewHoverScale). Свойство scale — отдельно от transform появления;
+   растёт от стороны полосок, чтобы не наезжать на них. */
+.hr-host.hr-pv-hscale .hr-preview {
+  transform-origin: right center;
+  transition: opacity var(--hr-pv-ms, 180ms) ease, transform var(--hr-pv-ms, 180ms) cubic-bezier(0.22, 1, 0.36, 1), scale 160ms ease;
+}
+.hr-host.hr-pv-hscale.hr-left .hr-preview { transform-origin: left center; }
+.hr-host.hr-pv-hscale.hr-pv-none .hr-preview { transition: scale 160ms ease; }
+.hr-host.hr-pv-hscale .hr-preview.hr-pv-keep.is-shown:hover { scale: var(--hr-pv-hs, 1); }
+
+/* Число в ячейках выше (is-on) и ниже текущего уровня — своё; наведение, нажатие и выбранная — поверх */
+.hr-seg-cell.is-on:not(.is-cur) .hr-seg-num {
+  font-size: var(--hr-segn-su, var(--hr-segn-s, 11px));
+  font-weight: var(--hr-segn-wu, var(--hr-segn-w, 500));
+  color: color-mix(in srgb, var(--hr-segn-cu, var(--hr-segn-c, var(--hr-lvl-c))) var(--hr-segn-opu, var(--hr-segn-op, 60%)), transparent);
+}
+.hr-seg-cell:not(.is-on) .hr-seg-num {
+  font-size: var(--hr-segn-sd, var(--hr-segn-s, 11px));
+  font-weight: var(--hr-segn-wd, var(--hr-segn-w, 500));
+  color: color-mix(in srgb, var(--hr-segn-cd, var(--hr-segn-c, var(--hr-lvl-c))) var(--hr-segn-opd, var(--hr-segn-op, 60%)), transparent);
+}
+
+/* Своя подложка номера у «Номера и чисел» (две подложки / вертикально): пусто — как у подложки зоны */
+.hr-host .hr-lvl-both.hr-both-split > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  border-radius: var(--hr-nbg-radius, var(--hr-lvl-radius, 6px));
+  background-color: color-mix(in srgb, var(--hr-nbg, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-nbg-op, var(--hr-lvl-bg-op, 0.08)) * 100%), transparent);
+  box-shadow: var(--hr-lvnum-shadow, none);
+  transition: background-color 120ms ease, box-shadow 120ms ease;
+}
+.hr-host .hr-lvl-both.hr-both-split > .hr-lvl-text { padding: var(--hr-nbg-pad, var(--hr-lvl-pad, 4px)) calc(var(--hr-nbg-pad, var(--hr-lvl-pad, 4px)) * 1.6); }
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text { padding: var(--hr-nbg-pad, var(--hr-lvl-pad, 4px)) calc(var(--hr-nbg-pad, var(--hr-lvl-pad, 4px)) * 1.4); }
+.hr-host .hr-lvl-btn.hr-lvl-both.hr-both-split:hover > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-btn.hr-lvl-both.hr-dots-vert:hover > .hr-lvl-text,
+.hr-host .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text:hover {
+  background-color: color-mix(in srgb, var(--hr-nbg-h, var(--hr-lvl-bg-h, var(--hr-nbg, var(--hr-lvl-bg, var(--hr-lvl-c))))) calc(var(--hr-nbg-op-h, var(--hr-lvl-bg-op-h, 0.22)) * 100%), transparent);
+  box-shadow: var(--hr-lvnum-shadow-h, var(--hr-lvnum-shadow, none));
+}
+/* …и её размер при наведении — как у подложки зоны: рисует ::before, выступающий одинаково со всех сторон */
+.hr-host.hr-nbg-size .hr-lvl-both.hr-both-split > .hr-lvl-text { position: relative; }
+.hr-host.hr-nbg-size .hr-lvl-both.hr-both-split > .hr-lvl-text,
+.hr-host.hr-nbg-size .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text {
+  z-index: 3;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.hr-host.hr-nbg-size .hr-lvl-both.hr-both-split > .hr-lvl-text::before,
+.hr-host.hr-nbg-size .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: var(--hr-nbg-radius, var(--hr-lvl-radius, 6px));
+  background-color: color-mix(in srgb, var(--hr-nbg, var(--hr-lvl-bg, var(--hr-lvl-c))) calc(var(--hr-nbg-op, var(--hr-lvl-bg-op, 0.08)) * 100%), transparent);
+  box-shadow: var(--hr-lvnum-shadow, none);
+  transition: inset 120ms ease, border-radius 120ms ease, background-color 120ms ease, box-shadow 120ms ease;
+}
+.hr-host.hr-nbg-size .hr-lvl-btn.hr-lvl-both.hr-both-split:hover > .hr-lvl-text::before,
+.hr-host.hr-nbg-size .hr-preview > .hr-preview-level.hr-lvl-btn.hr-lvl-both.hr-dots-vert:hover > .hr-lvl-text::before,
+.hr-host.hr-nbg-size .hr-preview > .hr-preview-level.hr-lvl-both.hr-dots-vert > .hr-lvl-text:hover::before {
+  inset: calc(var(--hr-nbg-g, 0px) * -1);
+  border-radius: max(0px, calc(var(--hr-nbg-radius, var(--hr-lvl-radius, 6px)) + var(--hr-nbg-g, 0px)));
+  background-color: color-mix(in srgb, var(--hr-nbg-h, var(--hr-lvl-bg-h, var(--hr-nbg, var(--hr-lvl-bg, var(--hr-lvl-c))))) calc(var(--hr-nbg-op-h, var(--hr-lvl-bg-op-h, 0.22)) * 100%), transparent);
+  box-shadow: var(--hr-lvnum-shadow-h, var(--hr-lvnum-shadow, none));
+}
+
+/* Свечение под подложкой зоны (у «Номера» подложка одна — это подложка номера); при наведении — своё */
+.hr-host .hr-preview-level { --sh: var(--hr-lvzone-shadow, none); --sh-h: var(--hr-lvzone-shadow-h, var(--sh)); }
+.hr-host .hr-preview-level.hr-lvl-h { --sh: var(--hr-lvnum-shadow, none); --sh-h: var(--hr-lvnum-shadow-h, var(--sh)); }
+.hr-host .hr-preview-level:not(.hr-both-split) { box-shadow: var(--sh); transition: background-color 120ms ease, box-shadow 120ms ease; }
+.hr-host .hr-preview-level.hr-lvl-btn:not(.hr-both-split):hover { box-shadow: var(--sh-h); }
+.hr-host .hr-lvl-both.hr-both-split > .hr-seg-row { box-shadow: var(--hr-lvzone-shadow, none); transition: box-shadow 120ms ease; }
+.hr-host .hr-lvl-btn.hr-lvl-both.hr-both-split:hover > .hr-seg-row { box-shadow: var(--hr-lvzone-shadow-h, var(--hr-lvzone-shadow, none)); }
+/* подложка, меняющая размер при наведении (9.10.0), — свечение у неё, а не у прежней рамки */
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split),
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split):hover { box-shadow: none; }
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split)::before { box-shadow: var(--sh); }
+.hr-host.hr-lvlbg-size .hr-preview-level.hr-lvl-btn:not(.hr-both-split):hover::before { box-shadow: var(--sh-h); }
+
+/* Меню «H1…H6» у номера: размер, поля, скругление, текст и заливка пунктов по состояниям, подложка меню, свечение */
+.hr-host .hr-preview-level .hr-lvl-menu { font-size: var(--hr-lm-size, var(--hr-lvl-size, 11px)); }
+.hr-host .hr-lvl-menu-in {
+  gap: var(--hr-lm-gap, 2px);
+  padding: var(--hr-lm-pad, 4px);
+  background-color: color-mix(in srgb, var(--hr-lm-bg, var(--hr-preview-bg, var(--hr-panel-bg, var(--background-primary)))) var(--hr-lm-bg-op, 100%), transparent);
+  border-color: color-mix(in srgb, var(--background-modifier-border) var(--hr-lm-border-op, 100%), transparent);
+  border-radius: var(--hr-lm-radius, calc(var(--hr-lvl-radius, 6px) + 2px));
+  box-shadow: var(--hr-lvmenu-shadow, 0 6px 20px rgba(0, 0, 0, 0.22));
+  transition: box-shadow 120ms ease;
+}
+.hr-host .hr-lvl-menu-in:hover { box-shadow: var(--hr-lvmenu-shadow-h, var(--hr-lvmenu-shadow, 0 6px 20px rgba(0, 0, 0, 0.22))); }
+.hr-host .hr-lvl-opt,
+.hr-host .hr-lvl-opt.is-current,
+.hr-host .hr-lvl-opt.is-current:hover {
+  position: relative;
+  padding: var(--hr-lm-ipad, 4px) calc(var(--hr-lm-ipad, 4px) * 1.75);
+  border-radius: var(--hr-lm-iradius, var(--hr-lvl-radius, 6px));
+  font-weight: var(--hr-lm-w, 600);
+  color: color-mix(in srgb, var(--hr-lm-t, var(--hr-lvl-c)) var(--hr-lm-t-op, 100%), transparent);
+  background-color: color-mix(in srgb, var(--hr-lm-f, var(--hr-lvl-c)) var(--hr-lm-f-op, 0%), transparent);
+  transition: background-color 110ms ease, color 110ms ease;
+}
+.hr-host .hr-lvl-opt-t { display: inline-block; transition: scale 110ms ease; }
+.hr-host .hr-lvl-opt:not(.is-current):hover {
+  z-index: 1;
+  color: color-mix(in srgb, var(--hr-lm-t-h, var(--hr-lm-t, var(--hr-lvl-c))) var(--hr-lm-t-h-op, 100%), transparent);
+  background-color: color-mix(in srgb, var(--hr-lm-f-h, var(--background-modifier-hover)) var(--hr-lm-f-h-op, 100%), transparent);
+}
+.hr-host .hr-lvl-opt:not(.is-current):hover > .hr-lvl-opt-t { scale: var(--hr-lm-sh, 1); }
+.hr-host .hr-lvl-opt:not(.is-current):active {
+  color: color-mix(in srgb, var(--hr-lm-t-p, var(--hr-lm-t-h, var(--hr-lm-t, var(--hr-lvl-c)))) var(--hr-lm-t-p-op, 100%), transparent);
+  background-color: color-mix(in srgb, var(--hr-lm-f-p, var(--hr-lm-f-h, var(--background-modifier-hover))) var(--hr-lm-f-p-op, 100%), transparent);
+}
+/* пункт под курсором растёт одинаково со всех сторон (как ячейка): заливку рисует ::before */
+.hr-host.hr-lm-grow .hr-lvl-opt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  border-radius: inherit;
+  transition: inset 110ms ease;
+}
+.hr-host.hr-lm-grow .hr-lvl-menu-in { isolation: isolate; }
+.hr-host.hr-lm-grow .hr-lvl-opt:not(.is-current):hover,
+.hr-host.hr-lm-grow .hr-lvl-opt:not(.is-current):active { background-color: transparent; }
+.hr-host.hr-lm-grow .hr-lvl-opt:not(.is-current):hover::before {
+  inset: calc(var(--hr-lm-g, 0px) * -1);
+  border-radius: calc(var(--hr-lm-iradius, var(--hr-lvl-radius, 6px)) + var(--hr-lm-g, 0px));
+  background-color: color-mix(in srgb, var(--hr-lm-f-h, var(--background-modifier-hover)) var(--hr-lm-f-h-op, 100%), transparent);
+}
+.hr-host.hr-lm-grow .hr-lvl-opt:not(.is-current):active::before {
+  background-color: color-mix(in srgb, var(--hr-lm-f-p, var(--hr-lm-f-h, var(--background-modifier-hover))) var(--hr-lm-f-p-op, 100%), transparent);
+}
+
+/* ======================= 9.12.0 ======================= */
+/* слепок полосок в соседней (неактивной) заметке: неподвижный, щелчок — перейти */
+.hr-ghost-host { position: relative; }
+.hr-rail.hr-ghost {
+  opacity: 0.55;
+  cursor: pointer;
+  transition: opacity 120ms ease;
+}
+.hr-rail.hr-ghost:hover { opacity: 0.9; }
+.hr-rail.hr-ghost .hr-bar { transition: none; }
+.hr-rail.hr-ghost .hr-row:hover .hr-bar { opacity: 1; }
+/* узкое окно структуры: перенос по словам, без числа слов */
+.hr-panel-narrow .hr-wrap .hr-item-text,
+.hr-panel-narrow .hr-item-text { overflow-wrap: break-word; }
+.hr-panel-narrow .hr-item-count { display: none; }
+/* строка, которая сейчас ни на что не влияет (уровень глубже показанных на полосках) */
+.setting-item.hr-set-warn .setting-item-description { color: var(--text-warning, var(--color-orange)); }
+/* длинный пункт списка не распирает строку настроек (телефон: строка вылезала за экран) */
+.hr-settings-root .setting-item-control { min-width: 0; max-width: 100%; }
+.hr-settings-root .setting-item-control select.dropdown { max-width: 100%; min-width: 0; text-overflow: ellipsis; }
+
+/* ---- 9.12.0: форма и свечение полосок ---- */
+.hr-host .hr-bar { border-radius: var(--hr-bar-radius, 999px); }
+.hr-host.hr-bar-glow .hr-bar {
+  box-shadow: 0 0 var(--hr-bar-glow, 0px) color-mix(in srgb, var(--hr-bar-glow-c, var(--hr-bar-own, var(--hr-bar-color, var(--text-faint)))) var(--hr-bar-glow-op, 60%), transparent);
+}
+.hr-host.hr-bar-glow .hr-row:hover .hr-bar {
+  box-shadow: 0 0 var(--hr-bar-glow, 0px) color-mix(in srgb, var(--hr-bar-glow-c, var(--hr-bar-own, var(--hr-bar-hover, var(--text-muted)))) var(--hr-bar-glow-op, 60%), transparent);
+}
+.hr-host.hr-bar-glow .hr-row.is-active .hr-bar {
+  box-shadow: 0 0 var(--hr-bar-glow, 0px) color-mix(in srgb, var(--hr-bar-glow-c, var(--hr-bar-active, var(--text-normal))) var(--hr-bar-glow-op, 60%), transparent);
+}
+.hr-host.hr-bar-fade .hr-bar {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - var(--hr-bar-fade, 0%)), rgba(0, 0, 0, 0.1));
+  mask-image: linear-gradient(to left, #000 calc(100% - var(--hr-bar-fade, 0%)), rgba(0, 0, 0, 0.1));
+}
+.hr-host.hr-bar-fade.hr-left .hr-bar {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - var(--hr-bar-fade, 0%)), rgba(0, 0, 0, 0.1));
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--hr-bar-fade, 0%)), rgba(0, 0, 0, 0.1));
+}
+
+/* ---- 9.12.0: рамки окна структуры и подсказки ---- */
+.hr-host .hr-panel {
+  border: var(--hr-pb-w, 1px) solid color-mix(in srgb, var(--hr-pb-c, var(--background-modifier-border)) var(--hr-pb-op, 100%), transparent);
+}
+.hr-host .hr-preview {
+  border: var(--hr-vb-w, 1px) solid color-mix(in srgb, var(--hr-vb-c, var(--background-modifier-border)) var(--hr-vb-op, 100%), transparent);
+}
+.hr-host.hr-pv-pad .hr-preview { padding: var(--hr-pv-pad, 12px); }
+
+/* ---- 9.12.0: пункты структуры — шрифт, интервал, отступы, скругление, текст при наведении, фон по уровню ---- */
+.hr-host.hr-ol-font .hr-panel-item { font-family: var(--hr-ol-font); }
+.hr-host .hr-panel-item { line-height: var(--hr-ol-lh, 1.35); border-radius: var(--hr-ol-radius, 6px); }
+.hr-host.hr-ol-pady .hr-panel-item { padding-top: var(--hr-ol-pady, 4px); padding-bottom: var(--hr-ol-pady, 4px); }
+.hr-host.hr-ol-htext .hr-panel-item:hover,
+.hr-host.hr-ol-htext .hr-panel-item.is-hover { color: var(--hr-ol-htext); }
+.hr-host.hr-olb-1 .hr-panel-item.hr-lvl-1:not(:hover):not(.is-hover):not(.is-selected) { background-color: color-mix(in srgb, var(--hr-olb1) var(--hr-olb-op, 15%), transparent); }
+.hr-host.hr-olb-2 .hr-panel-item.hr-lvl-2:not(:hover):not(.is-hover):not(.is-selected) { background-color: color-mix(in srgb, var(--hr-olb2) var(--hr-olb-op, 15%), transparent); }
+.hr-host.hr-olb-3 .hr-panel-item.hr-lvl-3:not(:hover):not(.is-hover):not(.is-selected) { background-color: color-mix(in srgb, var(--hr-olb3) var(--hr-olb-op, 15%), transparent); }
+.hr-host.hr-olb-4 .hr-panel-item.hr-lvl-4:not(:hover):not(.is-hover):not(.is-selected) { background-color: color-mix(in srgb, var(--hr-olb4) var(--hr-olb-op, 15%), transparent); }
+.hr-host.hr-olb-5 .hr-panel-item.hr-lvl-5:not(:hover):not(.is-hover):not(.is-selected) { background-color: color-mix(in srgb, var(--hr-olb5) var(--hr-olb-op, 15%), transparent); }
+.hr-host.hr-olb-6 .hr-panel-item.hr-lvl-6:not(:hover):not(.is-hover):not(.is-selected) { background-color: color-mix(in srgb, var(--hr-olb6) var(--hr-olb-op, 15%), transparent); }
+
+/* ---- 9.12.0: строка поиска — шрифт, цвет текста и подсказки; фон кнопки режима ---- */
+.hr-host.hr-search-font .hr-side .hr-search input.hr-search-input { font-family: var(--hr-search-font); }
+.hr-host.hr-search-text .hr-side .hr-search input.hr-search-input { color: var(--hr-search-text); }
+.hr-host.hr-search-ph .hr-side .hr-search input.hr-search-input::placeholder { color: var(--hr-search-ph); opacity: 1; }
+.hr-host.hr-sbtn-bg .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-bg .hr-side .hr-search .hr-search-mode:active {
+  background-color: color-mix(in srgb, var(--hr-sbtn-bg, var(--hr-panel-bg, var(--background-primary))) var(--hr-sbtn-bg-op, 100%), transparent);
+}
+.hr-host.hr-sbtn-bg:not(.hr-mobile) .hr-side .hr-search .hr-search-mode:hover {
+  background-color: color-mix(in srgb, var(--hr-sbtn-bg-h, var(--hr-sbtn-bg, var(--hr-panel-bg, var(--background-primary)))) var(--hr-sbtn-bg-h-op, 100%), transparent);
+}
+.hr-host .hr-side .hr-search .hr-search-mode svg { transition: opacity 120ms ease, scale 120ms ease; }
+.hr-host:not(.hr-mobile) .hr-side .hr-search .hr-search-mode:hover svg { scale: var(--hr-sbtn-hs, 1); }
+
+/* ---- 9.12.0: вид меню действий ---- */
+.hr-host .hr-item-menu:not(.is-ghost) { box-shadow: var(--hr-menu-shadow, var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18))); }
+.hr-host:not(.hr-mobile) .hr-item-menu:not(.is-ghost):hover { box-shadow: var(--hr-menu-shadow-h, var(--hr-menu-shadow, var(--hr-panel-shadow, 0 6px 24px rgba(0, 0, 0, 0.18)))); }
+.hr-host.hr-menu-own .hr-item-menu:not(.is-ghost) {
+  background-color: color-mix(in srgb, var(--hr-menu-bg, var(--background-primary)) var(--hr-menu-bg-op, 100%), transparent);
+  border-radius: var(--hr-menu-radius, 6px);
+}
+.hr-host.hr-menu-own .hr-mi:not(.hr-mi-danger) {
+  background-color: color-mix(in srgb, var(--hr-mi-bg, var(--background-secondary)) var(--hr-mi-bg-op, 100%), transparent);
+  color: var(--hr-mi-text, var(--text-normal));
+}
+.hr-host.hr-menu-own .hr-mi:not(.hr-mi-danger):hover {
+  background-color: color-mix(in srgb, var(--hr-mi-bg-h, var(--background-modifier-hover)) var(--hr-mi-bg-h-op, 100%), transparent);
+  color: var(--hr-mi-text-h, var(--hr-mi-text, var(--text-normal)));
+}
+.hr-host.hr-menu-own .hr-mi { border-radius: var(--hr-mi-radius, 4px); }
+
+/* ---- 9.12.0: рамка плавающей кнопки; скругление полос прокрутки ---- */
+.hr-host .hr-float:not(.hr-float-noborder) {
+  border-width: var(--hr-float-bw, 1px);
+  border-color: var(--hr-float-bc, var(--background-modifier-border));
+}
+.hr-host .hr-sb-thumb { border-radius: var(--hr-sb-radius, calc(var(--hr-sb-w, 6px) / 2)); }
+.hr-host.hr-olsb-custom .hr-panel-list::-webkit-scrollbar-thumb { border-radius: var(--hr-olsb-radius, 8px); }
+.hr-host.hr-olsb-autohide.hr-olsb-custom .hr-panel-list:not(:hover)::-webkit-scrollbar-thumb { background-color: transparent; }
+/* общее поле: кнопка внутри поля прозрачная (!important выше) — свой фон кнопки рисуем поверх, со скруглением поля */
+.hr-host.hr-sbtn-bg.hr-sbtn-joined .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-bg.hr-sbtn-joined .hr-side .hr-search .hr-search-mode:active,
+.hr-host.hr-sbtn-bg.hr-sbtn-joined .hr-side .hr-search .hr-search-mode.is-active {
+  background-color: color-mix(in srgb, var(--hr-sbtn-bg, var(--hr-panel-bg, var(--background-primary))) var(--hr-sbtn-bg-op, 100%), transparent) !important;
+  border-radius: 0 calc(var(--hr-search-r, 16px) - var(--hr-sb-bw, 1px)) calc(var(--hr-search-r, 16px) - var(--hr-sb-bw, 1px)) 0 !important;
+}
+.hr-host.hr-sbtn-bg.hr-sbtn-joined:not(.hr-mobile) .hr-side .hr-search .hr-search-mode:hover {
+  background-color: color-mix(in srgb, var(--hr-sbtn-bg-h, var(--hr-sbtn-bg, var(--hr-panel-bg, var(--background-primary)))) var(--hr-sbtn-bg-h-op, 100%), transparent) !important;
+  border-radius: 0 calc(var(--hr-search-r, 16px) - var(--hr-sb-bw, 1px)) calc(var(--hr-search-r, 16px) - var(--hr-sb-bw, 1px)) 0 !important;
+}
+.hr-host.hr-sbtn-bg.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode,
+.hr-host.hr-sbtn-bg.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode:hover,
+.hr-host.hr-sbtn-bg.hr-sbtn-joined.hr-sbtn-left .hr-side .hr-search .hr-search-mode:active {
+  border-radius: calc(var(--hr-search-r, 16px) - var(--hr-sb-bw, 1px)) 0 0 calc(var(--hr-search-r, 16px) - var(--hr-sb-bw, 1px)) !important;
+}
+/* 9.12.0: «Цвета, которые сейчас используются» — образец цвета у названия */
+.hr-col-used .setting-item-name { display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.hr-col-swatch {
+  width: 18px; height: 18px; flex: 0 0 auto;
+  border-radius: 5px;
+  border: 1px solid var(--background-modifier-border);
+}
+/* 9.13.0: недавно применённые стили и эффекты в «Готовых наборах» */
+.hr-looks-box.setting-item { display: block; padding: 4px 0 8px; }
+.hr-looks-box .hr-trash-row { padding: 5px 0; gap: 6px; margin: 0 !important; }
+.hr-looks-box .hr-trash-row:first-child { border-top: none; }
+.hr-looks-box .hr-trash-title { font-size: 13px; }
+.hr-looks-box .hr-trash-meta { font-size: 11px; color: var(--text-faint); }
+.hr-looks-box .hr-trash-row .hr-btn { font-size: 11px; padding: 2px 8px; flex: 0 0 auto; }
+.hr-looks-box .hr-looks-all { margin-top: 6px; font-size: 12px; }
+
+/* ======================= 9.14.0 ======================= */
+/* Свой CSS, картинки и шрифты; вставка кода в строку поиска настроек */
+.hr-css-row.setting-item, .hr-assets-row.setting-item { flex-wrap: wrap; }
+.hr-css-edit, .hr-assets-list { flex: 1 0 100%; display: flex; flex-direction: column; gap: 6px; margin-top: 8px; min-width: 0; }
+.hr-css-box {
+  width: 100%; min-height: 160px; resize: vertical;
+  font-family: var(--font-monospace); font-size: 12px; line-height: 1.5;
+  tab-size: 2; white-space: pre;
+}
+.hr-css-status { font-size: 12px; color: var(--text-muted); }
+.hr-css-status.is-bad { color: var(--text-error); }
+.hr-css-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.hr-css-help { font-size: 12px; color: var(--text-muted); }
+.hr-css-help summary { cursor: pointer; }
+.hr-css-help ul { margin: 6px 0; padding-left: 18px; }
+.hr-css-help code { font-size: 11px; }
+.hr-assets-list { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+.hr-assets-empty { font-size: 12px; color: var(--text-faint); }
+.hr-asset {
+  display: flex; flex-direction: column; gap: 4px; width: 132px;
+  padding: 6px; border-radius: 8px; border: 1px solid var(--background-modifier-border);
+}
+.hr-asset .hr-btn { font-size: 11px; padding: 2px 8px; align-self: flex-start; }
+.hr-asset-name { font-size: 11px; color: var(--text-muted); overflow-wrap: anywhere; }
+.hr-img-thumb {
+  width: 100%; height: 72px; border-radius: 6px;
+  background-size: cover; background-position: center; background-color: var(--background-secondary);
+}
+.setting-item-description .hr-img-thumb { width: 120px; height: 56px; margin-top: 6px; }
+.hr-font-sample { font-size: 20px; line-height: 1.2; color: var(--text-normal); }
+.hr-font-other { width: 180px; }
+.hr-paste-banner {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 6px 0 0; padding: 8px 10px; border-radius: 8px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  border-left: 3px solid var(--color-green, var(--interactive-accent));
+  font-size: 13px;
+}
+.hr-paste-banner-text { flex: 1 1 200px; min-width: 0; }
+.hr-share-assets.hr-hidden { display: none; }
+
+/* ======================= 9.15.0 ======================= */
+/* Настройки в боковой панели: тот же экран, сверху — лента разделов */
+.hr-side-settings,
+.workspace-leaf-content[data-type="heading-rail-settings"] .view-content.hr-side-settings { padding: 0 12px 24px !important; }
+.hr-side-settings .hr-settings-root .hr-settings-head { margin-left: -12px; margin-right: -12px; padding-left: 12px; padding-right: 12px; }
+.hr-side-nav { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.hr-side-chips {
+  display: flex; gap: 6px; overflow-x: auto; overscroll-behavior-x: contain;
+  padding-bottom: 2px; scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12px, #000 calc(100% - 12px), transparent 100%);
+}
+.hr-side-chips::-webkit-scrollbar { display: none; }
+.hr-side-chip {
+  flex: 0 0 auto; white-space: nowrap;
+  font-size: 12px; padding: 3px 10px; height: auto;
+  border-radius: 999px; box-shadow: none;
+  background-color: var(--background-secondary); color: var(--text-muted);
+  border: 1px solid var(--background-modifier-border);
+}
+.hr-side-chip.is-open { background-color: var(--interactive-accent); color: var(--text-on-accent); border-color: transparent; }
+.hr-side-tools { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--text-muted); }
+.hr-side-tools .hr-btn { font-size: 12px; padding: 2px 10px; }
+.hr-side-one { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+.hr-side-settings .setting-item { flex-wrap: wrap; }
+.hr-side-settings .setting-item-control { flex-wrap: wrap; justify-content: flex-end; }
+.hr-side-redirect { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 12px 0; }
+.hr-side-redirect p { flex: 1 0 100%; margin: 0 0 4px; }
+/* 9.16.0: история в боковой панели */
+.workspace-leaf-content[data-type="heading-rail-history"] .view-content.hr-side-history { padding: 8px 12px 24px; }
+.hr-side-history .hr-trash-modal .hr-trash-title-main { margin-top: 4px; }
+
+/* ======================= 9.17.0 ======================= */
+
+/* Меню действий в узком окне (автор): не помещается сбоку рядом — кнопки столбиком, и с текстом тоже;
+   не помещается и столбик — меню поверх дальнего края структуры. Список «ещё» раскрывается в сторону
+   структуры, а не за край окна. */
+.hr-item-menu.hr-menu-vert {
+  flex-direction: column;
+  align-items: stretch;
+}
+.hr-item-menu.hr-menu-vert .hr-mi-level {
+  flex-direction: column;
+  align-self: center;
+}
+.hr-item-menu.hr-menu-vert > .hr-mi:not(.hr-mi-icon) {
+  text-align: left;
+}
+.hr-item-menu.hr-menu-vert[data-dir="left"]:not(.hr-menu-over) .hr-mi-more,
+.hr-item-menu.hr-menu-over[data-dir="left"] .hr-mi-more {
+  right: auto;
+  left: 0;
+}
+.hr-item-menu.hr-menu-over { z-index: 16; }
+
+/* Подсказка под структурой или над ней (автор): сбоку места нет — структура у полосок не открывается на всю
+   высоту, а встаёт от верхнего края (или от нижнего, если подсказка над ней), оставляя место подсказке.
+   translate складывается с transform: −50 % центровки + 50 % = верхний край ровно на --hr-stk-top. */
+.hr-host.hr-pv-stack:not(.hr-float-mode):not(.hr-mobile) .hr-side {
+  top: var(--hr-stk-top, 8px) !important;
+  max-height: var(--hr-stk-h, 60%) !important;
+  translate: 0 50%;
+}
+.hr-host.hr-pv-stack.hr-pv-stack-above:not(.hr-float-mode):not(.hr-mobile) .hr-side {
+  translate: 0 -50%;
+}
+.hr-preview.hr-pv-stacked {
+  overflow: hidden;
+}
+
+/* ======================= 10.0.0 ======================= */
+
+/* Метки у пунктов: свой шрифт, толщина и еле заметная подсветка (включаются, только если заданы) */
+.hr-host.hr-mark-font .hr-item-tasks,
+.hr-host.hr-mark-font .hr-item-kids,
+.hr-host.hr-mark-font .hr-panel-item .hr-item-bm { font-family: var(--hr-mark-font, inherit); }
+.hr-host.hr-mark-weight .hr-item-tasks,
+.hr-host.hr-mark-weight .hr-item-kids,
+.hr-host.hr-mark-weight .hr-panel-item .hr-item-bm { font-weight: var(--hr-mark-weight, 400); }
+.hr-host.hr-mark-glow .hr-item-tasks,
+.hr-host.hr-mark-glow .hr-item-kids,
+.hr-host.hr-mark-glow .hr-panel-item .hr-item-bm { box-shadow: var(--hr-mark-glow, none); }
+/* заливка значка закрепления — как у меток задач */
+.hr-host .hr-panel-item.is-bookmarked .hr-item-bm {
+  background-color: color-mix(in srgb, var(--hr-bm-fill, transparent) var(--hr-bm-fill-op, 0%), transparent);
+}
+/* закреплённые вверху списка — свои фон, текст, рамка */
+.hr-host.hr-chip-own .hr-bm-chip {
+  background-color: color-mix(in srgb, var(--hr-chip-bg, var(--background-modifier-hover)) var(--hr-chip-bg-op, 100%), transparent);
+  color: var(--hr-chip-text, var(--text-normal));
+  border-color: var(--hr-chip-border, var(--background-modifier-border));
+}
+.hr-host.hr-chip-own .hr-bm-chip:hover { border-color: var(--interactive-accent, var(--text-accent)); }
+/* крестик открепления — свой цвет */
+.hr-host .hr-pin-trash { color: var(--hr-bm-x, var(--text-muted)); }
+/* плавающая кнопка, пока структура открыта: свой значок и тонкая рамка */
+.hr-host .hr-float.is-open:not(:hover) { color: var(--hr-float-fg-on, var(--hr-float-fg, var(--text-muted))); }
+.hr-host .hr-float.is-open:not(.hr-float-noborder) { border-color: var(--hr-float-bc-on, var(--hr-float-bc, var(--background-modifier-border))); }
+/* закреплённые вверху — шрифтом структуры (автор: «шрифт меняли только меткам») */
+.hr-host .hr-bm-chip { font-family: var(--hr-ol-font, inherit); }
+/* структура у полосок в узком окне не уходит за левый край: не шире, чем осталось от полосок до края */
+.hr-host:not(.hr-float-mode):not(.hr-mobile):not(.hr-outline-apart):not(.hr-left) .hr-side {
+  max-width: calc(100% - var(--hr-rail-off, 0px) - var(--hr-rail-w, 56px) - var(--hr-panel-gap, 8px) - var(--hr-panel-shift, 0px) - 8px);
+}
+.hr-host.hr-left:not(.hr-float-mode):not(.hr-mobile):not(.hr-outline-apart) .hr-side {
+  max-width: calc(100% - var(--hr-rail-off, 0px) - var(--hr-rail-w, 56px) - var(--hr-panel-gap, 8px) - var(--hr-panel-shift, 0px) - 8px);
+}
+
+/* ======================= 10.1.0 ======================= */
+
+/* Ячейки уровня «с глубиной»: каждая следующая темнее (поверх своей заливки); под курсором — светлеет */
+.hr-host.hr-seg-depth .hr-seg-cell[data-n="2"] { --hr-seg-deep: 0.10; }
+.hr-host.hr-seg-depth .hr-seg-cell[data-n="3"] { --hr-seg-deep: 0.20; }
+.hr-host.hr-seg-depth .hr-seg-cell[data-n="4"] { --hr-seg-deep: 0.30; }
+.hr-host.hr-seg-depth .hr-seg-cell[data-n="5"] { --hr-seg-deep: 0.40; }
+.hr-host.hr-seg-depth .hr-seg-cell[data-n="6"] { --hr-seg-deep: 0.50; }
+.hr-host.hr-seg-depth .hr-seg-cell {
+  background-image: linear-gradient(rgba(0, 6, 30, var(--hr-seg-deep, 0)), rgba(0, 6, 30, var(--hr-seg-deep, 0)));
+}
+.hr-host.hr-seg-depth .hr-lvl-hov .hr-seg-cell:hover { background-image: none; }
+
+/* ---------------- 10.3.0: каталог сборок, эффектов и CSS ---------------- */
+.modal.hr-mk-modal { width: min(1080px, 94vw); max-width: 94vw; height: min(860px, 90vh); display: flex; flex-direction: column; }
+.modal.hr-mk-modal .modal-content { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+.hr-mk-top { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.hr-mk-search { flex: 1 1 240px; min-width: 0; height: 34px; }
+.hr-mk-seg { display: inline-flex; border: 1px solid var(--background-modifier-border); border-radius: 8px; overflow: hidden; }
+.hr-mk-segbtn { border: 0; border-radius: 0; box-shadow: none; background: transparent; padding: 0 12px; height: 32px; color: var(--text-muted); }
+.hr-mk-segbtn.is-active { background: var(--interactive-accent); color: var(--text-on-accent); }
+.hr-mk-refresh { height: 32px; width: 32px; display: inline-flex; align-items: center; justify-content: center; }
+.hr-mk-chips { display: flex; gap: 6px; flex-wrap: wrap; margin: 10px 0 4px; }
+.hr-mk-chip { display: inline-flex; gap: 6px; align-items: center; height: 28px; padding: 0 12px; border-radius: 14px; font-size: var(--font-ui-small); background: var(--background-modifier-hover); box-shadow: none; color: var(--text-normal); }
+.hr-mk-chip.is-active { background: var(--interactive-accent); color: var(--text-on-accent); }
+.hr-mk-count { opacity: 0.7; font-variant-numeric: tabular-nums; }
+.hr-mk-status { font-size: var(--font-ui-smaller); color: var(--text-faint); margin: 2px 0 10px; }
+.hr-mk-status.is-off { color: var(--text-warning, var(--color-orange)); }
+.hr-mk-grid { flex: 1 1 auto; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); grid-auto-rows: max-content; gap: 14px; align-content: start; padding: 2px 4px 12px 2px; }
+.hr-mk-empty { grid-column: 1 / -1; color: var(--text-muted); padding: 40px 0; text-align: center; }
+.hr-mk-card { display: flex; flex-direction: column; flex-shrink: 0; min-height: min-content; border: 1px solid var(--background-modifier-border); border-radius: 12px; overflow: hidden; background: var(--background-primary-alt, var(--background-secondary)); }
+.hr-mk-shot { position: relative; flex: 0 0 auto; height: 0; padding-top: 62.5%; background: var(--background-secondary); overflow: hidden; }   /* 16:10 без aspect-ratio — иначе сетка сжимала строки */
+.hr-mk-shot.is-loading::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, var(--background-modifier-hover), transparent); animation: hr-mk-shine 1.2s linear infinite; }
+@keyframes hr-mk-shine { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+.hr-mk-shot img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; display: block; cursor: zoom-in; }
+.hr-mk-dots { position: absolute; left: 0; right: 0; bottom: 6px; display: flex; justify-content: center; gap: 6px; }
+.hr-mk-dot { width: 9px; height: 9px; min-height: 0; padding: 0; border-radius: 50%; border: 0; box-shadow: 0 0 0 1px rgba(0,0,0,.35); background: rgba(255,255,255,.55); }
+.hr-mk-dot.is-active { background: #fff; }
+.hr-mk-body { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px 12px; flex: 1 0 auto; }
+.hr-mk-head { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; }
+.hr-mk-name { font-weight: 600; font-size: 1.02em; line-height: 1.3; min-width: 0; text-wrap: balance; }
+.hr-mk-badges { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; flex: 0 0 auto; max-width: 55%; }
+.hr-mk-badge { font-size: var(--font-ui-smaller); line-height: 1; padding: 4px 7px; border-radius: 6px; background: var(--background-modifier-hover); color: var(--text-muted); white-space: nowrap; }
+.hr-mk-badge.is-kind { background: transparent; border: 1px solid var(--background-modifier-border); }
+.hr-mk-badge.is-on { background: var(--interactive-accent); color: var(--text-on-accent); }
+.hr-mk-badge.is-upd, .hr-mk-badge.is-new { background: var(--color-green, #3a3); color: #fff; }
+.hr-mk-desc { font-size: var(--font-ui-small); color: var(--text-muted); line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+.hr-mk-desc.is-open { -webkit-line-clamp: unset; display: block; }
+.hr-mk-meta { display: flex; gap: 10px; flex-wrap: wrap; font-size: var(--font-ui-smaller); color: var(--text-faint); }
+.hr-mk-acts { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: auto; padding-top: 4px; }
+.hr-mk-btn.is-busy { opacity: 0.6; pointer-events: none; }
+.hr-mk-state { font-size: var(--font-ui-small); color: var(--interactive-accent); font-weight: 600; }
+.hr-mk-need { font-size: var(--font-ui-small); color: var(--text-warning, var(--color-orange)); }
+.hr-mk-del { margin-left: auto; }
+.hr-mk-foot { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: var(--font-ui-smaller); color: var(--text-faint); padding-top: 8px; border-top: 1px solid var(--background-modifier-border); }
+.hr-mk-link { background: transparent; box-shadow: none; border: 0; padding: 0; height: auto; color: var(--text-accent); cursor: pointer; font-size: inherit; }
+.hr-mk-light { position: absolute; inset: 0; z-index: 5; background: rgba(0,0,0,.82); display: flex; align-items: center; justify-content: center; cursor: zoom-out; padding: 12px; }
+.hr-mk-light img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
+.hr-mk-light.hr-hidden { display: none; }
+.is-phone .modal.hr-mk-modal { width: 100vw; max-width: 100vw; height: 100%; }
+.is-phone .hr-mk-grid { grid-template-columns: 1fr; }
+.setting-item.hr-mk-entry { border: 1px solid var(--interactive-accent); border-radius: 10px; padding: 12px 14px; margin: 6px 0 10px; }
+.hr-settings-tab.hr-mk-tabbtn { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; }
+.hr-mk-tabicon { display: inline-flex; }
+.hr-mk-tabicon svg { width: 15px; height: 15px; }
+.hr-mk-shot { cursor: zoom-in; }
+.hr-mk-noshot { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 12px; text-align: center; font-size: var(--font-ui-small); color: var(--text-faint); }
+.hr-mk-lnav { position: absolute; top: 50%; transform: translateY(-50%); width: 44px; height: 64px; font-size: 34px; line-height: 1; border: 0; border-radius: 10px; background: rgba(0,0,0,.45); color: #fff; box-shadow: none; cursor: pointer; }
+.hr-mk-lnav.is-prev { left: 16px; }
+.hr-mk-lnav.is-next { right: 16px; }
+.hr-mk-lcount { position: absolute; bottom: 14px; left: 0; right: 0; text-align: center; color: #fff; font-size: var(--font-ui-small); text-shadow: 0 1px 4px rgba(0,0,0,.7); }
+/* 10.4.0: снимок с телефона — высокий, целиком по ширине карточки, сверху */
+.hr-mk-shot.is-phone { padding-top: 179.5%; background: #000; }
+.hr-mk-shot.is-phone img { object-fit: cover; object-position: top center; }
+.hr-mk-light img { max-height: 100%; }
