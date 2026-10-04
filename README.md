@@ -1,299 +1,323 @@
-# Heading Rail
+<h1 align="center">Heading Rail</h1>
 
-**Heading Rail is a table of contents and heading navigator for Obsidian.** Instead of a flat list, every heading in your note becomes a short bar docked to the edge of the page. The rail tracks where you are as you scroll, reacts to the cursor with a fully configurable wave, opens into a searchable outline, lets you scrub through the document by dragging, and can copy or delete whole sections with a history to restore them. It works on desktop and on mobile, with separate settings for each.
+<p align="center">
+<b>Your note's structure, always within reach.</b><br>
+Every heading becomes a bar at the edge of the note — a live map you can glide along,<br>
+open into a full outline, search and edit.
+</p>
 
-*[English](#heading-rail) · [Русский](#русский)*
+<p align="center">
+<a href="https://github.com/JustDast/obsidian-heading-rail/blob/main/GUIDE.md"><b>📘 Guide</b></a>
+&nbsp;·&nbsp;
+<a href="https://github.com/JustDast/obsidian-heading-rail/blob/main/SETTINGS.md"><b>⚙️ Every setting</b></a>
+&nbsp;·&nbsp;
+<a href="#the-catalog"><b>🎨 Catalog</b></a>
+&nbsp;·&nbsp;
+<a href="#whats-new"><b>🆕 What's new</b></a>
+&nbsp;·&nbsp;
+<a href="#installation"><b>⬇️ Install</b></a>
+</p>
 
-![The rail beside a long note, with the wave under the cursor](screenshots/hr-wave.png)
-
-## What it is for
-
-Long notes are hard to move around in. Obsidian's built-in outline is a list in a sidebar: it tells you what headings exist, but not where you are, and it takes a whole pane to do it. Heading Rail puts the structure of the note right beside the text, at the size of a scrollbar, and turns it into something you navigate with rather than just look at.
-
-It is built for people who lean on headings: long documents, research notes, specifications, books in progress, knowledge bases where a single note runs to dozens of sections.
-
-## Rebuilt from the ground up
-
-The wave that runs through the bars under your cursor used to be a fixed effect with a couple of sliders bolted onto it. It isn't anymore — the whole animation engine was rewritten from scratch, and on top of it sits one of the deepest customization systems you'll find in an Obsidian plugin. Almost nothing about how the rail moves, looks, or reacts is hardcoded; it's a setting.
-
-Shape, length, colour, opacity and thickness of the wave; where the highlight sits and how it travels when you jump to another section; where the rail lives on the page and how far it sits from the edge; how everything looks in a light theme versus a dark one — all of it can be reshaped. If you've seen a hover animation somewhere else and thought "I wish mine did that," odds are good you can build it here with sliders alone, no code involved. And once you land on a combination you like, you can save it and share it — there's a whole system built for exactly that, described further down.
-
-The goal wasn't to add one more fixed-look animation for people to admire. It was to make something flexible enough that everyone who uses it ends up with a rail that's actually theirs.
-
-## At a glance
-
-| | |
-|---|---|
-| Live tracking of the current section while scrolling | Yes |
-| Hover wave with every parameter adjustable — shape, length, colour, opacity, thickness, motion | Yes |
-| Halo around the current section that travels when the section changes | Yes |
-| Searchable outline panel, pinned or peeked with Ctrl | Yes |
-| Drag-to-scroll (scrubbing) with the mouse, the space bar, or a finger | Yes |
-| Preview card with the start of each section | Yes |
-| Select, copy and delete whole sections, with a restore history | Yes |
-| Several columns of bars on very long notes | Yes |
-| Separate desktop and mobile profiles, linkable setting by setting | Yes |
-| Ready-made styles, and a way to send in your own | Yes |
-| Interface in English, German, French, Russian, Japanese, Korean and Hindi | Yes |
-| Follows light and dark themes without configuration | Yes |
-| Network access, accounts, telemetry | None |
-
-## Features
-
-### The rail
-
-Every heading is a bar; its length reflects the heading level, so the shape of the document is visible at a glance. The bar for the section you are reading is highlighted and follows you as you scroll. Two short marks at the ends stand for the start and the end of the note. On notes too long for one column, the rail splits into several.
-
-![The rail at rest: the current section lit, with the halo around it](screenshots/hr-rail.png)
-
-### The wave
-
-Pointing at the rail sends a wave through the bars around the cursor. The wave is not a fixed effect: it is built from a small number of independent parts, and each one can be changed on its own. The shape can be a bell, a sharp peak, a flat plateau, an arc, a wedge, a hard step, a ripple, or a shape you draw yourself bar by bar in pixels. It can snap to one bar at a time or follow the cursor freely. It can catch up instantly or with a spring that overshoots and settles. Length, colour, opacity and thickness each travel from their own resting value to their own peak value. One master slider sets how loudly all of it plays.
-
-The point is that any hover animation you have seen elsewhere can be rebuilt here from settings alone, and so can ones nobody has made yet.
-
-### Highlighting where you are
-
-The current bar can be highlighted always, only while you point at the rail, or not at all. Around it sits a halo: you choose how many bars it covers and how bright each step is, mirrored above and below. When the current section changes, the whole halo travels to the new place with its own speed, overshoot and trail, instead of jumping.
-
-### The outline
-
-Right-click a bar, or use the toolbar button, to pin the outline open beside the rail; hold Ctrl to peek at it for as long as the key is down. The outline has its own search field, keeps the current section centred, and shows a marker for the part of the rail it covers.
-
-![The pinned outline with search](screenshots/hr-outline.png)
-
-### Preview
-
-Hovering a bar shows a card with the heading and the first lines of its section, so you can find the right place without scrolling there. Its distance from the rail, width, fonts, sizes, weights, line spacing and colours are all adjustable.
-
-![Preview card beside the rail](screenshots/hr-preview.png)
-
-### Moving through the note
-
-Click a bar to jump to its heading; choose whether the heading lands at the top of the screen, a third of the way down, or in the middle. Hold the mouse button and drag along the rail to scrub through the note the way you would along a video timeline, or hold Space and just move the cursor. The mouse wheel over the rail moves several times faster than over the text.
-
-### Sections as units
-
-Select a section in the outline, a range with Shift, or scattered sections with Alt, then copy or delete them together. A section is its heading plus everything below it down to the next heading of the same or higher level. Every deletion goes into a history with one-click restore.
-
-![Several sections selected, with the Copy, Delete and Cancel menu](screenshots/hr-sections.png)
-
-### Mobile
-
-Everything works on phones and tablets, with touch in place of hover: tap a bar to jump, drag a finger along the rail to scrub, long-press to open the outline or select. The mobile profile only shows settings that actually do something on a touchscreen. If Obsidian's own edge-swipe gesture gets in the way on your device, the plugin can be switched off for phones alone while it keeps working on desktop.
-
-![The rail and the outline on a phone](screenshots/hr-mobile.png)
-
-### Settings and styles
-
-The settings are split into Desktop and Mobile tabs. Each mobile setting has a chain button that makes it follow the desktop value, one setting at a time. Sections fold away, so the few controls that matter most are visible first and the fine tuning stays out of the way.
-
-A **style** is a complete set of values applied at once. The plugin ships with one, **Base**, which is on from the moment you install it. Styles made by other people will be added to the list after review: if you have arrived at something good, the Share button puts your settings into an email for you to send.
-
-![Settings: your own wave shape, step by step in pixels](screenshots/hr-custom-shape.png)
-![Ready-made styles with Base switched on](screenshots/hr-styles.png)
-
-Colours left empty come from your theme, so the rail looks right in light and dark themes without any setup. Colours that come from a style are adjusted automatically if they would disappear against your theme. Colours you set yourself are left exactly as you set them.
-
-## Usage
-
-| Action | Desktop | Mobile |
-|---|---|---|
-| Jump to a section | Click a bar | Tap a bar |
-| Scrub through the note | Drag along the rail, or hold Space and move | Drag a finger along the rail |
-| Peek at the outline | Hold Ctrl | — |
-| Pin the outline | Right-click a bar, or the toolbar button | Long-press a bar, or the toolbar button |
-| Step between headings | Arrow keys over the rail with the outline open, or Ctrl + arrows anywhere | — |
-| Select sections | Shift-click for a range, Alt-click to add or remove | Long-press, then tap to add or remove |
-| Copy or delete | Right-click a selected entry | Long-press a selected entry |
-| Restore a deletion | History button in the note toolbar | Same |
-
-The full walkthrough is in the guide: [English](GUIDE.md) · [Русский](GUIDE.ru.md).
-
-## Install
-
-From Obsidian: **Settings → Community plugins → Browse**, search for **Heading Rail**, install and enable. Or open the plugin's page on [Obsidian's community site](https://obsidian.md/plugins?id=heading-rail) and use **Add to Obsidian**.
-
-Manually:
-
-1. Download `manifest.json`, `main.js` and `styles.css` from the latest [release](../../releases).
-2. Put them in `<your vault>/.obsidian/plugins/heading-rail/`.
-3. Restart Obsidian and enable **Heading Rail** under Settings → Community plugins.
-
-## About deletion
-
-This is the one feature that changes your files. Before every deletion the plugin checks that the outline still matches the file on disk and refuses to write if the file changed while the operation was running. Deleted sections go into a history with one-click restore, and Obsidian's own undo also works. Still — it deletes text, so treat it with the respect that deserves.
-
-## Privacy
-
-The plugin makes no network requests, has no accounts and collects nothing. The Share button only opens your own mail app with a letter you can read before sending; it contains the plugin's settings and nothing from your vault.
-
-## Contributing
-
-Made a fork that's genuinely better? Send me the source and tell me how you did it. If it really is better, I'll ship it in the next version and credit you as a co-author. I may rework your code along the way, but if it served as the basis, you get the credit regardless.
-
-Ideas for this plugin, or for another one, are welcome at **lavrowws@gmail.com**.
-
-## Development
-
-Plain JavaScript, no bundler. `core.js` holds all the logic and `styles.css` all the appearance; `build.py` assembles `main.js` from the two and embeds a fallback copy of the styles, so the plugin still renders if `styles.css` fails to load.
-
-```
-python3 build.py
-```
-
-Edit `core.js` and `styles.css` — never `main.js`, it is generated.
-
-## License
-
-[MIT](LICENSE)
+<p align="center">
+<img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/hero.gif" width="660" alt="Heading Rail in Standard, Higanbana and Depth: the wave follows the cursor along the bars, the preview card glides from section to section, a click takes the note there">
+</p>
+<p align="center"><sub>Standard → Higanbana → Depth: the wave follows the cursor, the preview card glides from section to section, a click takes the note there.</sub></p>
 
 ---
 
-# Русский
+## Looks
 
-**Heading Rail — это оглавление и навигатор по заголовкам для Obsidian.** Вместо плоского списка каждый заголовок заметки становится короткой полоской у края страницы. Рельс сам отслеживает, где вы находитесь при прокрутке, откликается на курсор волной, которую можно настроить целиком, раскрывается в структуру с поиском, даёт листать документ протяжкой и умеет копировать и удалять целые разделы с историей для восстановления. Работает на компьютере и на телефоне, с отдельными настройками для каждого.
+Seven looks to start from. **Standard** comes with the plugin; the other six download from the [catalog](#the-catalog) with one click. A look is only a starting point — after applying it, every colour, size and movement is still yours to change, separately for the desktop and the phone.
 
-![Рельс рядом с длинной заметкой, волна под курсором](screenshots/hr-wave.png)
+<table>
+<tr>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-higanbana.png" alt="Higanbana preset"><br><b>Higanbana</b> — Japanese dark fantasy: glowing scarlet bars, a painting of spider lilies behind the outline and the preview, near-black buttons.</td>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-depth.png" alt="Depth preset"><br><b>Depth</b> — deep sea: one underwater picture across the outline, the search box and the preview, bars from light to dark blue, a smooth arched wave.</td>
+</tr>
+<tr>
+<td valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-base.png" alt="Standard preset"><br><b>Standard</b> — the default: thin bars on the right in your Obsidian theme's colours and a soft wave. Built in.</td>
+<td valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-graphite.png" alt="Funkier preset"><br><b>Funkier</b> — bars on the left, thicker and longer, a shorter and sharper wave, the actions menu below. Colours from the theme.</td>
+</tr>
+<tr>
+<td valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-trial-contrast.png" alt="Racer preset"><br><b>Racer</b> — crisp and high-contrast: thick bars, a blue wave, the current section in red, no animations.</td>
+<td valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-trial-terminal.png" alt="Terminal preset"><br><b>Terminal</b> — like an old terminal: black background, green bars and text, a monospace font.</td>
+</tr>
+<tr>
+<td valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/look-trial-paper.png" alt="Paper preset"><br><b>Paper</b> — light, like paper: thin grey lines on the left, a warm background, a book font.</td>
+<td valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/custom-background.png" alt="The outline with your own background picture and font"><br><b>Your own</b> — your CSS, background pictures (GIFs too) and any font. Share the result as a file or a code anyone can paste.</td>
+</tr>
+</table>
 
-## Для чего он
+**On the phone** — the same looks, adapted only where a phone needs it:
 
-По длинным заметкам трудно перемещаться. Встроенная структура Obsidian — это список в боковой панели: она показывает, какие заголовки есть, но не показывает, где вы сейчас, и занимает под это целую панель. Heading Rail ставит структуру заметки прямо рядом с текстом, размером с полосу прокрутки, и превращает её в то, чем перемещаются, а не на что смотрят.
+<p align="center"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/looks-phone.png" alt="The seven presets on a phone: Standard, Funkier, Racer, Terminal, Paper, Higanbana, Depth"></p>
+<p align="center"><sub>Standard · Funkier · Racer · Terminal · Paper · Higanbana · Depth</sub></p>
 
-Он сделан для тех, кто опирается на заголовки: длинные документы, исследовательские заметки, спецификации, книги в работе, базы знаний, где одна заметка тянется на десятки разделов.
+---
 
-## Переписан с нуля
+## The catalog
 
-Волна, что бежит по полоскам под курсором, раньше была готовым эффектом с парой прикрученных к нему ползунков. Теперь это не так — весь движок анимации переписан с нуля, а поверх него выстроена, пожалуй, самая глубокая система настройки, какая есть у плагинов для Obsidian. Почти ничего в том, как рельс двигается, выглядит и откликается, не зашито в код намертво — это настройка.
+Presets, effects and CSS add-ons live in a catalog right inside the plugin. Open it with the **Catalog** button at the top of the settings (next to *Desktop / Mobile*) or with the command *Open the catalog of presets and effects*.
 
-Форма, длина, цвет, прозрачность и толщина волны; где стоит подсветка и как она переезжает, когда вы переходите к другому разделу; где рельс живёт на странице и на каком расстоянии от края; как всё это выглядит в светлой теме и в тёмной — всё это можно перекроить. Если вы видели где-то анимацию при наведении и думали «вот бы и у меня так было» — скорее всего, её можно собрать здесь одними ползунками, без единой строчки кода. А если получилось что-то по-настоящему удачное, это можно сохранить и отправить дальше — под это тоже есть целая система, о ней ниже.
+- Every card has a screenshot from the desktop and one from the phone, a description in your language and the author's name.
+- **Download**, then **Apply** — one button each, on the desktop and on the phone. Nothing to copy by hand.
+- Search by name, description and keywords; filter *Presets*, *Effects*, *CSS*, *Downloaded*.
+- **New looks appear without updating the plugin** — the catalog is read from this repository.
+- Downloaded items are kept as files in the plugin's folder. What you applied on one device downloads by itself on the other.
 
-Задача была не в том, чтобы добавить ещё одну красивую, но неизменную анимацию, которой можно полюбоваться. Задача была сделать её настолько гибкой, чтобы у каждого в итоге получился рельс, который по-настоящему свой.
+<table>
+<tr>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/catalog.png" alt="The catalog with desktop screenshots"><br><sub>The catalog on the desktop.</sub></td>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/catalog-phone.png" alt="The catalog with phone screenshots"><br><sub><i>Mobile</i> chosen: the same cards with phone screenshots.</sub></td>
+</tr>
+</table>
 
-## Коротко
+### Effects
 
-| | |
+An effect goes on top of any preset and changes only its own few settings. **Remove** puts back exactly what was there before — even if you changed those settings by hand since.
+
+<p align="center"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/effects-wave.png" width="620" alt="Three wave effects side by side"></p>
+<p align="center"><sub>Wave effects, left to right: <i>Wave and trail — as in “Standard”</i>, <i>as in “Funkier”</i>, <i>Calm wave</i>.</sub></p>
+
+<p align="center"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/effects-level.png" width="620" alt="Two level-scale effects on the preview card"></p>
+<p align="center"><sub><i>Level as in “Higanbana”</i> and <i>Level as in “Depth”</i> — the level scale of the preview card, everything except colours.</sub></p>
+
+| Effect | What it changes |
 |---|---|
-| Отслеживание текущего раздела при прокрутке | Да |
-| Волна при наведении, настраивается каждый параметр — форма, длина, цвет, прозрачность, толщина, движение | Да |
-| Ореол вокруг текущего раздела, переезжающий при его смене | Да |
-| Структура с поиском, закреплённая или открытая удержанием Ctrl | Да |
-| Протяжка по документу мышью, пробелом или пальцем | Да |
-| Подсказка с началом каждого раздела | Да |
-| Выделение, копирование и удаление целых разделов с историей восстановления | Да |
-| Несколько столбцов полосок на очень длинных заметках | Да |
-| Отдельные профили для компьютера и телефона, связываемые по одной настройке | Да |
-| Готовые наборы настроек и возможность прислать свой | Да |
-| Интерфейс на английском, немецком, французском, русском, японском, корейском и хинди | Да |
-| Подстраивается под светлую и тёмную тему без настройки | Да |
-| Сеть, учётные записи, сбор данных | Нет |
+| **Wave and trail — as in “Standard”** | Everything about the bars and the wave except colours, as in Standard. |
+| **Wave and trail — as in “Funkier”** | Thick bars, a shorter and sharper wave, the halo and the current bar's travel, as in Funkier. |
+| **Calm wave** | Softer and slower: a wider, lower wave with no overshoot. |
+| **Level as in “Higanbana”** | Six numbered cells in a row on the preview card. Shape and sizes only. |
+| **Level as in “Depth”** | A vertical scale of wide cells, each one deeper. Shape, sizes and response only. |
+| **Higanbana: dark marks** | For Higanbana without light parts: marks, pinned entries and level cells turn dark grey. |
+| **Depth: white marks** | For Depth: marks, pinned entries and the menu buttons turn white with dark blue text. |
 
-## Возможности
+Made a look you like? **Share your own preset** in the settings sends it to the author; once checked, it goes into the catalog for everyone.
 
-### Рельс
+---
 
-Каждый заголовок — полоска; её длина отражает уровень заголовка, так что форма документа видна сразу. Полоска раздела, который вы читаете, подсвечена и едет вслед за прокруткой. Две короткие метки по краям обозначают начало и конец заметки. На заметках, которым мало одного столбца, рельс делится на несколько.
+## What it does
 
-![Рельс в покое: текущий раздел подсвечен, вокруг него ореол](screenshots/hr-rail.png)
+### A map of the whole note
 
-### Волна
+Every heading is a bar; longer bars are bigger headings, the current one is highlighted. Point at the rail and a wave runs under the cursor; stop on a bar and a preview card shows that section; click and the note glides there. The card doesn't blink from one section to the next — it slides.
 
-При наведении на рельс по полоскам вокруг курсора проходит волна. Это не готовый эффект, а сборка из нескольких независимых частей, и каждая меняется сама по себе. Форма — колокол, острый пик, плоское плато, дуга, клин, ступень, рябь или форма, нарисованная вами по полоскам в пикселях. Центр может держаться одной полоски или свободно идти за курсором. Волна может догонять курсор мгновенно или пружиной, которая проскакивает и возвращается. Длина, цвет, прозрачность и толщина идут каждая от своего значения в покое к своему значению на пике. Один общий ползунок задаёт, насколько громко всё это звучит.
+<p align="center"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/preview-glide.gif" width="520" alt="The preview card gliding from one section to the next"></p>
 
-Смысл в том, что любую анимацию при наведении, которую вы видели где-то ещё, здесь можно собрать одними настройками — как и ту, которую ещё никто не делал.
+### An outline that follows you
 
-### Где вы сейчас
+Open the rail into an outline — with the header button, a right-click on the bars, by holding Ctrl, or from a floating button you can put anywhere. It keeps the current section in view, folds like the note, shows nesting lines, word counts and open tasks.
 
-Текущую полоску можно подсвечивать всегда, только при наведении на рельс или не подсвечивать вовсе. Вокруг неё — ореол: вы выбираете, сколько полосок он захватывает и насколько ярка каждая ступень, одинаково вверх и вниз. Когда текущий раздел меняется, ореол целиком переезжает на новое место со своей скоростью, проскоком и следом, а не перескакивает.
+<table>
+<tr>
+<td width="60%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/outline-open.png" alt="The outline open next to the bars"><br><sub>The outline next to the bars.</sub></td>
+<td width="40%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/floating-button.gif" alt="The floating button: the outline grows out of it"><br><sub>The floating button: hover — the outline grows out of it; click — it stays.</sub></td>
+</tr>
+</table>
 
-### Структура
+### Edit the structure right in the outline
 
-Правый щелчок по полоске или кнопка на панели заметки закрепляют структуру рядом с рельсом; удержание Ctrl показывает её, пока клавиша нажата. У структуры свой поиск, она держит текущий раздел по центру и показывает метку той части рельса, которую сейчас охватывает.
+Select a section — right-click, or hold a finger on the phone — and an actions menu appears: change the heading level, rename, pin, copy a link, copy, duplicate, move into a new note, delete. Drag a section like a card: its text and subsections go with it, a line shows where it lands and at which level.
 
-![Закреплённая структура с поиском](screenshots/hr-outline.png)
+<table>
+<tr>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/actions-menu.png" alt="The actions menu next to a selected section"><br><sub>The actions menu of a selected section.</sub></td>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/drag-section.gif" alt="Dragging a section to a new place"><br><sub>Dragging a section: the line shows the place and the level.</sub></td>
+</tr>
+</table>
 
-### Подсказка
+### Search headings — or the text itself
 
-При наведении на полоску появляется окошко с заголовком и первыми строками раздела — нужное место можно найти, не прокручивая к нему. Расстояние от рельса, ширина, шрифты, размеры, толщина, межстрочный интервал и цвета — всё настраивается.
+Type and the outline shrinks to the matches. The button next to the box switches to searching the text of the sections: the found word is highlighted in the note and in the preview card.
 
-![Подсказка рядом с рельсом](screenshots/hr-preview.png)
+<p align="center"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/content-search.png" width="760" alt="Searching the text of the sections"></p>
 
-### Перемещение по заметке
+### Ctrl + hover: a slider inside every section
 
-Щелчок по полоске переносит к заголовку; можно выбрать, где он встанет — вверху экрана, на трети высоты или посередине. Зажмите кнопку мыши и тяните вдоль рельса — документ поедет следом, как при перемотке видео; то же самое можно делать с зажатым пробелом, просто двигая курсор. Колесо мыши над рельсом прокручивает в несколько раз быстрее, чем над текстом.
+Hold Ctrl (⌘ Cmd on macOS) over an outline entry and it fills up to the cursor. Click to land at that exact point of the section, hold the button and sweep through the note, or step with the wheel.
 
-### Разделы как единое целое
+<p align="center"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/ctrl-slider.gif" width="620" alt="The Ctrl slider inside an outline entry"></p>
 
-Выделите раздел в структуре, диапазон — с Shift, разрозненные разделы — с Alt, и скопируйте или удалите их разом. Раздел — это заголовок и всё под ним до следующего заголовка того же или более высокого уровня. Каждое удаление попадает в историю, откуда восстанавливается одним нажатием.
+### Pins, word counts, open tasks
 
-![Несколько разделов выделены, рядом меню Копировать, Удалить, Отмена](screenshots/hr-sections.png)
+Pin the sections you keep coming back to — they are listed at the top of the outline. Next to each entry: its word count, its open tasks (“7”, “4/11” or “7/11”) and what a folded section hides.
 
-### Телефон
+<table>
+<tr>
+<td width="62%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/pinned.png" alt="Pinned sections at the top of the outline"><br><sub>Pinned sections; a pinned entry's preview has a frame.</sub></td>
+<td width="38%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/marks.png" alt="Word counts, task marks and a folded-section mark"><br><sub>Word counts, tasks, a folded section.</sub></td>
+</tr>
+</table>
 
-Всё работает на телефонах и планшетах, касанием вместо наведения: нажатие на полоску — переход, протяжка пальцем по рельсу — перемотка, долгое нажатие — открыть структуру или выделить. В мобильном профиле показаны только те настройки, которые на сенсорном экране действительно что-то делают. Если на вашем устройстве мешает собственный жест Obsidian у края экрана, плагин можно выключить только на телефоне, а на компьютере он продолжит работать.
+### Undo anything
 
-![Рельс и структура на телефоне](screenshots/hr-mobile.png)
+The undo button in the note header takes back every action of the plugin — moves, renames, level changes, deletions, pins — and returns you to where you were before a jump. The history keeps deleted and copied sections, outline changes, typing, presets and every settings change, ready to be restored.
 
-### Настройки и наборы
+<table>
+<tr>
+<td width="40%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/undo-history.png" alt="The history window"><br><sub>The history window.</sub></td>
+<td width="60%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/history-sidebar.png" alt="The history in the sidebar"><br><sub>Or in the sidebar, next to the note.</sub></td>
+</tr>
+</table>
 
-Настройки разделены на вкладки «Компьютер» и «Телефон». У каждой настройки телефона есть кнопка-звено: нажатая, она заставляет настройку брать значение с компьютера — по одной настройке за раз. Разделы сворачиваются, поэтому сначала видно несколько главных ползунков, а тонкая настройка не мешает.
+### A preview card you can work with
 
-**Набор** — это полный комплект значений, применяемый разом. С плагином идёт один — **Base**, он включён с момента установки. Наборы от других людей будут добавляться в список после проверки: если у вас получилось что-то удачное, кнопка «Поделиться» сложит ваши настройки в письмо, которое вы отправите сами.
+The card shows the heading level as “H3”, as numbered cells, or both. Point at a cell and click to change the level, or press ↑ / ↓ anywhere on the card.
 
-![Настройки: своя форма волны, по ступеням в пикселях](screenshots/hr-custom-shape.png)
-![Готовые наборы, Base включён](screenshots/hr-styles.png)
+<table>
+<tr>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/preview-level.png" alt="Four looks of the level mark"><br><sub>Four looks of the level mark.</sub></td>
+<td width="50%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/preview-level-change.gif" alt="Changing the level from the card"><br><sub>Changing the level from the card.</sub></td>
+</tr>
+</table>
 
-Пустые цвета берутся из вашей темы, поэтому рельс правильно выглядит и в светлой, и в тёмной теме без всякой настройки. Цвета из набора подстраиваются сами, если на вашей теме они бы пропали. Цвета, выставленные вами, остаются ровно такими, какими вы их выставили.
+### Hundreds of settings, all reversible
 
-## Как пользоваться
+Settings are grouped by what they do, with search that understands you in every language. Next to every slider, number and colour: **Back** (undo its last change, remembered across restarts) and **Reset**. They can also open in the sidebar, so you change something and see it at once. Paste a theme, an effect or CSS straight into the settings search and it is applied.
 
-| Действие | Компьютер | Телефон |
-|---|---|---|
-| Перейти к разделу | Щелчок по полоске | Нажатие на полоску |
-| Листать протяжкой | Тянуть по рельсу или держать пробел и двигать курсор | Вести пальцем по рельсу |
-| Заглянуть в структуру | Держать Ctrl | — |
-| Закрепить структуру | Правый щелчок по полоске или кнопка на панели | Долгое нажатие на полоску или кнопка на панели |
-| Шаг между заголовками | Стрелки над рельсом при открытой структуре или Ctrl + стрелки где угодно | — |
-| Выделить разделы | Shift-щелчок — диапазон, Alt-щелчок — добавить или убрать | Долгое нажатие, дальше нажатиями добавлять и убирать |
-| Скопировать или удалить | Правый щелчок по выделенному | Долгое нажатие на выделенное |
-| Вернуть удалённое | Кнопка истории на панели заметки | То же |
+<table>
+<tr>
+<td width="40%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/settings.png" alt="The settings screen with the Catalog button, groups, Back and Reset"><br><sub>The settings.</sub></td>
+<td width="60%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/settings-sidebar.png" alt="The settings in the sidebar next to the note"><br><sub>The settings in the sidebar.</sub></td>
+</tr>
+</table>
 
-Подробное руководство: [English](GUIDE.md) · [Русский](GUIDE.ru.md).
+### Works fully on the phone
 
-## Установка
+The rail, the outline, the actions menu, dragging sections, pins and the history all work with touch. Slide a finger along the rail to move through the note; hold a finger on a bar to open the outline right there. The phone has its own profile of settings.
 
-Из Obsidian: **Настройки → Сторонние плагины → Обзор**, найдите **Heading Rail**, установите и включите. Или откройте страницу плагина на [сайте сообщества Obsidian](https://obsidian.md/plugins?id=heading-rail) и нажмите **Add to Obsidian**.
+<table>
+<tr>
+<td width="25%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/mobile-rail.png" alt="The rail on a phone"><br><sub>The rail.</sub></td>
+<td width="25%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/mobile-outline.png" alt="The outline and the actions menu on a phone"><br><sub>Outline and actions.</sub></td>
+<td width="25%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/mobile-preview.png" alt="The preview card on a phone"><br><sub>The preview.</sub></td>
+<td width="25%" valign="top"><img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/mobile-history.png" alt="The history on a phone"><br><sub>The history.</sub></td>
+</tr>
+</table>
 
-Вручную:
+### In 17 languages
 
-1. Скачайте `manifest.json`, `main.js` и `styles.css` из последнего [релиза](../../releases).
-2. Положите их в `<ваше хранилище>/.obsidian/plugins/heading-rail/`.
-3. Перезапустите Obsidian и включите **Heading Rail** в разделе «Сторонние плагины».
+English · Deutsch · Français · Русский · 日本語 · 한국어 · हिन्दी · Italiano · Español · Português · Türkçe · Polski · Українська · Tiếng Việt · Bahasa Indonesia · 简体中文 · 繁體中文
 
-## Про удаление
+➡️ Every feature step by step: **[Guide](https://github.com/JustDast/obsidian-heading-rail/blob/main/GUIDE.md)**. Every setting with its default: **[Every setting](https://github.com/JustDast/obsidian-heading-rail/blob/main/SETTINGS.md)**.
 
-Это единственная функция, которая меняет ваши файлы. Перед каждым удалением плагин проверяет, что структура всё ещё совпадает с файлом на диске, и отказывается записывать, если файл изменился, пока шла операция. Удалённые разделы попадают в историю с восстановлением в одно нажатие, и обычная отмена Obsidian тоже работает. И всё же — это удаление текста, относитесь к нему соответственно.
+---
 
-## Приватность
+## Installation
 
-Плагин не ходит в сеть, не требует учётных записей и ничего не собирает. Кнопка «Поделиться» только открывает ваш почтовый клиент с письмом, которое вы можете прочитать перед отправкой; в нём настройки плагина и ничего из вашего хранилища.
+In Obsidian: **Settings → Community plugins → Browse**, search for **Heading Rail**, install and enable it.
 
-## Участие
+By hand: download `main.js`, `manifest.json` and `styles.css` from the [latest release](https://github.com/JustDast/obsidian-heading-rail/releases/latest) into `<your vault>/.obsidian/plugins/heading-rail/`, then enable the plugin in **Community plugins**.
 
-Сделали форк, который реально лучше? Пришлите исходник и расскажите, как вы это реализовали. Если это правда лучше — обновлю версию и отмечу вас соавтором. Код могу переделать по-своему, но если он лёг в основу, отмечу вас всё равно.
+## Compatibility
 
-Идеи по этому плагину или по другим — на **lavrowws@gmail.com**.
+Desktop (Windows, macOS, Linux) and mobile (Android, iOS). macOS keys (⌘ Cmd, ⌥ Option) are supported and checked in testing, but the plugin has not yet been tried on real Apple devices — reports are very welcome.
 
-## Разработка
+---
 
-Обычный JavaScript, без сборщика. Вся логика — в `core.js`, всё оформление — в `styles.css`; `build.py` собирает из них `main.js` и встраивает резервную копию стилей, чтобы плагин рисовался, даже если `styles.css` не загрузится.
+## What's new
 
-```
-python3 build.py
-```
+### 10.5.1
 
-Правьте `core.js` и `styles.css` — никогда не `main.js`, он собирается.
+- **Phone keyboard and search.** Opening the keyboard to type in the outline search no longer collapses the results: the list stays, stretches down to the keyboard and follows what you type; when the keyboard hides, the outline grows back. The same in every preset.
+- **Higanbana on the phone:** the floating button sits lower, clear of Obsidian's top bar (the catalog offers it as an update).
+- **Depth on the phone:** the search box has the same blue as on the desktop.
+- **Guide** and **What's new** in the settings open the guide and this page on GitHub.
+- The English name of the effect *Wave and trail — as in “Funkier”* is fixed (it said “Bit cooler”); hints in the settings now say that checked presets go into the catalog, without a plugin update.
+- New README and guide with fresh screenshots of every part of the plugin; catalog screenshots in English.
 
-## Лицензия
+### 10.5
 
-[MIT](LICENSE)
+- **Everything is in the catalog now.** The plugin itself carries only *Standard*; every other preset and effect downloads from the catalog when you want it — the plugin is lighter and new looks arrive without an update. What you already use downloads by itself.
+- New effects: **Level as in “Higanbana”** and **Level as in “Depth”** — the level scale of the preview card, everything except colours.
+- **Terminal** reworked: green pinned entries and marks, the level as just “H3” on a green tile, a calm green search icon.
+- **Higanbana** on the phone: the floating button sits top left and the outline, a quarter smaller, opens downward.
+- New settings for the floating button: **Outline size at the button** and **Button position** (where it stands until you drag it).
+- The preview card no longer grows over the bars when the outline stands at the floating button.
+
+### 10.4
+
+- **GIF backgrounds** for the outline, the preview, the search box and the floating button: add a GIF (up to 20 MB) like any picture. It is kept as a file in the plugin's folder, so the settings stay light. GIFs are never blurred. **Animate GIFs** can be turned off per device — then the first frame stays still.
+- **Phone screenshots in the catalog**: choose *Mobile* and every card shows the outline, the preview and the bars on a phone screen.
+
+### 10.3
+
+- **The catalog** — presets, effects and CSS add-ons in their own window, with screenshots, descriptions, search and filters; **Download** and **Apply** right there.
+- **The preview never lies over the bars**, with two or three columns too.
+- *Thick bars* and *Very thick bars* are gone — the wave effects replace them.
+- 10.3.1: catalog screenshots load in every case and open full size with arrows; the *Downloaded* filter shows what you can remove.
+
+<details>
+<summary><b>Earlier versions</b></summary>
+
+### 10.2
+
+- **Depth**: a long smooth arc-shaped wave, the search box, search button, pinned entries and actions menu buttons in the colour of the marks. New effect **Depth: white marks**.
+- **Higanbana**: the hover fill and the Ctrl slider are light, so they show on the scarlet current entry.
+
+### 10.1
+
+- In a narrow window the outline stays by the floating button, and the preview goes on the other side. The preview never lies over the bars.
+- **Bar gradient by place in the note** — from a top colour to a bottom colour. **Cells with depth** for the level scale.
+- **Depth** reworked: a low smooth wave, bars from light to dark blue, a vertical level scale of wide cells.
+- **Higanbana**: the preview's picture works like in Depth; a light, visible outline scrollbar.
+
+### 10.0
+
+- **Depth** — a new preset: deep blue water with light from above; one picture runs across the outline, the search box and the preview.
+- **The preview's picture**: it can follow the card's movement, share one picture with the outline, or share one backdrop below / above the outline.
+- **Bar columns**: at most 3 on the desktop and 2 on the phone; if the bars still don't fit, only the outline works.
+- **Blur** for your background picture; **Delete** next to the picture choice.
+- New settings for marks, pinned entries and the floating button. New effect **Higanbana: dark marks**. Version numbers restart at 10.0.
+
+### 9.17
+
+- In a narrow window and on the phone the preview goes **below or above** the outline; the actions menu turns into a **column** when it doesn't fit beside the outline.
+- **Higanbana** reworked; the actions menu gets your own button colours on hover. Ready-made styles are now called **presets**.
+
+### 9.16
+
+- **Higanbana** — a new preset: Eastern dark fantasy in anthracite, scarlet and ivory.
+- **History in the sidebar**; your background image can be anchored to an edge or a corner; *Eastern serif (Mincho)* in every font list.
+
+### 9.15
+
+- **Settings in the sidebar** — the same settings next to the note; change something and see it at once.
+
+### 9.14
+
+- **Custom CSS, images and fonts**; **paste any code into the settings search**; five ready-made presets; wave and trail effects; a history of presets, effects and pastes.
+
+### 9.7–9.13
+
+- The level mark rebuilt (number, cells or both, every state adjustable); settings regrouped; **Colours in use right now** — change one colour and every setting with it changes; bars in the neighbouring notes; bar shape; mouse wheel and touchpad told apart.
+
+### 9.0–9.6
+
+- The **scale** look for the heading level; gradient backgrounds; settings search that understands you in every language; bar thickness by the distance between bars.
+
+### 8.5–8.10
+
+- The outline became a tool for the structure: the actions menu, dragging sections, keyboard moves and level changes.
+- Smooth scrolling everywhere; the floating button; undo for everything and the history window; Back and Reset next to every setting; search inside sections; the Ctrl slider; pinned sections, word counts and tasks; full phone support; a preview card you can work with.
+- New languages: Italian, Spanish, Portuguese, Turkish, Polish, Ukrainian, Vietnamese, Indonesian, Chinese (Simplified and Traditional).
+
+</details>
+
+---
+
+## Feedback
+
+A word from the author:
+
+> I'm not a programmer at all and never even opened the code of this plugin, it's written fully by AI from my ideas, because of that it's not perfect at all since there's just no normal professional person who could check it, so it can have all kinds of bugs depending on devices, on apple i didn't test at all, so if something doesn't work for you - interface moved somewhere or a setting doesn't work - the problem isn't you, it's the code, please write about every bug as detailed as possible and it will be fixed as fast as possible on your request, don't wait for it to go away by itself, unlikely, and while you don't write i most likely don't even know about it
+
+> **and one more thing, really important:** write to me about literally everything — a feature you're missing, something you'd like to change, something inconvenient, something that doesn't work. i know everyone got used to writing to a developer and it goes nowhere, and that nobody will build anything for just one person — here it's different, i read everything, and if i like the idea or it's objectively useful for the plugin, in most cases it will be made (if it's technically possible at all). so don't be shy, even if it seems only you need it or it's some small thing — write
+
+Found a bug or have an idea? Use **Report a bug or suggest an idea** in the plugin settings — it opens a letter with the plugin, Obsidian and system versions already filled in — or [open an issue](https://github.com/JustDast/obsidian-heading-rail/issues).
+
+Made a fork that is genuinely better? Send me the source and how you did it. If it really is better, it goes into the next version and you are credited as a co-author.
+
+## License
+
+See [LICENSE](LICENSE).
