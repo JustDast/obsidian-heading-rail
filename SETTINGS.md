@@ -2,7 +2,7 @@
 
 📘 [Guide: How to use](GUIDE.md) · 🎨 [Looks and the catalog](GUIDE.md#looks-and-the-catalog) · 🆕 [What's new](README.md#whats-new) · 🏠 [README](README.md)
 
-Every setting of the plugin, in the same order, groups and wording as in **Settings → Heading Rail** (version 10.5.1). The names, descriptions and default values below are taken straight from the plugin itself, not written by hand, so they match what you see. Where the phone has a different default, both are given.
+Every setting of the plugin, in the same order, groups and wording as in **Settings → Heading Rail** (version 10.5.5). The names, descriptions and default values below are taken straight from the plugin itself, not written by hand, so they match what you see. Where the phone has a different default, both are given.
 
 > The plugin keeps two profiles, **Desktop** and **Mobile** (the tabs at the top of the settings). On the Mobile tab every setting has a chain button: linked — the phone takes the desktop value; unlinked — it has its own. *Desktop only* settings are about the mouse, Ctrl, the wheel, the keyboard or the editor scrollbar and do not appear on the Mobile tab; *Phone only* settings appear only there.
 
@@ -1285,9 +1285,9 @@ One of your images (section “Custom CSS, images and fonts”) or a new one fro
 
 **Default:** 60
 
-<a id="set-panelimgpos"></a>**Anchor the image to**
+<a id="set-panelimgpos"></a>**Which part of the picture to keep**
 
-Which part of the image stays put when the window changes size (centre by default).
+When the picture doesn't fit the window exactly, this part of it stays in view: the centre, an edge or a corner. It also stays put when the window changes size.
 
 **Default:** Centre
 
@@ -1297,9 +1297,11 @@ Blurs the background image itself (0 — sharp). The blurred copy is made once, 
 
 **Default:** 0
 
-<a id="set-panelimgfit"></a>**Fit**
+<a id="set-panelimgfit"></a>**How the picture fills the window**
 
-**Default:** Fill (crop edges)
+Cover — the picture fills the whole window; what doesn't fit is cut off at the edges. Whole picture — all of it is visible; empty strips may remain. Repeat — the picture at its own size, repeated like tiles.
+
+**Default:** Cover (edges may be cut off)
 
 <a id="set-panelbgopacity"></a>**Background opacity of the outline, search and menu**
 
@@ -2525,9 +2527,9 @@ One of your images (section “Custom CSS, images and fonts”) or a new one fro
 
 **Default:** 60
 
-<a id="set-floatimgpos"></a>**Anchor the image to**
+<a id="set-floatimgpos"></a>**Which part of the picture to keep**
 
-Which part of the image stays put when the window changes size (centre by default).
+When the picture doesn't fit the window exactly, this part of it stays in view: the centre, an edge or a corner. It also stays put when the window changes size.
 
 **Default:** Centre
 
@@ -2537,9 +2539,11 @@ Blurs the background image itself (0 — sharp). The blurred copy is made once, 
 
 **Default:** 0
 
-<a id="set-floatimgfit"></a>**Fit**
+<a id="set-floatimgfit"></a>**How the picture fills the window**
 
-**Default:** Fill (crop edges)
+Cover — the picture fills the whole window; what doesn't fit is cut off at the edges. Whole picture — all of it is visible; empty strips may remain. Repeat — the picture at its own size, repeated like tiles.
+
+**Default:** Cover (edges may be cut off)
 
 <a id="settings-f-l-grad"></a>
 
@@ -2831,9 +2835,9 @@ One of your images (section “Custom CSS, images and fonts”) or a new one fro
 
 **Default:** 60
 
-<a id="set-searchimgpos"></a>**Anchor the image to**
+<a id="set-searchimgpos"></a>**Which part of the picture to keep**
 
-Which part of the image stays put when the window changes size (centre by default).
+When the picture doesn't fit the window exactly, this part of it stays in view: the centre, an edge or a corner. It also stays put when the window changes size.
 
 **Default:** Centre
 
@@ -2843,9 +2847,11 @@ Blurs the background image itself (0 — sharp). The blurred copy is made once, 
 
 **Default:** 0
 
-<a id="set-searchimgfit"></a>**Fit**
+<a id="set-searchimgfit"></a>**How the picture fills the window**
 
-**Default:** Fill (crop edges)
+Cover — the picture fills the whole window; what doesn't fit is cut off at the edges. Whole picture — all of it is visible; empty strips may remain. Repeat — the picture at its own size, repeated like tiles.
+
+**Default:** Cover (edges may be cut off)
 
 <a id="settings-s-f-grad"></a>
 
@@ -3351,9 +3357,9 @@ One of your images (section “Custom CSS, images and fonts”) or a new one fro
 
 **Default:** 60
 
-<a id="set-previewimgpos"></a>**Anchor the image to**
+<a id="set-previewimgpos"></a>**Which part of the picture to keep**
 
-Which part of the image stays put when the window changes size (centre by default).
+When the picture doesn't fit the window exactly, this part of it stays in view: the centre, an edge or a corner. It also stays put when the window changes size.
 
 **Default:** Centre
 
@@ -3363,9 +3369,11 @@ Blurs the background image itself (0 — sharp). The blurred copy is made once, 
 
 **Default:** 0
 
-<a id="set-previewimgfit"></a>**Fit**
+<a id="set-previewimgfit"></a>**How the picture fills the window**
 
-**Default:** Fill (crop edges)
+Cover — the picture fills the whole window; what doesn't fit is cut off at the edges. Whole picture — all of it is visible; empty strips may remain. Repeat — the picture at its own size, repeated like tiles.
+
+**Default:** Cover (edges may be cut off)
 
 <a id="set-previewbgopacity"></a>**Background opacity of the hover card**
 
@@ -3432,6 +3440,16 @@ Where the colours meet: lower — more of the second colour, higher — more of 
 The preview picture is stretched over the whole height the card travels: at the bottom you see the bottom of the picture, at the top — the top, in the middle — the middle.
 
 **Default:** Off
+
+<a id="set-previewsidelinked"></a>**Beside: one picture with the outline**
+
+One picture for the outline, the search box and the preview beside it: it spans exactly this area, and each of them shows its own part. The preview takes the outline's background.
+
+<a id="set-previewbgspan"></a>**Size of the shared picture**
+
+Automatic: outline and preview side by side — the picture spans both across; preview below or above the outline — it spans them in height; only the preview — just the preview. Whole note — the picture is as big as the note, and each shows its own part.
+
+**Default:** Automatic (fits what is shown)
 
 <a id="set-previewstacklinked"></a>**Below / above the outline: shared picture**
 

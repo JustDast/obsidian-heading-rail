@@ -24,9 +24,9 @@ English · Deutsch · Français · Русский · 日本語 · 한국어 · �
 </p>
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/hero.gif" width="660" alt="Heading Rail in Standard, Higanbana and Depth: the wave follows the cursor along the bars, the preview card glides from section to section, a click takes the note there">
+<img src="https://raw.githubusercontent.com/JustDast/obsidian-heading-rail/main/screenshots/hero.gif" width="660" alt="Heading Rail on the OLED.Black theme in Higanbana, Depth and Racer: previews along the rail, duplicating a section, changing a level from the preview, the Ctrl slider, the preview below the outline in a narrow window, search, pin, unpin and undo, dragging a section inside another and lowering its level">
 </p>
-<p align="center"><sub>Standard → Higanbana → Depth: the wave follows the cursor, the preview card glides from section to section, a click takes the note there.</sub></p>
+<p align="center"><sub>Higanbana → Depth → Racer: previews and duplicating a section · a level changed from the preview, the Ctrl slider, the preview below the outline in a narrow window · search, pin, unpin and undo, a section dragged inside another and lowered to H6.</sub></p>
 
 ---
 
@@ -217,6 +217,22 @@ Obsidian 1.6 or newer. Desktop (Windows, macOS, Linux) and mobile (Android, iOS)
 ---
 
 ## What's new
+
+### 10.5.5
+
+- The shared background picture no longer flashes oversized for a moment while the floating outline grows out of its button.
+
+### 10.5.4
+
+- **The shared background picture follows what is on screen.** Outline and preview side by side — the picture spans both across; the preview below or above the outline — it spans them in height; only the preview — just the preview (it used to wait for the outline and showed half a picture).
+- New option **Size of the shared picture**: *Automatic* (default) or *Whole note*, for those who prefer one big picture.
+- When a sidebar narrows the note, the preview moves below the outline right away instead of squeezing beside it.
+
+### 10.5.3
+
+- **Background pictures fit their window again.** With *one picture with the outline* (Higanbana, Depth) the picture spanned the whole note and on a wide window grew to the size of the screen. Now it spans just the outline with its search box and the preview beside it, so you can actually see what's on it.
+- Clearer names for the picture settings: **How the picture fills the window** (*Cover*, *Whole picture*, *Repeat*) and **Which part of the picture to keep**, each with an explanation, in all 17 languages.
+- A new animation at the top of this page.
 
 ### 10.5.2
 

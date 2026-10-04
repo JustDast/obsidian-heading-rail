@@ -7,7 +7,7 @@ const FALLBACK_CSS = `/* ============ Heading Rail ============ */
 /* Номер версии стилей. Плагин сверяет его со своим: если styles.css остался
    от старой версии, подключается встроенная копия. Менять вместе с HR_CSS_VER. */
 .hr-css-probe {
-  --hr-css-ver: "10.5.2";
+  --hr-css-ver: "10.5.5";
 }
 
 .hr-host {
@@ -6824,10 +6824,10 @@ const LOCALES = {
     optImageNone: "— none —",
     settingFillImageOpName: "Image visibility",
     settingFillImageOpDesc: "100 — the image as is; lower — the background colour lies on top so text stays readable.",
-    settingFillImageFitName: "Fit",
-    optImgCover: "Fill (crop edges)",
-    optImgContain: "Whole image",
-    optImgTile: "Tile",
+    settingFillImageFitName: "How the picture fills the window",
+    optImgCover: "Cover (edges may be cut off)",
+    optImgContain: "Whole picture (strips may remain)",
+    optImgTile: "Repeat (tiles)",
     imageAdded: (n) => "Image added (" + n + " KB)",
     imageBad: "Couldn’t read the image.",
     assetTooBig: "File too large (image up to 3 MB, font up to 5 MB).",
@@ -6872,8 +6872,8 @@ const LOCALES = {
     historyOpen: "Open the history",
     cmdOpenHistory: "Open the history",
     sideOneSectionTip: "Opening a section folds the other open sections, so the list stays short.",
-    settingFillImagePosName: "Anchor the image to",
-    settingFillImagePosDesc: "Which part of the image stays put when the window changes size (centre by default).",
+    settingFillImagePosName: "Which part of the picture to keep",
+    settingFillImagePosDesc: "When the picture doesn't fit the window exactly, this part of it stays in view: the centre, an edge or a corner. It also stays put when the window changes size.",
     optImgPos_center: "Centre",
     optImgPos_top: "Top",
     optImgPos_bottom: "Bottom",
@@ -6927,7 +6927,7 @@ const LOCALES = {
     settingPvImgTrackName: "Beside: picture along the movement",
     settingPvImgTrackDesc: "The preview picture is stretched over the whole height the card travels: at the bottom you see the bottom of the picture, at the top — the top, in the middle — the middle.",
     settingPvSideLinkedName: "Beside: one picture with the outline",
-    settingPvSideLinkedDesc: "The outline's picture spans the whole note: the outline, the search box and the preview each show their own part of one picture. The preview takes the outline's background.",
+    settingPvSideLinkedDesc: "One picture for the outline, the search box and the preview beside it: it spans exactly this area, and each of them shows its own part. The preview takes the outline's background.",
     settingPvStackLinkedName: "Below / above the outline: shared picture",
     settingPvStackLinkedDesc: "When the preview stands below or above the outline, they share one backdrop and one picture: below the outline the preview shows the bottom of the picture, above it — the top.",
     presetDepth: "Depth",
@@ -7005,6 +7005,13 @@ const LOCALES = {
     settingFloatHomeXName: "Button position: across",
     settingFloatHomeYName: "Button position: down",
     settingFloatHomeDesc: "Where the button stands until you drag it: 0 is the left (top) edge of the note, 100 the right (bottom). Once dragged, it stays where you put it.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Cover — the picture fills the whole window; what doesn't fit is cut off at the edges. Whole picture — all of it is visible; empty strips may remain. Repeat — the picture at its own size, repeated like tiles.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Size of the shared picture",
+    settingPvBgSpanDesc: "Automatic: outline and preview side by side — the picture spans both across; preview below or above the outline — it spans them in height; only the preview — just the preview. Whole note — the picture is as big as the note, and each shows its own part.",
+    optPvBgSpanAuto: "Automatic (fits what is shown)",
+    optPvBgSpanScreen: "Whole note",
   },
   de: {
     tocTooltip: 'Notizstruktur',
@@ -8719,10 +8726,10 @@ const LOCALES = {
     optImageNone: "— keines —",
     settingFillImageOpName: "Sichtbarkeit des Bildes",
     settingFillImageOpDesc: "100 — das Bild wie es ist; weniger — die Hintergrundfarbe liegt darüber, damit Text lesbar bleibt.",
-    settingFillImageFitName: "Einpassen",
-    optImgCover: "Füllen (Ränder beschneiden)",
-    optImgContain: "Ganzes Bild",
-    optImgTile: "Kacheln",
+    settingFillImageFitName: "Wie das Bild das Fenster füllt",
+    optImgCover: "Füllen (Ränder werden ggf. abgeschnitten)",
+    optImgContain: "Ganzes Bild (Streifen können bleiben)",
+    optImgTile: "Wiederholen (Kacheln)",
     imageAdded: (n) => "Bild hinzugefügt (" + n + " KB)",
     imageBad: "Bild konnte nicht gelesen werden.",
     assetTooBig: "Datei zu groß (Bild bis 3 MB, Schrift bis 5 MB).",
@@ -8767,8 +8774,8 @@ const LOCALES = {
     historyOpen: "Historie öffnen",
     cmdOpenHistory: "Historie öffnen",
     sideOneSectionTip: "Ein geöffneter Bereich klappt die anderen offenen ein, damit die Liste kurz bleibt.",
-    settingFillImagePosName: "Bild ausrichten an",
-    settingFillImagePosDesc: "Welcher Teil des Bildes stehen bleibt, wenn sich die Fenstergröße ändert (standardmäßig die Mitte).",
+    settingFillImagePosName: "Welcher Teil des Bildes sichtbar bleibt",
+    settingFillImagePosDesc: "Passt das Bild nicht genau ins Fenster, bleibt dieser Teil sichtbar: Mitte, Rand oder Ecke. Er bleibt auch an seinem Platz, wenn sich die Fenstergröße ändert.",
     optImgPos_center: "Mitte",
     optImgPos_top: "Oben",
     optImgPos_bottom: "Unten",
@@ -8822,7 +8829,7 @@ const LOCALES = {
     settingPvImgTrackName: "Seitlich: Bild entlang der Bewegung",
     settingPvImgTrackDesc: "Das Vorschaubild ist über die ganze Höhe gespannt, die die Karte zurücklegt: unten sieht man den unteren Teil des Bildes, oben den oberen, in der Mitte die Mitte.",
     settingPvSideLinkedName: "Seitlich: ein Bild mit der Gliederung",
-    settingPvSideLinkedDesc: "Das Bild der Gliederung spannt sich über die ganze Notiz: Gliederung, Suchfeld und Vorschau zeigen je ihren Teil eines Bildes. Die Vorschau übernimmt den Hintergrund der Gliederung.",
+    settingPvSideLinkedDesc: "Ein Bild für Gliederung, Suchfeld und die Vorschau daneben: Es spannt sich genau über diesen Bereich, und jedes zeigt seinen Teil. Die Vorschau übernimmt den Hintergrund der Gliederung.",
     settingPvStackLinkedName: "Unter / über der Gliederung: gemeinsames Bild",
     settingPvStackLinkedDesc: "Steht die Vorschau unter oder über der Gliederung, teilen sie einen Hintergrund und ein Bild: darunter zeigt die Vorschau den unteren Teil des Bildes, darüber den oberen.",
     presetDepth: "Tiefe",
@@ -8900,6 +8907,13 @@ const LOCALES = {
     settingFloatHomeXName: "Position des Buttons: waagerecht",
     settingFloatHomeYName: "Position des Buttons: senkrecht",
     settingFloatHomeDesc: "Wo der Button steht, bis du ihn ziehst: 0 ist der linke (obere) Rand der Notiz, 100 der rechte (untere). Gezogen bleibt er, wo du ihn abgelegt hast.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Füllen – das Bild deckt das ganze Fenster ab, was nicht passt, wird an den Rändern abgeschnitten. Ganzes Bild – alles ist sichtbar, am Rand können leere Streifen bleiben. Wiederholen – das Bild in eigener Größe, wie Kacheln wiederholt.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Größe des gemeinsamen Bildes",
+    settingPvBgSpanDesc: "Automatisch: Gliederung und Vorschau nebeneinander – das Bild reicht in der Breite über beide; Vorschau unter oder über der Gliederung – in der Höhe; nur die Vorschau – nur über sie. Ganze Notiz – das Bild ist so groß wie die Notiz, jedes zeigt seinen Teil.",
+    optPvBgSpanAuto: "Automatisch (nach Sichtbarem)",
+    optPvBgSpanScreen: "Ganze Notiz",
   },
   fr: {
     tocTooltip: 'Structure de la note',
@@ -10614,10 +10628,10 @@ const LOCALES = {
     optImageNone: "— aucune —",
     settingFillImageOpName: "Visibilité de l’image",
     settingFillImageOpDesc: "100 — l’image telle quelle ; moins — la couleur de fond passe par-dessus pour garder le texte lisible.",
-    settingFillImageFitName: "Ajustement",
-    optImgCover: "Remplir (rogner les bords)",
-    optImgContain: "Image entière",
-    optImgTile: "Mosaïque",
+    settingFillImageFitName: "Comment l’image remplit la fenêtre",
+    optImgCover: "Couvrir (bords parfois coupés)",
+    optImgContain: "Image entière (des bandes peuvent rester)",
+    optImgTile: "Répéter (carreaux)",
     imageAdded: (n) => "Image ajoutée (" + n + " Ko)",
     imageBad: "Impossible de lire l’image.",
     assetTooBig: "Fichier trop volumineux (image jusqu’à 3 Mo, police jusqu’à 5 Mo).",
@@ -10662,8 +10676,8 @@ const LOCALES = {
     historyOpen: "Ouvrir l’historique",
     cmdOpenHistory: "Ouvrir l’historique",
     sideOneSectionTip: "Ouvrir une section replie les autres sections ouvertes, pour garder la liste courte.",
-    settingFillImagePosName: "Ancrer l’image",
-    settingFillImagePosDesc: "Quelle partie de l’image reste en place quand la fenêtre change de taille (le centre par défaut).",
+    settingFillImagePosName: "Quelle partie de l’image garder",
+    settingFillImagePosDesc: "Si l’image ne correspond pas exactement à la fenêtre, cette partie reste visible : le centre, un bord ou un coin. Elle reste aussi en place quand la fenêtre change de taille.",
     optImgPos_center: "Centre",
     optImgPos_top: "Haut",
     optImgPos_bottom: "Bas",
@@ -10717,7 +10731,7 @@ const LOCALES = {
     settingPvImgTrackName: "Sur le côté : image selon le mouvement",
     settingPvImgTrackDesc: "L’image de l’aperçu couvre toute la hauteur que la carte parcourt : en bas on voit le bas de l’image, en haut le haut, au milieu le milieu.",
     settingPvSideLinkedName: "Sur le côté : une seule image avec le plan",
-    settingPvSideLinkedDesc: "L’image du plan couvre toute la note : le plan, la recherche et l’aperçu montrent chacun leur partie d’une même image. L’aperçu prend le fond du plan.",
+    settingPvSideLinkedDesc: "Une seule image pour le plan, le champ de recherche et l’aperçu à côté : elle couvre exactement cette zone, et chacun en montre sa partie. L’aperçu prend le fond du plan.",
     settingPvStackLinkedName: "Sous / au-dessus du plan : image commune",
     settingPvStackLinkedDesc: "Quand l’aperçu est sous le plan ou au-dessus, ils partagent un même fond et une même image : dessous, l’aperçu montre le bas de l’image, dessus — le haut.",
     presetDepth: "Profondeur",
@@ -10795,6 +10809,13 @@ const LOCALES = {
     settingFloatHomeXName: "Position du bouton : horizontale",
     settingFloatHomeYName: "Position du bouton : verticale",
     settingFloatHomeDesc: "Où se trouve le bouton tant que vous ne l’avez pas déplacé : 0 = bord gauche (haut) de la note, 100 = bord droit (bas). Déplacé, il reste où vous l’avez mis.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Couvrir — l’image remplit toute la fenêtre ; ce qui dépasse est coupé sur les bords. Image entière — tout est visible ; des bandes vides peuvent rester. Répéter — l’image à sa taille, répétée comme des carreaux.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Taille de l’image commune",
+    settingPvBgSpanDesc: "Automatique : plan et aperçu côte à côte — l’image couvre les deux en largeur ; aperçu sous ou au-dessus du plan — en hauteur ; seulement l’aperçu — juste l’aperçu. Toute la note — l’image a la taille de la note, chacun en montre sa partie.",
+    optPvBgSpanAuto: "Automatique (selon ce qui est affiché)",
+    optPvBgSpanScreen: "Toute la note",
   },
   ru: {
     tocTooltip: 'Структура заметки',
@@ -12531,10 +12552,10 @@ const LOCALES = {
     optImageNone: "— не выбрана —",
     settingFillImageOpName: "Видимость картинки",
     settingFillImageOpDesc: "100 — картинка как есть; меньше — сверху ложится цвет фона, чтобы читался текст.",
-    settingFillImageFitName: "Как заполнять",
-    optImgCover: "Заполнить (обрезая края)",
-    optImgContain: "Целиком",
-    optImgTile: "Плиткой",
+    settingFillImageFitName: "Как картинка заполняет окно",
+    optImgCover: "Заполнить (края могут обрезаться)",
+    optImgContain: "Целиком (могут остаться полосы)",
+    optImgTile: "Повторять плиткой",
     imageAdded: (n) => "Картинка добавлена (" + n + " КБ)",
     imageBad: "Не получилось прочитать картинку.",
     assetTooBig: "Файл слишком большой (картинка — до 3 МБ, шрифт — до 5 МБ).",
@@ -12579,8 +12600,8 @@ const LOCALES = {
     historyOpen: "Открыть историю",
     cmdOpenHistory: "Открыть историю",
     sideOneSectionTip: "Открываете раздел — остальные открытые разделы сворачиваются, чтобы список был коротким.",
-    settingFillImagePosName: "К чему прижать картинку",
-    settingFillImagePosDesc: "Какая часть картинки остаётся на месте, когда окно меняет размер (по умолчанию — центр).",
+    settingFillImagePosName: "Какую часть картинки держать на виду",
+    settingFillImagePosDesc: "Если картинка не совпадает с окном по размеру, на виду остаётся эта её часть: центр, край или угол. Она же стоит на месте, когда окно меняет размер.",
     optImgPos_center: "По центру",
     optImgPos_top: "Верх",
     optImgPos_bottom: "Низ",
@@ -12636,7 +12657,7 @@ const LOCALES = {
     settingPvImgTrackName: "Сбоку: картинка по высоте движения",
     settingPvImgTrackDesc: "Картинка подсказки растянута на всю высоту, по которой подсказка ездит: внизу видна нижняя часть картинки, наверху — верхняя, посередине — средняя.",
     settingPvSideLinkedName: "Сбоку: одна картинка со структурой",
-    settingPvSideLinkedDesc: "Картинка структуры растянута на всю заметку: структура, поиск и подсказка показывают каждый свою часть одной картинки. Подсказка берёт фон структуры.",
+    settingPvSideLinkedDesc: "Одна картинка на структуру, поле поиска и подсказку рядом: она растянута ровно на эту область, и каждый показывает свою часть. Подсказка берёт фон структуры.",
     settingPvStackLinkedName: "Под / над структурой: общая картинка",
     settingPvStackLinkedDesc: "Когда подсказка стоит под структурой или над ней, у них одна подложка и одна картинка: под структурой подсказка показывает нижнюю часть картинки, над ней — верхнюю.",
     presetDepth: "Глубина",
@@ -12714,6 +12735,17 @@ const LOCALES = {
     settingFloatHomeXName: "Где стоит кнопка: по ширине",
     settingFloatHomeYName: "Где стоит кнопка: по высоте",
     settingFloatHomeDesc: "Где кнопка стоит, пока вы её не перетащили: 0 — левый (верхний) край заметки, 100 — правый (нижний). Перетащили — стоит там, куда поставили.",
+    // ---- добавлено ----
+
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Заполнить — картинка закрывает всё окно, что не влезло, обрезается по краям. Целиком — видна вся картинка, по краям могут остаться пустые полосы. Повторять — картинка в своём размере, повторяется плиткой.",
+    // ---- добавлено ----
+
+    // ---- добавлено ----
+    settingPvBgSpanName: "Размер общей картинки",
+    settingPvBgSpanDesc: "Автоматически: структура и подсказка рядом — картинка по ширине на обе; подсказка под или над структурой — по высоте; видна только подсказка — только под неё. На всю заметку — картинка размером с заметку, каждый показывает свою часть.",
+    optPvBgSpanAuto: "Автоматически (по месту)",
+    optPvBgSpanScreen: "На всю заметку",
   },
 
   ja: {
@@ -14429,10 +14461,10 @@ const LOCALES = {
     optImageNone: "— なし —",
     settingFillImageOpName: "画像の見え方",
     settingFillImageOpDesc: "100で画像そのまま。下げると背景色が重なり、文字が読みやすくなります。",
-    settingFillImageFitName: "表示方法",
-    optImgCover: "全体を覆う（端を切る）",
-    optImgContain: "全体を表示",
-    optImgTile: "タイル",
+    settingFillImageFitName: "画像の収め方",
+    optImgCover: "覆う（端が切れることも）",
+    optImgContain: "全体（余白が残ることも）",
+    optImgTile: "繰り返し（タイル）",
     imageAdded: (n) => "画像を追加しました（" + n + " KB）",
     imageBad: "画像を読み込めませんでした。",
     assetTooBig: "ファイルが大きすぎます（画像は3 MB、フォントは5 MBまで）。",
@@ -14477,8 +14509,8 @@ const LOCALES = {
     historyOpen: "履歴を開く",
     cmdOpenHistory: "履歴を開く",
     sideOneSectionTip: "セクションを開くと、ほかの開いているセクションが閉じ、一覧が短く保たれます。",
-    settingFillImagePosName: "画像の寄せ方",
-    settingFillImagePosDesc: "ウィンドウの大きさが変わっても動かない部分（既定は中央）。",
+    settingFillImagePosName: "画像のどこを見せるか",
+    settingFillImagePosDesc: "画像がウィンドウにぴったり合わないとき、この部分が見えるようにします：中央・端・角。ウィンドウの大きさが変わってもこの部分は動きません。",
     optImgPos_center: "中央",
     optImgPos_top: "上",
     optImgPos_bottom: "下",
@@ -14532,7 +14564,7 @@ const LOCALES = {
     settingPvImgTrackName: "横：動きに合わせた画像",
     settingPvImgTrackDesc: "プレビューの画像を、カードが動く高さ全体に広げます。下では画像の下部、上では上部、中ほどでは中央が見えます。",
     settingPvSideLinkedName: "横：アウトラインと一枚の画像",
-    settingPvSideLinkedDesc: "アウトラインの画像をノート全体に広げ、アウトライン・検索欄・プレビューがそれぞれ一枚の画像の自分の部分を見せます。プレビューはアウトラインの背景を使います。",
+    settingPvSideLinkedDesc: "アウトライン・検索欄・横のプレビューに1枚の画像：ちょうどこの範囲に広がり、それぞれが自分の部分を見せます。プレビューはアウトラインの背景を使います。",
     settingPvStackLinkedName: "アウトラインの下／上：共通の画像",
     settingPvStackLinkedDesc: "プレビューがアウトラインの下か上にあるとき、両者は一つの背景と画像を共有します。下では画像の下部、上では上部をプレビューが見せます。",
     presetDepth: "深海",
@@ -14610,6 +14642,13 @@ const LOCALES = {
     settingFloatHomeXName: "ボタンの位置：横",
     settingFloatHomeYName: "ボタンの位置：縦",
     settingFloatHomeDesc: "ドラッグするまでのボタンの位置：0 はノートの左（上）端、100 は右（下）端。ドラッグした後は置いた場所に留まります。",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "覆う — 画像がウィンドウ全体を埋め、はみ出た部分は端で切れます。全体 — 画像がすべて見え、端に空きが残ることがあります。繰り返し — 画像を元の大きさでタイル状に並べます。",
+    // ---- добавлено ----
+    settingPvBgSpanName: "共通画像の大きさ",
+    settingPvBgSpanDesc: "自動：アウトラインとプレビューが並ぶとき — 横に両方へ広がる。プレビューがアウトラインの上下 — 縦に広がる。プレビューだけ — プレビューだけに合わせる。ノート全体 — ノートの大きさで、それぞれが自分の部分を見せる。",
+    optPvBgSpanAuto: "自動（表示に合わせる）",
+    optPvBgSpanScreen: "ノート全体",
   },
   ko: {
     tocTooltip: '노트 구조',
@@ -16323,10 +16362,10 @@ const LOCALES = {
     optImageNone: "— 없음 —",
     settingFillImageOpName: "이미지 보이는 정도",
     settingFillImageOpDesc: "100은 이미지 그대로, 낮추면 배경색이 위에 겹쳐 글자가 잘 읽힙니다.",
-    settingFillImageFitName: "채우는 방식",
-    optImgCover: "채우기(가장자리 자름)",
-    optImgContain: "전체 보기",
-    optImgTile: "타일",
+    settingFillImageFitName: "그림을 창에 채우는 방식",
+    optImgCover: "채우기 (가장자리가 잘릴 수 있음)",
+    optImgContain: "전체 (빈 띠가 남을 수 있음)",
+    optImgTile: "반복 (타일)",
     imageAdded: (n) => "이미지를 추가했습니다(" + n + " KB)",
     imageBad: "이미지를 읽지 못했습니다.",
     assetTooBig: "파일이 너무 큽니다(이미지 3 MB, 글꼴 5 MB까지).",
@@ -16371,8 +16410,8 @@ const LOCALES = {
     historyOpen: "기록 열기",
     cmdOpenHistory: "기록 열기",
     sideOneSectionTip: "섹션을 열면 열려 있던 다른 섹션이 접혀 목록이 짧게 유지됩니다.",
-    settingFillImagePosName: "이미지 기준 위치",
-    settingFillImagePosDesc: "창 크기가 바뀌어도 그대로 남는 이미지 부분(기본은 가운데).",
+    settingFillImagePosName: "그림의 어느 부분을 보일지",
+    settingFillImagePosDesc: "그림이 창과 크기가 맞지 않을 때 이 부분이 보이게 남습니다: 가운데, 가장자리 또는 모서리. 창 크기가 바뀌어도 이 부분은 제자리에 있습니다.",
     optImgPos_center: "가운데",
     optImgPos_top: "위",
     optImgPos_bottom: "아래",
@@ -16426,7 +16465,7 @@ const LOCALES = {
     settingPvImgTrackName: "옆: 움직임에 따른 그림",
     settingPvImgTrackDesc: "미리보기 그림을 카드가 움직이는 높이 전체에 펼칩니다. 아래에서는 그림의 아랫부분, 위에서는 윗부분, 가운데에서는 가운데가 보입니다.",
     settingPvSideLinkedName: "옆: 개요와 하나의 그림",
-    settingPvSideLinkedDesc: "개요의 그림이 노트 전체에 펼쳐져 개요, 검색창, 미리보기가 하나의 그림에서 각자의 부분을 보여 줍니다. 미리보기는 개요의 배경을 씁니다.",
+    settingPvSideLinkedDesc: "개요, 검색창, 옆의 미리보기에 그림 하나: 정확히 이 영역에 펼쳐지고 각자 자기 부분을 보여 줍니다. 미리보기는 개요의 배경을 씁니다.",
     settingPvStackLinkedName: "개요 아래/위: 공유 그림",
     settingPvStackLinkedDesc: "미리보기가 개요 아래나 위에 있을 때 둘은 하나의 바탕과 그림을 공유합니다. 아래에서는 그림의 아랫부분, 위에서는 윗부분을 보여 줍니다.",
     presetDepth: "심해",
@@ -16504,6 +16543,13 @@ const LOCALES = {
     settingFloatHomeXName: "버튼 위치: 가로",
     settingFloatHomeYName: "버튼 위치: 세로",
     settingFloatHomeDesc: "끌어 옮기기 전 버튼의 자리: 0은 노트의 왼쪽(위) 끝, 100은 오른쪽(아래) 끝. 옮기면 놓은 자리에 남습니다.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "채우기 — 그림이 창 전체를 덮고, 넘치는 부분은 가장자리에서 잘립니다. 전체 — 그림 전체가 보이며 가장자리에 빈 띠가 남을 수 있습니다. 반복 — 그림을 원래 크기로 타일처럼 반복합니다.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "공통 그림의 크기",
+    settingPvBgSpanDesc: "자동: 개요와 미리보기가 나란히 — 그림이 가로로 둘 다에 걸침; 미리보기가 개요 위나 아래 — 세로로; 미리보기만 — 미리보기에만. 노트 전체 — 그림이 노트만큼 크고, 각자 자기 부분을 보여 줌.",
+    optPvBgSpanAuto: "자동 (보이는 것에 맞춤)",
+    optPvBgSpanScreen: "노트 전체",
   },
   hi: {
     tocTooltip: 'नोट संरचना',
@@ -18217,10 +18263,10 @@ const LOCALES = {
     optImageNone: "— कोई नहीं —",
     settingFillImageOpName: "चित्र की दृश्यता",
     settingFillImageOpDesc: "100 — चित्र जैसा है; कम — ऊपर पृष्ठभूमि का रंग आता है ताकि पाठ पढ़ा जा सके।",
-    settingFillImageFitName: "कैसे भरें",
-    optImgCover: "भरें (किनारे कटें)",
-    optImgContain: "पूरा चित्र",
-    optImgTile: "टाइल",
+    settingFillImageFitName: "चित्र खिड़की को कैसे भरे",
+    optImgCover: "भरें (किनारे कट सकते हैं)",
+    optImgContain: "पूरा चित्र (पट्टियाँ रह सकती हैं)",
+    optImgTile: "दोहराएँ (टाइलें)",
     imageAdded: (n) => "चित्र जोड़ा गया (" + n + " KB)",
     imageBad: "चित्र पढ़ा नहीं जा सका।",
     assetTooBig: "फ़ाइल बहुत बड़ी है (चित्र 3 MB तक, फ़ॉन्ट 5 MB तक)।",
@@ -18265,8 +18311,8 @@ const LOCALES = {
     historyOpen: "इतिहास खोलें",
     cmdOpenHistory: "इतिहास खोलें",
     sideOneSectionTip: "एक अनुभाग खोलने पर बाक़ी खुले अनुभाग सिमट जाते हैं, ताकि सूची छोटी रहे।",
-    settingFillImagePosName: "चित्र किस ओर टिके",
-    settingFillImagePosDesc: "विंडो का आकार बदलने पर चित्र का कौन-सा हिस्सा अपनी जगह रहे (डिफ़ॉल्ट — बीच)।",
+    settingFillImagePosName: "चित्र का कौन-सा भाग दिखे",
+    settingFillImagePosDesc: "जब चित्र खिड़की में ठीक से न समाए, तो उसका यह भाग दिखता रहता है: बीच, किनारा या कोना। खिड़की का आकार बदलने पर भी यह भाग अपनी जगह रहता है।",
     optImgPos_center: "बीच",
     optImgPos_top: "ऊपर",
     optImgPos_bottom: "नीचे",
@@ -18320,7 +18366,7 @@ const LOCALES = {
     settingPvImgTrackName: "बगल में: गति के साथ चित्र",
     settingPvImgTrackDesc: "पूर्वावलोकन का चित्र उस पूरी ऊँचाई पर फैला होता है जिस पर कार्ड चलता है: नीचे चित्र का निचला हिस्सा दिखता है, ऊपर — ऊपरी, बीच में — बीच का।",
     settingPvSideLinkedName: "बगल में: रूपरेखा के साथ एक चित्र",
-    settingPvSideLinkedDesc: "रूपरेखा का चित्र पूरे नोट पर फैला होता है: रूपरेखा, खोज और पूर्वावलोकन एक ही चित्र का अपना-अपना हिस्सा दिखाते हैं। पूर्वावलोकन रूपरेखा की पृष्ठभूमि लेता है।",
+    settingPvSideLinkedDesc: "रूपरेखा, खोज बॉक्स और बगल के पूर्वावलोकन के लिए एक चित्र: वह ठीक इसी क्षेत्र पर फैला होता है और हर एक अपना भाग दिखाता है। पूर्वावलोकन रूपरेखा की पृष्ठभूमि लेता है।",
     settingPvStackLinkedName: "रूपरेखा के नीचे / ऊपर: साझा चित्र",
     settingPvStackLinkedDesc: "जब पूर्वावलोकन रूपरेखा के नीचे या ऊपर हो, दोनों की एक पृष्ठभूमि और एक चित्र होता है: नीचे पूर्वावलोकन चित्र का निचला हिस्सा दिखाता है, ऊपर — ऊपरी।",
     presetDepth: "गहराई",
@@ -18398,6 +18444,13 @@ const LOCALES = {
     settingFloatHomeXName: "बटन की जगह: चौड़ाई में",
     settingFloatHomeYName: "बटन की जगह: ऊँचाई में",
     settingFloatHomeDesc: "जब तक आप बटन को खींचते नहीं, वह यहाँ रहता है: 0 — नोट का बायाँ (ऊपरी) किनारा, 100 — दायाँ (निचला)। खींचने के बाद वहीं रहता है जहाँ रखा।",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "भरें — चित्र पूरी खिड़की ढक लेता है, जो नहीं समाता वह किनारों से कट जाता है। पूरा चित्र — पूरा दिखता है, किनारों पर खाली पट्टियाँ रह सकती हैं। दोहराएँ — चित्र अपने आकार में, टाइलों की तरह दोहराया जाता है।",
+    // ---- добавлено ----
+    settingPvBgSpanName: "साझा चित्र का आकार",
+    settingPvBgSpanDesc: "स्वचालित: रूपरेखा और पूर्वावलोकन साथ-साथ — चित्र चौड़ाई में दोनों पर; पूर्वावलोकन रूपरेखा के नीचे या ऊपर — ऊँचाई में; केवल पूर्वावलोकन — बस उसी पर। पूरा नोट — चित्र नोट जितना बड़ा, हर एक अपना भाग दिखाता है।",
+    optPvBgSpanAuto: "स्वचालित (जो दिखे उसके अनुसार)",
+    optPvBgSpanScreen: "पूरा नोट",
   },
   it: {
     tocTooltip: "Struttura della nota",
@@ -20111,10 +20164,10 @@ const LOCALES = {
     optImageNone: "— nessuna —",
     settingFillImageOpName: "Visibilità dell’immagine",
     settingFillImageOpDesc: "100 — l’immagine così com’è; meno — sopra va il colore di sfondo, così il testo resta leggibile.",
-    settingFillImageFitName: "Adattamento",
-    optImgCover: "Riempi (taglia i bordi)",
-    optImgContain: "Immagine intera",
-    optImgTile: "Affiancata",
+    settingFillImageFitName: "Come l’immagine riempie la finestra",
+    optImgCover: "Copri (i bordi possono essere tagliati)",
+    optImgContain: "Immagine intera (possono restare strisce)",
+    optImgTile: "Ripeti (piastrelle)",
     imageAdded: (n) => "Immagine aggiunta (" + n + " KB)",
     imageBad: "Impossibile leggere l’immagine.",
     assetTooBig: "File troppo grande (immagine fino a 3 MB, font fino a 5 MB).",
@@ -20159,8 +20212,8 @@ const LOCALES = {
     historyOpen: "Apri la cronologia",
     cmdOpenHistory: "Apri la cronologia",
     sideOneSectionTip: "Aprendo una sezione si chiudono le altre aperte, così l’elenco resta corto.",
-    settingFillImagePosName: "Ancora l’immagine a",
-    settingFillImagePosDesc: "Quale parte dell’immagine resta ferma quando la finestra cambia dimensione (di base il centro).",
+    settingFillImagePosName: "Quale parte dell’immagine tenere",
+    settingFillImagePosDesc: "Se l’immagine non combacia con la finestra, resta in vista questa sua parte: il centro, un bordo o un angolo. Resta ferma anche quando la finestra cambia dimensione.",
     optImgPos_center: "Centro",
     optImgPos_top: "Alto",
     optImgPos_bottom: "Basso",
@@ -20214,7 +20267,7 @@ const LOCALES = {
     settingPvImgTrackName: "Di lato: immagine lungo il movimento",
     settingPvImgTrackDesc: "L’immagine dell’anteprima copre tutta l’altezza su cui la scheda si muove: in basso si vede la parte bassa dell’immagine, in alto quella alta, al centro quella centrale.",
     settingPvSideLinkedName: "Di lato: un’unica immagine con la struttura",
-    settingPvSideLinkedDesc: "L’immagine della struttura copre tutta la nota: struttura, ricerca e anteprima mostrano ognuna la propria parte di un’unica immagine. L’anteprima prende lo sfondo della struttura.",
+    settingPvSideLinkedDesc: "Un’unica immagine per struttura, campo di ricerca e anteprima accanto: copre esattamente quest’area e ognuno ne mostra la sua parte. L’anteprima prende lo sfondo della struttura.",
     settingPvStackLinkedName: "Sotto / sopra la struttura: immagine comune",
     settingPvStackLinkedDesc: "Quando l’anteprima sta sotto o sopra la struttura, condividono uno sfondo e un’immagine: sotto l’anteprima mostra la parte bassa dell’immagine, sopra quella alta.",
     presetDepth: "Profondità",
@@ -20292,6 +20345,13 @@ const LOCALES = {
     settingFloatHomeXName: "Posizione del pulsante: in larghezza",
     settingFloatHomeYName: "Posizione del pulsante: in altezza",
     settingFloatHomeDesc: "Dove sta il pulsante finché non lo trascini: 0 è il bordo sinistro (in alto) della nota, 100 quello destro (in basso). Trascinato, resta dove l’hai messo.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Copri — l’immagine riempie tutta la finestra; ciò che non entra viene tagliato ai bordi. Immagine intera — si vede tutta; possono restare strisce vuote. Ripeti — l’immagine nella sua misura, ripetuta come piastrelle.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Dimensione dell’immagine condivisa",
+    settingPvBgSpanDesc: "Automatico: struttura e anteprima affiancate — l’immagine copre entrambe in larghezza; anteprima sotto o sopra la struttura — in altezza; solo l’anteprima — solo l’anteprima. Tutta la nota — l’immagine è grande quanto la nota, ognuno ne mostra la sua parte.",
+    optPvBgSpanAuto: "Automatico (in base a ciò che è visibile)",
+    optPvBgSpanScreen: "Tutta la nota",
   },
   es: {
     tocTooltip: "Estructura de la nota",
@@ -22005,10 +22065,10 @@ const LOCALES = {
     optImageNone: "— ninguna —",
     settingFillImageOpName: "Visibilidad de la imagen",
     settingFillImageOpDesc: "100 — la imagen tal cual; menos — encima va el color de fondo para que el texto se lea.",
-    settingFillImageFitName: "Ajuste",
-    optImgCover: "Rellenar (recortar bordes)",
-    optImgContain: "Imagen completa",
-    optImgTile: "Mosaico",
+    settingFillImageFitName: "Cómo llena la imagen la ventana",
+    optImgCover: "Cubrir (los bordes pueden recortarse)",
+    optImgContain: "Imagen entera (pueden quedar franjas)",
+    optImgTile: "Repetir (baldosas)",
     imageAdded: (n) => "Imagen añadida (" + n + " KB)",
     imageBad: "No se pudo leer la imagen.",
     assetTooBig: "Archivo demasiado grande (imagen hasta 3 MB, fuente hasta 5 MB).",
@@ -22053,8 +22113,8 @@ const LOCALES = {
     historyOpen: "Abrir el historial",
     cmdOpenHistory: "Abrir el historial",
     sideOneSectionTip: "Al abrir una sección se pliegan las demás abiertas, para que la lista siga corta.",
-    settingFillImagePosName: "Anclar la imagen a",
-    settingFillImagePosDesc: "Qué parte de la imagen se queda fija cuando la ventana cambia de tamaño (el centro por defecto).",
+    settingFillImagePosName: "Qué parte de la imagen mantener",
+    settingFillImagePosDesc: "Si la imagen no coincide con la ventana, queda a la vista esta parte: el centro, un borde o una esquina. También se queda en su sitio cuando la ventana cambia de tamaño.",
     optImgPos_center: "Centro",
     optImgPos_top: "Arriba",
     optImgPos_bottom: "Abajo",
@@ -22108,7 +22168,7 @@ const LOCALES = {
     settingPvImgTrackName: "Al lado: imagen a lo largo del movimiento",
     settingPvImgTrackDesc: "La imagen de la vista previa se extiende por toda la altura que recorre la tarjeta: abajo se ve la parte inferior de la imagen, arriba la superior, en medio la central.",
     settingPvSideLinkedName: "Al lado: una sola imagen con el esquema",
-    settingPvSideLinkedDesc: "La imagen del esquema abarca toda la nota: el esquema, la búsqueda y la vista previa muestran cada uno su parte de una misma imagen. La vista previa toma el fondo del esquema.",
+    settingPvSideLinkedDesc: "Una sola imagen para el esquema, el cuadro de búsqueda y la vista previa al lado: abarca exactamente esa zona y cada uno muestra su parte. La vista previa toma el fondo del esquema.",
     settingPvStackLinkedName: "Debajo / encima del esquema: imagen común",
     settingPvStackLinkedDesc: "Cuando la vista previa está debajo o encima del esquema, comparten un fondo y una imagen: debajo muestra la parte inferior de la imagen, encima, la superior.",
     presetDepth: "Profundidad",
@@ -22186,6 +22246,13 @@ const LOCALES = {
     settingFloatHomeXName: "Posición del botón: horizontal",
     settingFloatHomeYName: "Posición del botón: vertical",
     settingFloatHomeDesc: "Dónde está el botón hasta que lo arrastres: 0 es el borde izquierdo (superior) de la nota, 100 el derecho (inferior). Una vez arrastrado, se queda donde lo pusiste.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Cubrir — la imagen llena toda la ventana; lo que no cabe se recorta por los bordes. Imagen entera — se ve completa; pueden quedar franjas vacías. Repetir — la imagen a su tamaño, repetida como baldosas.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Tamaño de la imagen compartida",
+    settingPvBgSpanDesc: "Automático: esquema y vista previa lado a lado — la imagen abarca ambos a lo ancho; vista previa debajo o encima del esquema — a lo alto; solo la vista previa — solo ella. Toda la nota — la imagen mide como la nota y cada uno muestra su parte.",
+    optPvBgSpanAuto: "Automático (según lo que se ve)",
+    optPvBgSpanScreen: "Toda la nota",
   },
   pt: {
     tocTooltip: "Estrutura da nota",
@@ -23900,10 +23967,10 @@ const LOCALES = {
     optImageNone: "— nenhuma —",
     settingFillImageOpName: "Visibilidade da imagem",
     settingFillImageOpDesc: "100 — a imagem como está; menos — a cor de fundo fica por cima para o texto continuar legível.",
-    settingFillImageFitName: "Ajuste",
-    optImgCover: "Preencher (cortar bordas)",
-    optImgContain: "Imagem inteira",
-    optImgTile: "Lado a lado",
+    settingFillImageFitName: "Como a imagem preenche a janela",
+    optImgCover: "Cobrir (as bordas podem ser cortadas)",
+    optImgContain: "Imagem inteira (podem sobrar faixas)",
+    optImgTile: "Repetir (azulejos)",
     imageAdded: (n) => "Imagem adicionada (" + n + " KB)",
     imageBad: "Não foi possível ler a imagem.",
     assetTooBig: "Arquivo grande demais (imagem até 3 MB, fonte até 5 MB).",
@@ -23948,8 +24015,8 @@ const LOCALES = {
     historyOpen: "Abrir o histórico",
     cmdOpenHistory: "Abrir o histórico",
     sideOneSectionTip: "Abrir uma seção recolhe as outras abertas, para a lista ficar curta.",
-    settingFillImagePosName: "Ancorar a imagem em",
-    settingFillImagePosDesc: "Qual parte da imagem fica parada quando a janela muda de tamanho (o centro por padrão).",
+    settingFillImagePosName: "Que parte da imagem manter",
+    settingFillImagePosDesc: "Se a imagem não coincide com a janela, esta parte dela fica à vista: o centro, uma borda ou um canto. Ela também fica no lugar quando a janela muda de tamanho.",
     optImgPos_center: "Centro",
     optImgPos_top: "Topo",
     optImgPos_bottom: "Base",
@@ -24003,7 +24070,7 @@ const LOCALES = {
     settingPvImgTrackName: "Ao lado: imagem ao longo do movimento",
     settingPvImgTrackDesc: "A imagem da prévia se estende por toda a altura que o cartão percorre: embaixo aparece a parte de baixo da imagem, em cima a de cima, no meio a do meio.",
     settingPvSideLinkedName: "Ao lado: uma só imagem com a estrutura",
-    settingPvSideLinkedDesc: "A imagem da estrutura cobre a nota inteira: a estrutura, a busca e a prévia mostram cada uma sua parte de uma só imagem. A prévia usa o fundo da estrutura.",
+    settingPvSideLinkedDesc: "Uma só imagem para a estrutura, a caixa de busca e a prévia ao lado: ela cobre exatamente essa área, e cada um mostra a sua parte. A prévia usa o fundo da estrutura.",
     settingPvStackLinkedName: "Abaixo / acima da estrutura: imagem comum",
     settingPvStackLinkedDesc: "Quando a prévia fica abaixo ou acima da estrutura, elas compartilham um fundo e uma imagem: abaixo a prévia mostra a parte de baixo da imagem, acima — a de cima.",
     presetDepth: "Profundeza",
@@ -24081,6 +24148,13 @@ const LOCALES = {
     settingFloatHomeXName: "Posição do botão: horizontal",
     settingFloatHomeYName: "Posição do botão: vertical",
     settingFloatHomeDesc: "Onde o botão fica até você arrastá-lo: 0 é a borda esquerda (de cima) da nota, 100 a direita (de baixo). Depois de arrastado, fica onde você o deixou.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Cobrir — a imagem preenche toda a janela; o que não cabe é cortado nas bordas. Imagem inteira — aparece toda; podem sobrar faixas vazias. Repetir — a imagem no próprio tamanho, repetida como azulejos.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Tamanho da imagem compartilhada",
+    settingPvBgSpanDesc: "Automático: estrutura e prévia lado a lado — a imagem cobre as duas na largura; prévia abaixo ou acima da estrutura — na altura; só a prévia — só ela. Nota inteira — a imagem tem o tamanho da nota e cada um mostra a sua parte.",
+    optPvBgSpanAuto: "Automático (conforme o que aparece)",
+    optPvBgSpanScreen: "Nota inteira",
   },
   tr: {
     tocTooltip: "Not yapısı",
@@ -25795,10 +25869,10 @@ const LOCALES = {
     optImageNone: "— yok —",
     settingFillImageOpName: "Görselin görünürlüğü",
     settingFillImageOpDesc: "100 — görsel olduğu gibi; daha az — üstüne arka plan rengi gelir, metin okunur kalır.",
-    settingFillImageFitName: "Sığdırma",
-    optImgCover: "Doldur (kenarları kırp)",
-    optImgContain: "Tüm görsel",
-    optImgTile: "Döşe",
+    settingFillImageFitName: "Resim pencereyi nasıl doldurur",
+    optImgCover: "Kapla (kenarlar kesilebilir)",
+    optImgContain: "Tüm resim (şeritler kalabilir)",
+    optImgTile: "Tekrarla (karo)",
     imageAdded: (n) => "Görsel eklendi (" + n + " KB)",
     imageBad: "Görsel okunamadı.",
     assetTooBig: "Dosya çok büyük (görsel en fazla 3 MB, yazı tipi en fazla 5 MB).",
@@ -25843,8 +25917,8 @@ const LOCALES = {
     historyOpen: "Geçmişi aç",
     cmdOpenHistory: "Geçmişi aç",
     sideOneSectionTip: "Bir bölümü açınca diğer açık bölümler kapanır, liste kısa kalır.",
-    settingFillImagePosName: "Görseli hizala",
-    settingFillImagePosDesc: "Pencere boyutu değişince görselin hangi kısmı yerinde kalır (varsayılan: orta).",
+    settingFillImagePosName: "Resmin hangi kısmı görünsün",
+    settingFillImagePosDesc: "Resim pencereye tam uymadığında görünür kalan kısım: orta, bir kenar ya da bir köşe. Pencere boyutu değişince de bu kısım yerinde kalır.",
     optImgPos_center: "Orta",
     optImgPos_top: "Üst",
     optImgPos_bottom: "Alt",
@@ -25898,7 +25972,7 @@ const LOCALES = {
     settingPvImgTrackName: "Yanda: harekete göre görsel",
     settingPvImgTrackDesc: "Önizleme görseli kartın gezdiği tüm yüksekliğe yayılır: altta görselin alt kısmı, üstte üst kısmı, ortada orta kısmı görünür.",
     settingPvSideLinkedName: "Yanda: ana hatla tek görsel",
-    settingPvSideLinkedDesc: "Ana hattın görseli tüm nota yayılır: ana hat, arama ve önizleme tek görselin kendi kısmını gösterir. Önizleme ana hattın arka planını kullanır.",
+    settingPvSideLinkedDesc: "Ana hat, arama kutusu ve yanındaki önizleme için tek resim: tam bu alana yayılır ve her biri kendi parçasını gösterir. Önizleme ana hattın arka planını alır.",
     settingPvStackLinkedName: "Ana hattın altında / üstünde: ortak görsel",
     settingPvStackLinkedDesc: "Önizleme ana hattın altında ya da üstündeyken ikisi tek zemini ve tek görseli paylaşır: altta görselin alt kısmı, üstte üst kısmı görünür.",
     presetDepth: "Derinlik",
@@ -25976,6 +26050,13 @@ const LOCALES = {
     settingFloatHomeXName: "Düğmenin yeri: yatay",
     settingFloatHomeYName: "Düğmenin yeri: dikey",
     settingFloatHomeDesc: "Sürükleyene kadar düğmenin yeri: 0 notun sol (üst) kenarı, 100 sağ (alt) kenarı. Sürükledikten sonra koyduğun yerde kalır.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Kapla — resim tüm pencereyi doldurur, sığmayan kısım kenarlardan kesilir. Tüm resim — resmin tamamı görünür, kenarlarda boş şeritler kalabilir. Tekrarla — resim kendi boyutunda, karo gibi tekrarlanır.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Ortak resmin boyutu",
+    settingPvBgSpanDesc: "Otomatik: ana hat ve önizleme yan yana — resim enine ikisine yayılır; önizleme ana hattın altında ya da üstünde — boyuna; yalnızca önizleme — yalnızca ona. Tüm not — resim not kadar büyük, her biri kendi parçasını gösterir.",
+    optPvBgSpanAuto: "Otomatik (görünene göre)",
+    optPvBgSpanScreen: "Tüm not",
   },
   pl: {
     tocTooltip: "Struktura notatki",
@@ -27689,10 +27770,10 @@ const LOCALES = {
     optImageNone: "— brak —",
     settingFillImageOpName: "Widoczność obrazu",
     settingFillImageOpDesc: "100 — obraz bez zmian; mniej — na wierzch kładzie się kolor tła, by tekst był czytelny.",
-    settingFillImageFitName: "Dopasowanie",
-    optImgCover: "Wypełnij (przytnij brzegi)",
-    optImgContain: "Cały obraz",
-    optImgTile: "Kafelki",
+    settingFillImageFitName: "Jak obraz wypełnia okno",
+    optImgCover: "Wypełnij (brzegi mogą zostać przycięte)",
+    optImgContain: "Cały obraz (mogą zostać pasy)",
+    optImgTile: "Powtarzaj (kafelki)",
     imageAdded: (n) => "Dodano obraz (" + n + " KB)",
     imageBad: "Nie udało się odczytać obrazu.",
     assetTooBig: "Plik za duży (obraz do 3 MB, czcionka do 5 MB).",
@@ -27737,8 +27818,8 @@ const LOCALES = {
     historyOpen: "Otwórz historię",
     cmdOpenHistory: "Otwórz historię",
     sideOneSectionTip: "Otwarcie sekcji zwija pozostałe otwarte, żeby lista była krótka.",
-    settingFillImagePosName: "Przyczep obraz do",
-    settingFillImagePosDesc: "Która część obrazu zostaje na miejscu, gdy okno zmienia rozmiar (domyślnie środek).",
+    settingFillImagePosName: "Którą część obrazu zostawić",
+    settingFillImagePosDesc: "Gdy obraz nie pasuje dokładnie do okna, widoczna zostaje ta jego część: środek, krawędź lub róg. Zostaje też na miejscu, gdy okno zmienia rozmiar.",
     optImgPos_center: "Środek",
     optImgPos_top: "Góra",
     optImgPos_bottom: "Dół",
@@ -27792,7 +27873,7 @@ const LOCALES = {
     settingPvImgTrackName: "Z boku: obraz wzdłuż ruchu",
     settingPvImgTrackDesc: "Obraz podglądu jest rozciągnięty na całą wysokość, po której jeździ karta: na dole widać dół obrazu, na górze górę, pośrodku środek.",
     settingPvSideLinkedName: "Z boku: jeden obraz z konspektem",
-    settingPvSideLinkedDesc: "Obraz konspektu obejmuje całą notatkę: konspekt, wyszukiwarka i podgląd pokazują każdy swoją część jednego obrazu. Podgląd bierze tło konspektu.",
+    settingPvSideLinkedDesc: "Jeden obraz na konspekt, pole wyszukiwania i podgląd obok: obejmuje dokładnie ten obszar, a każde pokazuje swoją część. Podgląd bierze tło konspektu.",
     settingPvStackLinkedName: "Pod / nad konspektem: wspólny obraz",
     settingPvStackLinkedDesc: "Gdy podgląd stoi pod konspektem albo nad nim, mają wspólne tło i jeden obraz: pod konspektem podgląd pokazuje dół obrazu, nad nim — górę.",
     presetDepth: "Głębia",
@@ -27870,6 +27951,13 @@ const LOCALES = {
     settingFloatHomeXName: "Położenie przycisku: w poziomie",
     settingFloatHomeYName: "Położenie przycisku: w pionie",
     settingFloatHomeDesc: "Gdzie stoi przycisk, dopóki go nie przeciągniesz: 0 to lewa (górna) krawędź notatki, 100 prawa (dolna). Po przeciągnięciu zostaje tam, gdzie go położysz.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Wypełnij — obraz zakrywa całe okno, to, co się nie mieści, jest przycinane na brzegach. Cały obraz — widać go w całości, po bokach mogą zostać puste pasy. Powtarzaj — obraz w swoim rozmiarze, powtarzany jak kafelki.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Rozmiar wspólnego obrazu",
+    settingPvBgSpanDesc: "Automatycznie: konspekt i podgląd obok siebie — obraz obejmuje oba wszerz; podgląd pod lub nad konspektem — wzdłuż; tylko podgląd — tylko jego. Cała notatka — obraz wielkości notatki, każde pokazuje swoją część.",
+    optPvBgSpanAuto: "Automatycznie (według tego, co widać)",
+    optPvBgSpanScreen: "Cała notatka",
   },
   uk: {
     tocTooltip: "Структура нотатки",
@@ -29583,10 +29671,10 @@ const LOCALES = {
     optImageNone: "— не вибрано —",
     settingFillImageOpName: "Видимість зображення",
     settingFillImageOpDesc: "100 — зображення як є; менше — зверху лягає колір фону, щоб читався текст.",
-    settingFillImageFitName: "Як заповнювати",
-    optImgCover: "Заповнити (обрізаючи краї)",
-    optImgContain: "Повністю",
-    optImgTile: "Плиткою",
+    settingFillImageFitName: "Як картинка заповнює вікно",
+    optImgCover: "Заповнити (краї можуть обрізатися)",
+    optImgContain: "Цілком (можуть лишитися смуги)",
+    optImgTile: "Повторювати плиткою",
     imageAdded: (n) => "Зображення додано (" + n + " КБ)",
     imageBad: "Не вдалося прочитати зображення.",
     assetTooBig: "Файл завеликий (зображення — до 3 МБ, шрифт — до 5 МБ).",
@@ -29631,8 +29719,8 @@ const LOCALES = {
     historyOpen: "Відкрити історію",
     cmdOpenHistory: "Відкрити історію",
     sideOneSectionTip: "Відкриваєте розділ — інші відкриті згортаються, щоб список був коротким.",
-    settingFillImagePosName: "До чого притиснути зображення",
-    settingFillImagePosDesc: "Яка частина зображення лишається на місці, коли вікно змінює розмір (типово — центр).",
+    settingFillImagePosName: "Яку частину картинки тримати на виду",
+    settingFillImagePosDesc: "Якщо картинка не збігається з вікном за розміром, на виду лишається ця її частина: центр, край або кут. Вона ж стоїть на місці, коли вікно змінює розмір.",
     optImgPos_center: "По центру",
     optImgPos_top: "Верх",
     optImgPos_bottom: "Низ",
@@ -29686,7 +29774,7 @@ const LOCALES = {
     settingPvImgTrackName: "Збоку: картинка за висотою руху",
     settingPvImgTrackDesc: "Картинка підказки розтягнута на всю висоту, якою підказка їздить: унизу видно нижню частину картинки, нагорі — верхню, посередині — середню.",
     settingPvSideLinkedName: "Збоку: одна картинка зі структурою",
-    settingPvSideLinkedDesc: "Картинка структури розтягнута на всю нотатку: структура, пошук і підказка показують кожен свою частину однієї картинки. Підказка бере фон структури.",
+    settingPvSideLinkedDesc: "Одна картинка на структуру, поле пошуку й підказку поруч: вона розтягнута рівно на цю ділянку, і кожен показує свою частину. Підказка бере фон структури.",
     settingPvStackLinkedName: "Під / над структурою: спільна картинка",
     settingPvStackLinkedDesc: "Коли підказка стоїть під структурою або над нею, у них одна підкладка й одна картинка: під структурою підказка показує нижню частину картинки, над нею — верхню.",
     presetDepth: "Глибина",
@@ -29764,6 +29852,13 @@ const LOCALES = {
     settingFloatHomeXName: "Де стоїть кнопка: за шириною",
     settingFloatHomeYName: "Де стоїть кнопка: за висотою",
     settingFloatHomeDesc: "Де стоїть кнопка, доки ви її не перетягли: 0 — лівий (верхній) край нотатки, 100 — правий (нижній). Перетягли — стоїть там, де поставили.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Заповнити — картинка закриває все вікно, що не влізло, обрізається по краях. Цілком — видно всю картинку, по краях можуть лишитися порожні смуги. Повторювати — картинка у своєму розмірі, повторюється плиткою.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Розмір спільної картинки",
+    settingPvBgSpanDesc: "Автоматично: структура й підказка поруч — картинка за шириною на обидві; підказка під або над структурою — за висотою; видно лише підказку — лише під неї. На всю нотатку — картинка розміром з нотатку, кожен показує свою частину.",
+    optPvBgSpanAuto: "Автоматично (за місцем)",
+    optPvBgSpanScreen: "На всю нотатку",
   },
   vi: {
     tocTooltip: "Cấu trúc ghi chú",
@@ -31477,10 +31572,10 @@ const LOCALES = {
     optImageNone: "— không có —",
     settingFillImageOpName: "Độ hiện của ảnh",
     settingFillImageOpDesc: "100 — ảnh giữ nguyên; thấp hơn — màu nền phủ lên để chữ dễ đọc.",
-    settingFillImageFitName: "Cách lấp đầy",
-    optImgCover: "Lấp đầy (cắt mép)",
-    optImgContain: "Toàn bộ ảnh",
-    optImgTile: "Lát gạch",
+    settingFillImageFitName: "Ảnh lấp cửa sổ thế nào",
+    optImgCover: "Phủ kín (có thể cắt mép)",
+    optImgContain: "Cả ảnh (có thể còn dải trống)",
+    optImgTile: "Lặp lại (lát gạch)",
     imageAdded: (n) => "Đã thêm ảnh (" + n + " KB)",
     imageBad: "Không đọc được ảnh.",
     assetTooBig: "Tệp quá lớn (ảnh tối đa 3 MB, phông tối đa 5 MB).",
@@ -31525,8 +31620,8 @@ const LOCALES = {
     historyOpen: "Mở lịch sử",
     cmdOpenHistory: "Mở lịch sử",
     sideOneSectionTip: "Mở một mục thì các mục đang mở khác thu lại, để danh sách ngắn gọn.",
-    settingFillImagePosName: "Neo ảnh vào",
-    settingFillImagePosDesc: "Phần nào của ảnh đứng yên khi cửa sổ đổi kích thước (mặc định là giữa).",
+    settingFillImagePosName: "Giữ phần nào của ảnh",
+    settingFillImagePosDesc: "Khi ảnh không vừa khít cửa sổ, phần này của ảnh vẫn hiện: giữa, một mép hoặc một góc. Phần đó cũng đứng yên khi cửa sổ đổi kích thước.",
     optImgPos_center: "Giữa",
     optImgPos_top: "Trên",
     optImgPos_bottom: "Dưới",
@@ -31580,7 +31675,7 @@ const LOCALES = {
     settingPvImgTrackName: "Bên cạnh: ảnh theo chuyển động",
     settingPvImgTrackDesc: "Ảnh xem trước trải trên toàn bộ chiều cao thẻ di chuyển: ở dưới thấy phần dưới ảnh, ở trên thấy phần trên, ở giữa thấy phần giữa.",
     settingPvSideLinkedName: "Bên cạnh: một ảnh chung với dàn ý",
-    settingPvSideLinkedDesc: "Ảnh của dàn ý trải trên toàn ghi chú: dàn ý, ô tìm kiếm và bản xem trước mỗi thứ hiện phần của mình trên cùng một ảnh. Bản xem trước dùng nền của dàn ý.",
+    settingPvSideLinkedDesc: "Một ảnh cho dàn ý, ô tìm kiếm và bản xem trước bên cạnh: ảnh trải đúng vùng này, mỗi phần hiện phần ảnh của mình. Bản xem trước dùng nền của dàn ý.",
     settingPvStackLinkedName: "Dưới / trên dàn ý: ảnh chung",
     settingPvStackLinkedDesc: "Khi bản xem trước nằm dưới hoặc trên dàn ý, chúng dùng chung một nền và một ảnh: ở dưới hiện phần dưới ảnh, ở trên hiện phần trên.",
     presetDepth: "Biển sâu",
@@ -31658,6 +31753,13 @@ const LOCALES = {
     settingFloatHomeXName: "Vị trí nút: theo chiều ngang",
     settingFloatHomeYName: "Vị trí nút: theo chiều dọc",
     settingFloatHomeDesc: "Vị trí nút khi bạn chưa kéo nó: 0 là mép trái (trên) của ghi chú, 100 là mép phải (dưới). Đã kéo thì nút ở lại chỗ bạn đặt.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Phủ kín — ảnh lấp đầy cả cửa sổ, phần thừa bị cắt ở mép. Cả ảnh — thấy toàn bộ ảnh, có thể còn dải trống ở mép. Lặp lại — ảnh ở kích thước gốc, lặp như gạch lát.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Kích thước ảnh dùng chung",
+    settingPvBgSpanDesc: "Tự động: dàn ý và xem trước cạnh nhau — ảnh trải ngang cả hai; xem trước ở dưới hoặc trên dàn ý — trải dọc; chỉ có xem trước — chỉ vừa nó. Cả ghi chú — ảnh lớn bằng ghi chú, mỗi phần hiện phần của mình.",
+    optPvBgSpanAuto: "Tự động (theo phần đang hiện)",
+    optPvBgSpanScreen: "Cả ghi chú",
   },
   id: {
     tocTooltip: "Struktur catatan",
@@ -33371,10 +33473,10 @@ const LOCALES = {
     optImageNone: "— tidak ada —",
     settingFillImageOpName: "Visibilitas gambar",
     settingFillImageOpDesc: "100 — gambar apa adanya; lebih kecil — warna latar menutup di atas agar teks tetap terbaca.",
-    settingFillImageFitName: "Penyesuaian",
-    optImgCover: "Isi (potong tepi)",
-    optImgContain: "Gambar utuh",
-    optImgTile: "Ubin",
+    settingFillImageFitName: "Cara gambar mengisi jendela",
+    optImgCover: "Tutupi (tepi bisa terpotong)",
+    optImgContain: "Gambar utuh (bisa tersisa pita)",
+    optImgTile: "Ulangi (ubin)",
     imageAdded: (n) => "Gambar ditambahkan (" + n + " KB)",
     imageBad: "Gambar tidak dapat dibaca.",
     assetTooBig: "Berkas terlalu besar (gambar hingga 3 MB, font hingga 5 MB).",
@@ -33419,8 +33521,8 @@ const LOCALES = {
     historyOpen: "Buka riwayat",
     cmdOpenHistory: "Buka riwayat",
     sideOneSectionTip: "Membuka satu bagian menutup bagian lain yang terbuka, agar daftar tetap pendek.",
-    settingFillImagePosName: "Tambatkan gambar ke",
-    settingFillImagePosDesc: "Bagian gambar mana yang tetap saat ukuran jendela berubah (bawaan: tengah).",
+    settingFillImagePosName: "Bagian gambar yang tetap terlihat",
+    settingFillImagePosDesc: "Jika gambar tidak pas dengan jendela, bagian ini tetap terlihat: tengah, tepi, atau sudut. Bagian ini juga tetap di tempatnya saat ukuran jendela berubah.",
     optImgPos_center: "Tengah",
     optImgPos_top: "Atas",
     optImgPos_bottom: "Bawah",
@@ -33474,7 +33576,7 @@ const LOCALES = {
     settingPvImgTrackName: "Di samping: gambar mengikuti gerak",
     settingPvImgTrackDesc: "Gambar pratinjau direntangkan sepanjang tinggi yang dilalui kartu: di bawah terlihat bagian bawah gambar, di atas bagian atas, di tengah bagian tengah.",
     settingPvSideLinkedName: "Di samping: satu gambar dengan kerangka",
-    settingPvSideLinkedDesc: "Gambar kerangka direntangkan ke seluruh catatan: kerangka, pencarian, dan pratinjau masing-masing menampilkan bagiannya dari satu gambar. Pratinjau memakai latar kerangka.",
+    settingPvSideLinkedDesc: "Satu gambar untuk kerangka, kotak pencarian, dan pratinjau di sampingnya: gambar membentang tepat di area ini, dan masing-masing menampilkan bagiannya. Pratinjau memakai latar kerangka.",
     settingPvStackLinkedName: "Di bawah / di atas kerangka: gambar bersama",
     settingPvStackLinkedDesc: "Saat pratinjau di bawah atau di atas kerangka, keduanya berbagi satu latar dan satu gambar: di bawah pratinjau menampilkan bagian bawah gambar, di atas — bagian atas.",
     presetDepth: "Kedalaman",
@@ -33552,6 +33654,13 @@ const LOCALES = {
     settingFloatHomeXName: "Posisi tombol: mendatar",
     settingFloatHomeYName: "Posisi tombol: menurun",
     settingFloatHomeDesc: "Posisi tombol sebelum kamu menyeretnya: 0 tepi kiri (atas) catatan, 100 tepi kanan (bawah). Setelah diseret, tombol tetap di tempat kamu menaruhnya.",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "Tutupi — gambar memenuhi seluruh jendela, bagian yang tidak muat terpotong di tepi. Gambar utuh — seluruh gambar terlihat, bisa tersisa pita kosong. Ulangi — gambar dengan ukuran aslinya, diulang seperti ubin.",
+    // ---- добавлено ----
+    settingPvBgSpanName: "Ukuran gambar bersama",
+    settingPvBgSpanDesc: "Otomatis: kerangka dan pratinjau berdampingan — gambar membentang melebar di keduanya; pratinjau di bawah atau di atas kerangka — memanjang; hanya pratinjau — hanya pratinjau. Seluruh catatan — gambar sebesar catatan, masing-masing menampilkan bagiannya.",
+    optPvBgSpanAuto: "Otomatis (sesuai yang tampil)",
+    optPvBgSpanScreen: "Seluruh catatan",
   },
   'zh-Hans': {
     tocTooltip: "笔记大纲",
@@ -35265,10 +35374,10 @@ const LOCALES = {
     optImageNone: "— 无 —",
     settingFillImageOpName: "图片可见度",
     settingFillImageOpDesc: "100 为原图；调低则背景色盖在上面，文字更易读。",
-    settingFillImageFitName: "填充方式",
-    optImgCover: "铺满（裁掉边缘）",
-    optImgContain: "完整显示",
-    optImgTile: "平铺",
+    settingFillImageFitName: "图片如何填充窗口",
+    optImgCover: "铺满（边缘可能被裁掉）",
+    optImgContain: "完整显示（可能留出空白条）",
+    optImgTile: "重复（瓷砖）",
     imageAdded: (n) => "已添加图片（" + n + " KB）",
     imageBad: "无法读取图片。",
     assetTooBig: "文件过大（图片不超过 3 MB，字体不超过 5 MB）。",
@@ -35313,8 +35422,8 @@ const LOCALES = {
     historyOpen: "打开历史记录",
     cmdOpenHistory: "打开历史记录",
     sideOneSectionTip: "打开一个分区时，其他已打开的分区会折叠，列表保持简短。",
-    settingFillImagePosName: "图片对齐到",
-    settingFillImagePosDesc: "窗口大小变化时图片哪一部分保持不动（默认居中）。",
+    settingFillImagePosName: "保留图片的哪一部分",
+    settingFillImagePosDesc: "图片与窗口大小不一致时，保留可见的部分：中间、某条边或某个角。窗口大小变化时这部分也保持不动。",
     optImgPos_center: "居中",
     optImgPos_top: "上",
     optImgPos_bottom: "下",
@@ -35368,7 +35477,7 @@ const LOCALES = {
     settingPvImgTrackName: "侧边：随移动高度的图片",
     settingPvImgTrackDesc: "预览图片铺满卡片移动的整个高度：在下方显示图片下部，上方显示上部，中间显示中部。",
     settingPvSideLinkedName: "侧边：与大纲共用一张图片",
-    settingPvSideLinkedDesc: "大纲的图片铺满整篇笔记：大纲、搜索框和预览各自显示同一张图片的一部分。预览使用大纲的背景。",
+    settingPvSideLinkedDesc: "大纲、搜索框和旁边的预览共用一张图片：它正好铺满这块区域，各自显示其中一部分。预览使用大纲的背景。",
     settingPvStackLinkedName: "大纲下方／上方：共用图片",
     settingPvStackLinkedDesc: "预览在大纲下方或上方时，两者共用一个底板和一张图片：在下方时预览显示图片下部，在上方时显示上部。",
     presetDepth: "深海",
@@ -35446,6 +35555,13 @@ const LOCALES = {
     settingFloatHomeXName: "按钮位置：横向",
     settingFloatHomeYName: "按钮位置：纵向",
     settingFloatHomeDesc: "拖动之前按钮的位置：0 为笔记左（上）边缘，100 为右（下）边缘。拖动后就停在你放的位置。",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "铺满——图片覆盖整个窗口，放不下的部分在边缘被裁掉。完整显示——整张图片可见，边上可能留出空白条。重复——图片按原尺寸像瓷砖一样重复。",
+    // ---- добавлено ----
+    settingPvBgSpanName: "共用图片的大小",
+    settingPvBgSpanDesc: "自动：大纲和预览并排——图片横向铺满两者；预览在大纲下方或上方——纵向铺满；只有预览——只铺满预览。整篇笔记——图片和笔记一样大，各自显示自己那部分。",
+    optPvBgSpanAuto: "自动（按显示的内容）",
+    optPvBgSpanScreen: "整篇笔记",
   },
   'zh-Hant': {
     tocTooltip: "筆記大綱",
@@ -37159,10 +37275,10 @@ const LOCALES = {
     optImageNone: "— 無 —",
     settingFillImageOpName: "圖片可見度",
     settingFillImageOpDesc: "100 為原圖；調低則背景色蓋在上面，文字更易讀。",
-    settingFillImageFitName: "填充方式",
-    optImgCover: "鋪滿（裁掉邊緣）",
-    optImgContain: "完整顯示",
-    optImgTile: "平鋪",
+    settingFillImageFitName: "圖片如何填充視窗",
+    optImgCover: "鋪滿（邊緣可能被裁掉）",
+    optImgContain: "完整顯示（可能留出空白條）",
+    optImgTile: "重複（瓷磚）",
     imageAdded: (n) => "已新增圖片（" + n + " KB）",
     imageBad: "無法讀取圖片。",
     assetTooBig: "檔案過大（圖片不超過 3 MB，字型不超過 5 MB）。",
@@ -37207,8 +37323,8 @@ const LOCALES = {
     historyOpen: "開啟歷史記錄",
     cmdOpenHistory: "開啟歷史記錄",
     sideOneSectionTip: "開啟一個分割槽時，其他已開啟的分割槽會摺疊，列表保持簡短。",
-    settingFillImagePosName: "圖片對齊到",
-    settingFillImagePosDesc: "視窗大小變化時圖片哪一部分保持不動（預設居中）。",
+    settingFillImagePosName: "保留圖片的哪一部分",
+    settingFillImagePosDesc: "圖片與視窗大小不一致時，保留可見的部分：中間、某條邊或某個角。視窗大小變化時這部分也保持不動。",
     optImgPos_center: "居中",
     optImgPos_top: "上",
     optImgPos_bottom: "下",
@@ -37262,7 +37378,7 @@ const LOCALES = {
     settingPvImgTrackName: "側邊：隨移動高度的圖片",
     settingPvImgTrackDesc: "預覽圖片鋪滿卡片移動的整個高度：在下方顯示圖片下部，上方顯示上部，中間顯示中部。",
     settingPvSideLinkedName: "側邊：與大綱共用一張圖片",
-    settingPvSideLinkedDesc: "大綱的圖片鋪滿整篇筆記：大綱、搜尋框和預覽各自顯示同一張圖片的一部分。預覽使用大綱的背景。",
+    settingPvSideLinkedDesc: "大綱、搜尋框和旁邊的預覽共用一張圖片：它正好鋪滿這塊區域，各自顯示其中一部分。預覽使用大綱的背景。",
     settingPvStackLinkedName: "大綱下方／上方：共用圖片",
     settingPvStackLinkedDesc: "預覽在大綱下方或上方時，兩者共用一個底板和一張圖片：在下方時預覽顯示圖片下部，在上方時顯示上部。",
     presetDepth: "深海",
@@ -37340,6 +37456,13 @@ const LOCALES = {
     settingFloatHomeXName: "按鈕位置：橫向",
     settingFloatHomeYName: "按鈕位置：縱向",
     settingFloatHomeDesc: "拖動之前按鈕的位置：0 為筆記左（上）邊緣，100 為右（下）邊緣。拖動後就停在你放的位置。",
+    // ---- добавлено ----
+    settingFillImageFitDesc: "鋪滿——圖片覆蓋整個視窗，放不下的部分在邊緣被裁掉。完整顯示——整張圖片可見，邊上可能留出空白條。重複——圖片按原尺寸像瓷磚一樣重複。",
+    // ---- добавлено ----
+    settingPvBgSpanName: "共用圖片的大小",
+    settingPvBgSpanDesc: "自動：大綱和預覽並排——圖片橫向鋪滿兩者；預覽在大綱下方或上方——縱向鋪滿；只有預覽——只鋪滿預覽。整篇筆記——圖片和筆記一樣大，各自顯示自己那部分。",
+    optPvBgSpanAuto: "自動（按顯示的內容）",
+    optPvBgSpanScreen: "整篇筆記",
   },
 };
 
@@ -37513,7 +37636,7 @@ const HR_SITE_URL = 'https://SITE-PLACEHOLDER.github.io/heading-rail/';   // (н
 const HR_REPO_URL = 'https://github.com/JustDast/obsidian-heading-rail';
 const HR_GUIDE_URL = HR_REPO_URL + '/blob/main/GUIDE.md';
 const HR_NEW_URL = HR_REPO_URL + '#whats-new';
-const HR_VERSION = '10.5.2';
+const HR_VERSION = '10.5.5';
 // 9.9.0: доля разницы скруглений крайней ячейки, на которую число уходит к её плоскому концу (оптическая середина)
 const SEG_OPTICAL_SHIFT = 0.07;
 // 9.9.1: путь жеста тачпада (пкс), который двигает ползунок Ctrl + колесо на одну точку
@@ -37538,7 +37661,7 @@ function wheelIsPad(e, memo) {
   return pad;
 }
 // Номер версии стилей: должен совпадать с --hr-css-ver в styles.css
-const HR_CSS_VER = '10.5.2';
+const HR_CSS_VER = '10.5.5';
 // 8.4.13: на сколько пикселей вокруг уголка и полоски высоты касание ещё попадает в них
 const HANDLE_TOUCH_PAD = 20;
 
@@ -38272,6 +38395,9 @@ const PROFILE_DEFAULTS = {
   previewImgTrack: false,
   previewSideLinked: false,
   previewStackLinked: false,
+  /* 10.5.4 (автор): размер общей картинки. 'auto' — структура и подсказка рядом: по ширине на обе; подсказка под / над
+     структурой — по высоте; видна только подсказка — только под неё. 'screen' — на всю заметку (как до 10.5.3). */
+  previewBgSpan: 'auto',
   previewAnim: 'side',      // 8.5.2/8.5.3: появление подсказки: 'side' | 'top' | 'bottom' | 'center' | 'none'
   previewAnimMs: 180,
   previewAnimLevel: 3,      // 8.5.4: сила эффекта 0…10 (3 — выезд на 36 пкс или рост от 79 %)
@@ -39240,8 +39366,48 @@ class HeadingRailPlugin extends Plugin {
       const bottom = this.pvStack === 'above' ? sr.bottom : sr.bottom + gap + R;
       return { left, top, width: right - left, height: bottom - top };
     }
-    if (!this.pvStack && st.previewImgTrack && st.previewSideLinked) return { left: hr.left, top: hr.top, width: hr.width, height: hr.height };
+    if (!this.pvStack && st.previewImgTrack && st.previewSideLinked) {
+      if (st.previewBgSpan === 'screen') return { left: hr.left, top: hr.top, width: hr.width, height: hr.height };
+      return this.isPanelVisible() ? this.sideUnionRect(hr) : null;
+    }
     return null;
+  }
+
+  /* 10.5.3 (автор: «картинка растягивается на весь экран, огромная, не видно что на ней; должна — в ширину на
+     подсказку + структуру, в высоту на структуру + поиск»). Раньше общий прямоугольник «подсказка сбоку вместе со
+     структурой» был всей заметкой — на широком окне картинка становилась размером с экран. Теперь: по высоте — окно
+     структуры с полем поиска (и половина карточки сверху и снизу, чтобы у крайних пунктов подсказка не выходила за
+     картинку), по ширине — структура + зазор + карточка с той стороны, где она встаёт (как в positionPreview). */
+  sideUnionRect(hr) {
+    const side = this.sideEl;
+    const sr = side && side.getBoundingClientRect();
+    if (!sr || !sr.width || !sr.height) return { left: hr.left, top: hr.top, width: hr.width, height: hr.height };
+    // только из настроек, не из текущей карточки: структура и подсказка считают одно и то же полотно (иначе шов)
+    const k = this.previewK(true);
+    /* 10.5.5 (автор: «при наведении на плавающую кнопку картинка сначала очень крупная, потом исправляется»). Пока окно
+       структуры вырастает из кнопки (transform: scale), его прямоугольник на экране меньше настоящего, а места под
+       подсказку считались в полную величину — пропорция полотна ломалась, картинка выходила крупнее. Прибавки под
+       подсказку уменьшаем в той же доле, что и само окно сейчас: полотно сразу то же, что после анимации. */
+    let anim = 1;
+    if (this.floatMode && side.offsetWidth) {
+      const zs = this.floatZNow || this.floatZ() || 1;
+      anim = Math.max(0.05, Math.min(1, sr.width / (side.offsetWidth * zs)));
+    }
+    const cssW = parseFloat(this.hostEl.style.getPropertyValue('--hr-preview-w')) || numOr(this.p.previewWidth, 260);
+    const pvW = Math.min(hr.width, cssW * k) * anim;
+    const pvH = 150 * k * anim;
+    const gap = this.previewOutlineGapPx() * anim;
+    let pvLeft;   // карточка слева от структуры?
+    if (this.sideDetached) {
+      const zone = this.railZonePx(), railLeft = this.p.side === 'left';
+      const roomL = sr.left - hr.left - (railLeft ? zone : 0), roomR = hr.right - sr.right - (railLeft ? 0 : zone);
+      pvLeft = !(roomR > roomL);
+    } else pvLeft = this.p.side !== 'left';
+    let left = pvLeft ? sr.left - gap - pvW : sr.left;
+    let right = pvLeft ? sr.right : sr.right + gap + pvW;
+    left = Math.max(hr.left, left); right = Math.min(hr.right, right);
+    const top = Math.max(hr.top, sr.top - pvH / 2), bottom = Math.min(hr.bottom, sr.bottom + pvH / 2);
+    return { left, top, width: Math.max(1, right - left), height: Math.max(1, bottom - top) };
   }
 
   /* 10.0.0 (автор): «если подсказка сбоку — картинка растянута на всю высоту её движения: внизу показывает нижнюю
@@ -39264,7 +39430,15 @@ class HeadingRailPlugin extends Plugin {
     const hr = host.getBoundingClientRect(), r = el.getBoundingClientRect();
     if (!r.width || !hr.height) return;
     let u, g;
-    if (mode === 'union') {
+    /* 10.5.4 (автор: «когда только подсказка — какого оно ждёт, что появится структура? подгоняй только под подсказку»):
+       структура закрыта или карточка стоит не у неё — картинка вписывается в саму карточку */
+    if (mode === 'union' && !stacked && st.previewBgSpan !== 'screen' && (!this.isPanelVisible() || !this.pvBesideOutline)) {
+      // размеры самой карточки без анимации появления (scale) — фон задаётся в её собственных пикселях
+      u = { left: r.left, top: r.top, width: el.offsetWidth || r.width, height: el.offsetHeight || r.height };
+      g = this.bgGeom(u, st.panelImg, st.panelImgFit, st.panelImgPos);
+      el.style.setProperty('--hr-preview-bgimg', host.style.getPropertyValue('--hr-panel-bgimg'));
+      el.style.setProperty('--hr-preview-bgrep', host.style.getPropertyValue('--hr-panel-bgrep'));
+    } else if (mode === 'union') {
       u = this.bgUnionRect();
       if (!u) { for (const k of keys) el.style.removeProperty(k); return; }
       g = this.bgGeom(u, st.panelImg, st.panelImgFit, st.panelImgPos);
@@ -41920,6 +42094,7 @@ class HeadingRailPlugin extends Plugin {
     const host = view.containerEl.querySelector('.view-content') || view.containerEl;
     this.dropGhost(host);   // 9.12.0: здесь снова живой рельс
     this.hostEl = host;
+    this.watchHostWidth(host);   // 10.5.4: ширина заметки поменялась (боковая панель) — пересчитать «подсказку под структурой»
     this.hostView = view;
     host.classList.add('hr-host');
     host.classList.toggle('hr-mobile', this.isMobile);
@@ -45677,6 +45852,31 @@ class HeadingRailPlugin extends Plugin {
   }
 
   // структура у полосок или у края (ПК) и на телефоне; плавающую ставит placeFloatPanel
+  /* 10.5.4: пересчёт «места сбоку для подсказки» не только при изменении окна, но и когда заметку сужает / расширяет
+     боковая панель (её тянут или открывают) — иначе подсказка оставалась сбоку, сжатая, до следующей перерисовки */
+  watchHostWidth(host) {
+    if (typeof ResizeObserver !== 'function') return;
+    if (this.hostWRO && this.hostWROEl === host) return;
+    if (this.hostWRO) this.hostWRO.disconnect();
+    let lastW = host.clientWidth;
+    this.hostWROEl = host;
+    this.hostWRO = new ResizeObserver(() => {
+      const w = host.clientWidth;
+      if (!w || Math.abs(w - lastW) < 2) return;
+      lastW = w;
+      if (this.hostWFrame) return;
+      this.hostWFrame = window.requestAnimationFrame(() => {
+        this.hostWFrame = 0;
+        if (this.hostEl !== host || !this.isPanelVisible() || this.floatMode) return;
+        const was = this.pvStack;
+        this.applyPvStack();
+        if (was !== this.pvStack && this.previewEl && this.previewAnchor && this.previewEl.classList.contains('is-shown')) this.positionPreview(this.previewAnchor);
+      });
+    });
+    this.hostWRO.observe(host);
+    if (!this.hostWROReg) { this.hostWROReg = true; this.register(() => { if (this.hostWRO) this.hostWRO.disconnect(); }); }
+  }
+
   applyPvStack() {
     const host = this.hostEl, side = this.sideEl;
     if (!host || !side || this.floatMode) return;
@@ -48521,6 +48721,7 @@ class HeadingRailPlugin extends Plugin {
     this.previewAnchor = anchorEl;
     const hostRect = this.hostEl.getBoundingClientRect();
     const besideOutline = this.previewBeside(anchorEl);
+    this.pvBesideOutline = besideOutline;   // 10.5.4: для картинки подсказки (у структуры или сама по себе)
 
     const k = this.previewK(besideOutline);
     this.previewEl.style.setProperty('--hr-pk', k.toFixed(3));
@@ -52064,7 +52265,7 @@ const SETTINGS_LAYOUT = [
     { sub: 'pv-window', title: 'ftPvWindow', items: [
       { sub: 'pv-bg', title: 'ftPvBg', items: ['k:previewBg', 'k:previewFill', 'k:previewImg', 'k:previewImgOp', 'k:previewImgPos', 'k:previewImgBlur', 'k:previewImgFit', 'k:previewBgOpacity', 'k:previewBlur',
         SETTINGS_GRAD('preview', 'pv-grad', 'Pv'),
-        { sub: 'pv-bg-link', title: 'ftPvBgLink', items: ['k:previewImgTrack', 'k:previewSideLinked', 'k:previewStackLinked'] }] },   // 10.0.0
+        { sub: 'pv-bg-link', title: 'ftPvBgLink', items: ['k:previewImgTrack', 'k:previewSideLinked', 'k:previewBgSpan', 'k:previewStackLinked'] }] },   // 10.0.0
       { sub: 'pv-shape', title: 'ftPvShape', items: ['k:previewRadius', 'k:previewPad'] },   // 9.12.0
       { sub: 'pv-border', title: 'ftPvBorder', items: ['k:previewBorderW', 'k:previewBorderColor', 'k:previewBorderOp'] },
       { sub: 'pv-pin', title: 'ftPvPin', items: ['k:previewPinBorder', 'k:previewPinBorderOpacity', 'k:previewPinBorderWidth'] },
@@ -52633,7 +52834,7 @@ class HeadingRailSettingTab extends PluginSettingTab {
         for (const k of Object.keys(IMG_POS)) d.addOption(k, t('optImgPos_' + k.replace('-', '_')));
         d.setValue(IMG_POS[this.val(pfx + 'ImgPos')] ? this.val(pfx + 'ImgPos') : 'center').onChange((v) => this.setVal(pfx + 'ImgPos', v));
       });
-    this.row(box, pfx + 'ImgFit').setName(t('settingFillImageFitName'))
+    this.row(box, pfx + 'ImgFit').setName(t('settingFillImageFitName')).setDesc(t('settingFillImageFitDesc'))
       .addDropdown((d) => d.addOption('cover', t('optImgCover')).addOption('contain', t('optImgContain')).addOption('tile', t('optImgTile'))
         .setValue(['cover', 'contain', 'tile'].includes(this.val(pfx + 'ImgFit')) ? this.val(pfx + 'ImgFit') : 'cover')
         .onChange((v) => this.setVal(pfx + 'ImgFit', v)));
@@ -55186,7 +55387,14 @@ class HeadingRailSettingTab extends PluginSettingTab {
     if (this.val('previewImgTrack')) this.row(gPrevColour, 'previewSideLinked')
       .setName(t('settingPvSideLinkedName'))
       .setDesc(t('settingPvSideLinkedDesc'))
-      .addToggle((tg) => tg.setValue(!!this.val('previewSideLinked')).onChange((v) => this.setVal('previewSideLinked', v)));
+      .addToggle((tg) => tg.setValue(!!this.val('previewSideLinked')).onChange(async (v) => { await this.setVal('previewSideLinked', v); this.redraw(); }));
+    // 10.5.4: размер общей картинки — по месту (по умолчанию) или на всю заметку
+    if (this.val('previewImgTrack') && this.val('previewSideLinked')) this.row(gPrevColour, 'previewBgSpan')
+      .setName(t('settingPvBgSpanName'))
+      .setDesc(t('settingPvBgSpanDesc'))
+      .addDropdown((d) => d.addOption('auto', t('optPvBgSpanAuto')).addOption('screen', t('optPvBgSpanScreen'))
+        .setValue(this.val('previewBgSpan') === 'screen' ? 'screen' : 'auto')
+        .onChange((v) => this.setVal('previewBgSpan', v)));
     this.row(gPrevColour, 'previewStackLinked')
       .setName(t('settingPvStackLinkedName'))
       .setDesc(t('settingPvStackLinkedDesc'))
