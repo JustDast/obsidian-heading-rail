@@ -1,0 +1,58 @@
+{
+ "kind": "effect",
+ "ver": 1,
+ "author": "DAST & Claude",
+ "added": "2026-10-03",
+ "name": {
+  "ru": "Спокойная волна",
+  "en": "Calm wave",
+  "de": "Ruhige Welle",
+  "fr": "Vague calme",
+  "ja": "穏やかな波",
+  "ko": "잔잔한 물결",
+  "hi": "शांत लहर",
+  "it": "Onda calma",
+  "es": "Ola tranquila",
+  "pt": "Onda calma",
+  "tr": "Sakin dalga",
+  "pl": "Spokojna fala",
+  "uk": "Спокійна хвиля",
+  "vi": "Sóng êm",
+  "id": "Gelombang tenang",
+  "zh-Hans": "平静的波浪",
+  "zh-Hant": "平靜的波浪"
+ },
+ "desc": {
+  "ru": "Мягче и медленнее: волна шире и ниже, без проскока, полоски догоняют курсор плавно. Только движение — цвета не трогает, ложится поверх любой сборки.",
+  "en": "Softer and slower: a wider, lower wave with no overshoot; the bars follow the cursor smoothly. Motion only — it leaves colours alone and works on top of any preset.",
+  "de": "Weicher und langsamer: breitere, flachere Welle ohne Überschwingen, die Balken folgen dem Zeiger sanft. Nur Bewegung – Farben bleiben, passt auf jedes Preset.",
+  "fr": "Plus douce et plus lente : vague plus large et plus basse, sans dépassement ; les barres suivent le curseur en douceur. Seulement le mouvement — les couleurs ne changent pas, sur n’importe quel préréglage.",
+  "ja": "よりやわらかく、ゆっくり：幅広く低い波で行き過ぎなし、バーはカーソルをなめらかに追います。動きだけを変え、色はそのまま。どのプリセットの上にも使えます。",
+  "ko": "더 부드럽고 느리게: 더 넓고 낮은 물결, 지나침 없이 막대가 커서를 매끄럽게 따라갑니다. 움직임만 바꾸고 색은 그대로라 어떤 프리셋 위에도 쓸 수 있습니다.",
+  "hi": "नरम और धीमी: चौड़ी, नीची लहर, बिना आगे निकले; पट्टियाँ कर्सर के पीछे धीरे-धीरे चलती हैं। सिर्फ़ गति — रंग नहीं बदलते, किसी भी प्रीसेट के ऊपर।",
+  "it": "Più morbida e lenta: onda più larga e bassa, senza rimbalzo; le barre seguono il cursore dolcemente. Solo movimento: i colori restano, va sopra qualsiasi preset.",
+  "es": "Más suave y lenta: ola más ancha y baja, sin rebote; las barras siguen el cursor con suavidad. Solo movimiento: no toca los colores y va sobre cualquier preajuste.",
+  "pt": "Mais suave e lenta: onda mais larga e baixa, sem ultrapassar; as barras seguem o cursor com suavidade. Só movimento — não mexe nas cores e funciona sobre qualquer predefinição.",
+  "tr": "Daha yumuşak ve yavaş: daha geniş, daha alçak dalga, taşma yok; çubuklar imleci yumuşakça izler. Yalnızca hareket — renklere dokunmaz, her hazır ayarın üzerine uyar.",
+  "pl": "Łagodniej i wolniej: szersza, niższa fala bez przestrzelenia; paski płynnie podążają za kursorem. Tylko ruch — kolory bez zmian, pasuje do każdego zestawu.",
+  "uk": "М’якше й повільніше: хвиля ширша й нижча, без проскоку, смужки плавно наздоганяють курсор. Лише рух — кольори не змінює, лягає поверх будь-якої збірки.",
+  "vi": "Mềm và chậm hơn: sóng rộng và thấp hơn, không vọt quá; thanh theo con trỏ một cách êm ái. Chỉ thay đổi chuyển động — giữ nguyên màu, dùng được trên mọi cấu hình.",
+  "id": "Lebih lembut dan lambat: gelombang lebih lebar dan rendah tanpa lewat batas; bilah mengikuti kursor dengan halus. Hanya gerakan — warna tetap, cocok di atas preset apa pun.",
+  "zh-Hans": "更柔和、更缓慢：波浪更宽更低、不过冲，细条平滑地跟随光标。只改动效，不动颜色，可叠加在任何预设上。",
+  "zh-Hant": "更柔和、更緩慢：波浪更寬更低、不過衝，細條平滑地跟隨游標。只改動效，不動顏色，可疊加在任何預設上。"
+ },
+ "tags": {
+  "ru": [
+   "волна",
+   "плавная",
+   "медленная",
+   "спокойная"
+  ],
+  "en": [
+   "wave",
+   "smooth",
+   "slow",
+   "calm"
+  ]
+ }
+}
