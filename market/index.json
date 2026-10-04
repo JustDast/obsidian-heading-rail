@@ -20,18 +20,55 @@
     ]
    },
    "shots": [
-    "base-1.webp",
-    "base-2.webp"
+    "base-1.webp"
    ],
    "shotsPhone": [
-    "base-p1.webp",
-    "base-p2.webp"
+    "base-p1.webp"
    ]
   },
   {
    "id": "graphite",
    "kind": "preset",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "По-прикольней",
+    "en": "Funkier",
+    "de": "Bisschen cooler",
+    "fr": "Plus stylé",
+    "ja": "ちょいイケてる",
+    "ko": "좀 더 힙한",
+    "hi": "थोड़ा कूल वाला",
+    "it": "Più figo",
+    "es": "Más molón",
+    "pt": "Mais maneiro",
+    "tr": "Daha havalı",
+    "pl": "Fajniejszy",
+    "uk": "Прикольніший",
+    "vi": "Chất hơn",
+    "id": "Lebih kece",
+    "zh-Hans": "更带劲",
+    "zh-Hant": "更帶勁"
+   },
+   "desc": {
+    "ru": "Полоски слева, толще и длиннее, волна короче и резче, меню действий снизу. Цвета — от темы.",
+    "en": "Bars on the left, thicker and longer, a shorter and sharper wave, actions menu at the bottom. Colours come from the theme.",
+    "de": "Balken links, dicker und länger, eine kürzere, schärfere Welle, Aktionsmenü unten. Farben vom Theme.",
+    "fr": "Barres à gauche, plus épaisses et plus longues, vague plus courte et plus vive, menu d’actions en bas. Couleurs du thème.",
+    "ja": "バーは左側で太く長め、波は短く鋭く、操作メニューは下。色はテーマから。",
+    "ko": "막대는 왼쪽에 더 굵고 길게, 물결은 짧고 날카롭게, 동작 메뉴는 아래에. 색은 테마를 따릅니다.",
+    "hi": "पट्टियाँ बाईं ओर, मोटी और लंबी, लहर छोटी और तेज़, क्रिया मेनू नीचे। रंग थीम से।",
+    "it": "Barre a sinistra, più spesse e lunghe, onda più corta e decisa, menu azioni in basso. Colori dal tema.",
+    "es": "Barras a la izquierda, más gruesas y largas, ola más corta y marcada, menú de acciones abajo. Colores del tema.",
+    "pt": "Barras à esquerda, mais grossas e longas, onda mais curta e marcada, menu de ações embaixo. Cores do tema.",
+    "tr": "Çubuklar solda, daha kalın ve uzun; dalga daha kısa ve keskin; eylem menüsü altta. Renkler temadan.",
+    "pl": "Paski po lewej, grubsze i dłuższe, krótsza i ostrzejsza fala, menu akcji na dole. Kolory z motywu.",
+    "uk": "Смужки ліворуч, товщі й довші, хвиля коротша й різкіша, меню дій знизу. Кольори — від теми.",
+    "vi": "Thanh ở bên trái, dày và dài hơn, sóng ngắn và gắt hơn, menu thao tác ở dưới. Màu theo chủ đề.",
+    "id": "Bilah di kiri, lebih tebal dan panjang, gelombang lebih pendek dan tajam, menu tindakan di bawah. Warna dari tema.",
+    "zh-Hans": "细条在左侧，更粗更长，波浪更短更利落，操作菜单在下方。颜色跟随主题。",
+    "zh-Hant": "細條在左側，更粗更長，波浪更短更利落，操作選單在下方。顏色跟隨主題。"
+   },
    "tags": {
     "ru": [
      "слева",
@@ -44,19 +81,59 @@
      "sharp wave"
     ]
    },
+   "file": "graphite.json",
+   "size": 1369,
+   "added": "2026-10-04",
    "shots": [
-    "graphite-1.webp",
-    "graphite-2.webp"
+    "graphite-1.webp"
    ],
    "shotsPhone": [
-    "graphite-p1.webp",
-    "graphite-p2.webp"
+    "graphite-p1.webp"
    ]
   },
   {
    "id": "trial-contrast",
    "kind": "preset",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Болид",
+    "en": "Racer",
+    "de": "Rennwagen",
+    "fr": "Bolide",
+    "ja": "レーサー",
+    "ko": "레이서",
+    "hi": "रेसर",
+    "it": "Bolide",
+    "es": "Bólido",
+    "pt": "Bólido",
+    "tr": "Yarışçı",
+    "pl": "Bolid",
+    "uk": "Болід",
+    "vi": "Xe đua",
+    "id": "Pembalap",
+    "zh-Hans": "赛车",
+    "zh-Hant": "賽車"
+   },
+   "desc": {
+    "ru": "Чёткая и контрастная: толстые полоски, синяя волна, красный текущий раздел, без анимаций.",
+    "en": "Crisp and high-contrast: thick bars, a blue wave, the current section in red, no animations.",
+    "de": "Klar und kontrastreich: dicke Balken, blaue Welle, aktueller Abschnitt in Rot, keine Animationen.",
+    "fr": "Net et contrasté : barres épaisses, vague bleue, section actuelle en rouge, sans animations.",
+    "ja": "くっきり高コントラスト：太いバー、青い波、現在のセクションは赤、アニメーションなし。",
+    "ko": "선명하고 대비가 강함: 굵은 막대, 파란 물결, 현재 섹션은 빨강, 애니메이션 없음.",
+    "hi": "साफ़ और उच्च कंट्रास्ट: मोटी पट्टियाँ, नीली लहर, मौजूदा खंड लाल, बिना एनिमेशन।",
+    "it": "Nitido e ad alto contrasto: barre spesse, onda blu, sezione corrente in rosso, niente animazioni.",
+    "es": "Nítido y de alto contraste: barras gruesas, ola azul, sección actual en rojo, sin animaciones.",
+    "pt": "Nítido e de alto contraste: barras grossas, onda azul, seção atual em vermelho, sem animações.",
+    "tr": "Net ve yüksek kontrastlı: kalın çubuklar, mavi dalga, geçerli bölüm kırmızı, animasyon yok.",
+    "pl": "Wyraźny i kontrastowy: grube paski, niebieska fala, bieżąca sekcja na czerwono, bez animacji.",
+    "uk": "Чітка й контрастна: товсті смужки, синя хвиля, поточний розділ червоний, без анімацій.",
+    "vi": "Rõ nét, tương phản cao: thanh dày, sóng xanh dương, mục hiện tại màu đỏ, không có hoạt ảnh.",
+    "id": "Tegas dan kontras tinggi: bilah tebal, gelombang biru, bagian saat ini merah, tanpa animasi.",
+    "zh-Hans": "清晰高对比：粗条、蓝色波浪、当前章节为红色、无动画。",
+    "zh-Hant": "清晰高對比：粗條、藍色波浪、目前章節為紅色、無動畫。"
+   },
    "tags": {
     "ru": [
      "контраст",
@@ -72,19 +149,59 @@
      "no animation"
     ]
    },
+   "file": "trial-contrast.json",
+   "size": 454,
+   "added": "2026-10-04",
    "shots": [
-    "trial-contrast-1.webp",
-    "trial-contrast-2.webp"
+    "trial-contrast-1.webp"
    ],
    "shotsPhone": [
-    "trial-contrast-p1.webp",
-    "trial-contrast-p2.webp"
+    "trial-contrast-p1.webp"
    ]
   },
   {
    "id": "trial-terminal",
    "kind": "preset",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Терминал",
+    "en": "Terminal",
+    "de": "Terminal",
+    "fr": "Terminal",
+    "ja": "ターミナル",
+    "ko": "터미널",
+    "hi": "टर्मिनल",
+    "it": "Terminale",
+    "es": "Terminal",
+    "pt": "Terminal",
+    "tr": "Terminal",
+    "pl": "Terminal",
+    "uk": "Термінал",
+    "vi": "Terminal",
+    "id": "Terminal",
+    "zh-Hans": "终端",
+    "zh-Hant": "終端"
+   },
+   "desc": {
+    "ru": "Как старый терминал: чёрный фон, зелёные полоски и текст, моноширинный шрифт.",
+    "en": "Like an old terminal: black background, green bars and text, monospace font.",
+    "de": "Wie ein altes Terminal: schwarzer Hintergrund, grüne Balken und Schrift, Festbreitenschrift.",
+    "fr": "Comme un vieux terminal : fond noir, barres et texte verts, police à chasse fixe.",
+    "ja": "昔の端末風：黒い背景、緑のバーと文字、等幅フォント。",
+    "ko": "옛날 터미널처럼: 검은 배경, 초록 막대와 글자, 고정폭 글꼴.",
+    "hi": "पुराने टर्मिनल जैसा: काली पृष्ठभूमि, हरी पट्टियाँ और पाठ, मोनोस्पेस फ़ॉन्ट।",
+    "it": "Come un vecchio terminale: sfondo nero, barre e testo verdi, carattere monospaziato.",
+    "es": "Como una terminal antigua: fondo negro, barras y texto verdes, fuente monoespaciada.",
+    "pt": "Como um terminal antigo: fundo preto, barras e texto verdes, fonte monoespaçada.",
+    "tr": "Eski bir terminal gibi: siyah arka plan, yeşil çubuklar ve metin, eş aralıklı yazı tipi.",
+    "pl": "Jak stary terminal: czarne tło, zielone paski i tekst, czcionka o stałej szerokości.",
+    "uk": "Як старий термінал: чорне тло, зелені смужки й текст, моноширинний шрифт.",
+    "vi": "Như terminal cũ: nền đen, thanh và chữ xanh lá, phông đơn cách.",
+    "id": "Seperti terminal lama: latar hitam, bilah dan teks hijau, huruf monospace.",
+    "zh-Hans": "像老式终端：黑色背景、绿色细条和文字、等宽字体。",
+    "zh-Hant": "像老式終端：黑色背景、綠色細條和文字、等寬字型。"
+   },
    "tags": {
     "ru": [
      "терминал",
@@ -101,19 +218,59 @@
      "hacker"
     ]
    },
+   "file": "trial-terminal.json",
+   "size": 2962,
+   "added": "2026-10-04",
    "shots": [
-    "trial-terminal-1.webp",
-    "trial-terminal-2.webp"
+    "trial-terminal-1.webp"
    ],
    "shotsPhone": [
-    "trial-terminal-p1.webp",
-    "trial-terminal-p2.webp"
+    "trial-terminal-p1.webp"
    ]
   },
   {
    "id": "trial-paper",
    "kind": "preset",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Бумага",
+    "en": "Paper",
+    "de": "Papier",
+    "fr": "Papier",
+    "ja": "紙",
+    "ko": "종이",
+    "hi": "काग़ज़",
+    "it": "Carta",
+    "es": "Papel",
+    "pt": "Papel",
+    "tr": "Kâğıt",
+    "pl": "Papier",
+    "uk": "Папір",
+    "vi": "Giấy",
+    "id": "Kertas",
+    "zh-Hans": "纸张",
+    "zh-Hant": "紙張"
+   },
+   "desc": {
+    "ru": "Светлая, как бумага: полоски слева тонкими серыми линиями, тёплый фон, шрифт с засечками.",
+    "en": "Light, like paper: thin grey lines on the left, a warm background, a serif font.",
+    "de": "Hell wie Papier: dünne graue Linien links, warmer Hintergrund, Serifenschrift.",
+    "fr": "Clair comme du papier : fines lignes grises à gauche, fond chaud, police à empattements.",
+    "ja": "紙のように明るく：左側に細い灰色の線、温かみのある背景、セリフ体。",
+    "ko": "종이처럼 밝게: 왼쪽에 얇은 회색 선, 따뜻한 배경, 세리프 글꼴.",
+    "hi": "काग़ज़ जैसा हल्का: बाईं ओर पतली धूसर रेखाएँ, गर्म पृष्ठभूमि, सेरिफ़ फ़ॉन्ट।",
+    "it": "Chiaro come la carta: linee grigie sottili a sinistra, sfondo caldo, carattere con grazie.",
+    "es": "Claro como el papel: líneas grises finas a la izquierda, fondo cálido, fuente con serifa.",
+    "pt": "Claro como papel: linhas cinza finas à esquerda, fundo quente, fonte com serifa.",
+    "tr": "Kâğıt gibi açık: solda ince gri çizgiler, sıcak arka plan, tırnaklı yazı tipi.",
+    "pl": "Jasny jak papier: cienkie szare linie po lewej, ciepłe tło, czcionka szeryfowa.",
+    "uk": "Світла, як папір: тонкі сірі лінії ліворуч, тепле тло, шрифт із засічками.",
+    "vi": "Sáng như giấy: đường xám mảnh bên trái, nền ấm, phông có chân.",
+    "id": "Terang seperti kertas: garis abu-abu tipis di kiri, latar hangat, huruf serif.",
+    "zh-Hans": "像纸一样明亮：左侧细灰线、暖色背景、衬线字体。",
+    "zh-Hant": "像紙一樣明亮：左側細灰線、暖色背景、襯線字型。"
+   },
    "tags": {
     "ru": [
      "бумага",
@@ -128,19 +285,59 @@
      "warm"
     ]
    },
+   "file": "trial-paper.json",
+   "size": 1456,
+   "added": "2026-10-04",
    "shots": [
-    "trial-paper-1.webp",
-    "trial-paper-2.webp"
+    "trial-paper-1.webp"
    ],
    "shotsPhone": [
-    "trial-paper-p1.webp",
-    "trial-paper-p2.webp"
+    "trial-paper-p1.webp"
    ]
   },
   {
    "id": "higanbana",
    "kind": "preset",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Хиганбана",
+    "en": "Higanbana",
+    "de": "Higanbana",
+    "fr": "Higanbana",
+    "ja": "彼岸花",
+    "ko": "히간바나",
+    "hi": "हिगानबाना",
+    "it": "Higanbana",
+    "es": "Higanbana",
+    "pt": "Higanbana",
+    "tr": "Higanbana",
+    "pl": "Higanbana",
+    "uk": "Хіганбана",
+    "vi": "Higanbana",
+    "id": "Higanbana",
+    "zh-Hans": "彼岸花",
+    "zh-Hant": "彼岸花"
+   },
+   "desc": {
+    "ru": "Японское тёмное фэнтези: алые полоски со свечением, картина с паучьими лилиями на фоне структуры и подсказки, почти чёрные кнопки.",
+    "en": "Japanese dark fantasy: glowing scarlet bars, a painting of spider lilies behind the outline and the preview, near-black buttons.",
+    "de": "Japanische Dark Fantasy: leuchtend scharlachrote Balken, ein Bild mit Spinnenlilien hinter Gliederung und Vorschau, fast schwarze Schaltflächen.",
+    "fr": "Dark fantasy japonaise : barres écarlates lumineuses, peinture de lys araignées derrière le plan et l’aperçu, boutons presque noirs.",
+    "ja": "和風ダークファンタジー：光る緋色のバー、アウトラインとプレビューの背景に彼岸花の絵、ほぼ黒のボタン。",
+    "ko": "일본풍 다크 판타지: 빛나는 진홍 막대, 개요와 미리보기 뒤의 석산 그림, 거의 검은 버튼.",
+    "hi": "जापानी डार्क फ़ैंटेसी: चमकती लाल पट्टियाँ, रूपरेखा और पूर्वावलोकन के पीछे स्पाइडर लिली का चित्र, लगभग काले बटन।",
+    "it": "Dark fantasy giapponese: barre scarlatte luminose, un dipinto di gigli ragno dietro la struttura e l’anteprima, pulsanti quasi neri.",
+    "es": "Fantasía oscura japonesa: barras escarlata que brillan, una pintura de lirios araña detrás del esquema y la vista previa, botones casi negros.",
+    "pt": "Fantasia sombria japonesa: barras escarlate brilhantes, uma pintura de lírios-aranha atrás da estrutura e da prévia, botões quase pretos.",
+    "tr": "Japon karanlık fantezi: parlayan al çubuklar, ana hat ve önizlemenin arkasında örümcek zambakları tablosu, neredeyse siyah düğmeler.",
+    "pl": "Japońska mroczna fantastyka: świecące szkarłatne paski, obraz z liliami pająkowatymi za konspektem i podglądem, prawie czarne przyciski.",
+    "uk": "Японське темне фентезі: червоні смужки зі світінням, картина з павучими ліліями на тлі структури й підказки, майже чорні кнопки.",
+    "vi": "Kỳ ảo u tối kiểu Nhật: thanh đỏ thắm phát sáng, tranh hoa bỉ ngạn sau dàn ý và bản xem trước, nút gần như đen.",
+    "id": "Fantasi gelap Jepang: bilah merah tua bercahaya, lukisan bunga lili laba-laba di balik kerangka dan pratinjau, tombol nyaris hitam.",
+    "zh-Hans": "日式暗黑奇幻：发光的猩红细条，大纲和预览背后是彼岸花画作，按钮近乎黑色。",
+    "zh-Hant": "日式暗黑奇幻：發光的猩紅細條，大綱和預覽背後是彼岸花畫作，按鈕近乎黑色。"
+   },
    "tags": {
     "ru": [
      "япония",
@@ -161,19 +358,59 @@
      "anime"
     ]
    },
+   "file": "higanbana.json",
+   "size": 342516,
+   "added": "2026-10-04",
    "shots": [
-    "higanbana-1.webp",
-    "higanbana-2.webp"
+    "higanbana-1.webp"
    ],
    "shotsPhone": [
-    "higanbana-p1.webp",
-    "higanbana-p2.webp"
+    "higanbana-p1.webp"
    ]
   },
   {
    "id": "depth",
    "kind": "preset",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Глубина",
+    "en": "Depth",
+    "de": "Tiefe",
+    "fr": "Profondeur",
+    "ja": "深海",
+    "ko": "심해",
+    "hi": "गहराई",
+    "it": "Profondità",
+    "es": "Profundidad",
+    "pt": "Profundeza",
+    "tr": "Derinlik",
+    "pl": "Głębia",
+    "uk": "Глибина",
+    "vi": "Biển sâu",
+    "id": "Kedalaman",
+    "zh-Hans": "深海",
+    "zh-Hant": "深海"
+   },
+   "desc": {
+    "ru": "Морская глубина: подводная картина на фоне, полоски от светло-синего к тёмному, плавная волна дугой, вертикальная шкала уровня.",
+    "en": "Deep sea: an underwater painting in the background, bars from light to dark blue, a smooth arched wave, a vertical level scale.",
+    "de": "Tiefsee: ein Unterwasserbild im Hintergrund, Balken von hell- bis dunkelblau, eine sanft gewölbte Welle, eine senkrechte Ebenenskala.",
+    "fr": "Grands fonds : une peinture sous-marine en fond, des barres du bleu clair au bleu foncé, une vague douce en arc, une échelle de niveau verticale.",
+    "ja": "深海：背景に海中の絵、明るい青から濃い青へのバー、なめらかな弧の波、縦のレベル目盛り。",
+    "ko": "심해: 배경에 바닷속 그림, 밝은 파랑에서 짙은 파랑으로 이어지는 막대, 부드러운 아치형 물결, 세로 레벨 눈금.",
+    "hi": "गहरा समुद्र: पृष्ठभूमि में पानी के नीचे का चित्र, हल्के से गहरे नीले तक पट्टियाँ, धनुषाकार नरम लहर, खड़ा स्तर पैमाना।",
+    "it": "Abisso: un dipinto subacqueo sullo sfondo, barre dal blu chiaro al blu scuro, un’onda morbida ad arco, una scala di livello verticale.",
+    "es": "Mar profundo: una pintura submarina de fondo, barras del azul claro al oscuro, una ola suave en arco, una escala de nivel vertical.",
+    "pt": "Mar profundo: uma pintura submarina ao fundo, barras do azul-claro ao escuro, uma onda suave em arco, uma escala de nível vertical.",
+    "tr": "Derin deniz: arka planda su altı tablosu, açık maviden koyu maviye çubuklar, yumuşak kemerli dalga, dikey seviye ölçeği.",
+    "pl": "Głębia morza: podwodny obraz w tle, paski od jasno- do ciemnoniebieskiego, łagodna fala łukiem, pionowa skala poziomu.",
+    "uk": "Морська глибина: підводна картина на тлі, смужки від світло-синього до темного, плавна хвиля дугою, вертикальна шкала рівня.",
+    "vi": "Biển sâu: tranh dưới nước làm nền, thanh từ xanh nhạt đến xanh đậm, sóng vòng cung mềm mại, thang cấp độ dọc.",
+    "id": "Laut dalam: lukisan bawah laut sebagai latar, bilah dari biru muda ke biru tua, gelombang melengkung yang halus, skala tingkat vertikal.",
+    "zh-Hans": "深海：背景为水下画作，细条由浅蓝渐变到深蓝，波浪呈平滑弧形，层级刻度竖排。",
+    "zh-Hant": "深海：背景為水下畫作，細條由淺藍漸變到深藍，波浪呈平滑弧形，層級刻度豎排。"
+   },
    "tags": {
     "ru": [
      "море",
@@ -192,19 +429,59 @@
      "deep"
     ]
    },
+   "file": "depth.json",
+   "size": 140252,
+   "added": "2026-10-04",
    "shots": [
-    "depth-1.webp",
-    "depth-2.webp"
+    "depth-1.webp"
    ],
    "shotsPhone": [
-    "depth-p1.webp",
-    "depth-p2.webp"
+    "depth-p1.webp"
    ]
   },
   {
    "id": "higanbanaDark",
    "kind": "effect",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Хиганбана: тёмные метки",
+    "en": "Higanbana: dark marks",
+    "de": "Higanbana: dunkle Marken",
+    "fr": "Higanbana : marques sombres",
+    "ja": "彼岸花：暗いマーク",
+    "ko": "히간바나: 어두운 표시",
+    "hi": "हिगानबाना: गहरे चिह्न",
+    "it": "Higanbana: segni scuri",
+    "es": "Higanbana: marcas oscuras",
+    "pt": "Higanbana: marcas escuras",
+    "tr": "Higanbana: koyu işaretler",
+    "pl": "Higanbana: ciemne znaczniki",
+    "uk": "Хіганбана: темні позначки",
+    "vi": "Higanbana: dấu tối",
+    "id": "Higanbana: tanda gelap",
+    "zh-Hans": "彼岸花：深色标记",
+    "zh-Hant": "彼岸花：深色標記"
+   },
+   "desc": {
+    "ru": "Для тех, кому светлое не заходит: метки, закреплённые, ячейки уровня и кнопки меню под курсором — тёмно-серые со светлым текстом. Акценты полосок не меняются.",
+    "en": "For those who don't like the light parts: marks, pinned entries, level cells and menu buttons under the cursor become dark grey with light text. The bar accents stay.",
+    "de": "Für alle, denen das Helle nicht gefällt: Marken, Angeheftete, Ebenenzellen und Menüschaltflächen unter dem Zeiger werden dunkelgrau mit hellem Text. Die Akzente der Balken bleiben.",
+    "fr": "Pour ceux qui n’aiment pas le clair : marques, épinglées, cases de niveau et boutons du menu sous le curseur deviennent gris foncé avec un texte clair. Les accents des barres restent.",
+    "ja": "明るい部分が苦手な人向け：マーク・ピン留め・レベルのセル・カーソル下のメニューボタンが濃い灰色に、文字は明るくなります。バーのアクセントはそのまま。",
+    "ko": "밝은 부분이 싫은 분을 위해: 표시, 고정 항목, 수준 칸, 커서 아래 메뉴 버튼이 밝은 글자의 진회색이 됩니다. 막대의 강조색은 그대로입니다.",
+    "hi": "जिन्हें उजला पसंद न हो: चिह्न, पिन किए गए, स्तर के खाने और कर्सर के नीचे मेनू बटन हल्के पाठ के साथ गहरे स्लेटी हो जाते हैं। पट्टियों के उभार वैसे ही रहते हैं।",
+    "it": "Per chi non ama le parti chiare: segni, fissati, celle di livello e pulsanti del menu sotto il cursore diventano grigio scuro con testo chiaro. Gli accenti delle barre restano.",
+    "es": "Para quien no le gusta lo claro: marcas, fijados, celdas de nivel y botones del menú bajo el cursor pasan a gris oscuro con texto claro. Los acentos de las barras se mantienen.",
+    "pt": "Para quem não gosta do claro: marcas, fixados, células de nível e botões do menu sob o cursor ficam cinza-escuros com texto claro. Os destaques das barras continuam.",
+    "tr": "Açık kısımları sevmeyenler için: işaretler, sabitlenenler, düzey hücreleri ve imleç altındaki menü düğmeleri açık metinli koyu gri olur. Çubuk vurguları kalır.",
+    "pl": "Dla tych, którym jasne nie pasuje: znaczniki, przypięte, komórki poziomu i przyciski menu pod kursorem stają się ciemnoszare z jasnym tekstem. Akcenty pasków zostają.",
+    "uk": "Для тих, кому світле не заходить: позначки, закріплені, комірки рівня й кнопки меню під курсором — темно-сірі зі світлим текстом. Акценти смужок не змінюються.",
+    "vi": "Cho ai không thích phần sáng: dấu, mục ghim, ô cấp và nút menu dưới con trỏ thành xám đậm với chữ sáng. Điểm nhấn của thanh giữ nguyên.",
+    "id": "Bagi yang tidak suka bagian terang: tanda, yang disematkan, sel tingkat, dan tombol menu di bawah kursor menjadi abu-abu gelap dengan teks terang. Aksen bilah tetap.",
+    "zh-Hans": "给不喜欢浅色部分的人：标记、固定项、级别格和光标下的菜单按钮变为深灰色、浅色文字。竖条的强调色不变。",
+    "zh-Hant": "給不喜歡淺色部分的人：標記、固定項、級別格和游標下的選單按鈕變為深灰色、淺色文字。豎條的強調色不變。"
+   },
    "tags": {
     "ru": [
      "тёмные метки",
@@ -217,19 +494,59 @@
      "grey"
     ]
    },
+   "file": "higanbanaDark.json",
+   "size": 551,
+   "added": "2026-10-04",
    "shots": [
-    "higanbanaDark-1.webp",
-    "higanbanaDark-2.webp"
+    "higanbanaDark-1.webp"
    ],
    "shotsPhone": [
-    "higanbanaDark-p1.webp",
-    "higanbanaDark-p2.webp"
+    "higanbanaDark-p1.webp"
    ]
   },
   {
    "id": "depthWhite",
    "kind": "effect",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Глубина: белые метки",
+    "en": "Depth: white marks",
+    "de": "Tiefe: weiße Marken",
+    "fr": "Profondeur : marques blanches",
+    "ja": "深海：白いマーク",
+    "ko": "심해: 흰 표시",
+    "hi": "गहराई: सफ़ेद चिह्न",
+    "it": "Profondità: segni bianchi",
+    "es": "Profundidad: marcas blancas",
+    "pt": "Profundeza: marcas brancas",
+    "tr": "Derinlik: beyaz işaretler",
+    "pl": "Głębia: białe znaczniki",
+    "uk": "Глибина: білі позначки",
+    "vi": "Biển sâu: dấu trắng",
+    "id": "Kedalaman: tanda putih",
+    "zh-Hans": "深海：白色标记",
+    "zh-Hant": "深海：白色標記"
+   },
+   "desc": {
+    "ru": "Метки, закреплённые, кнопка поиска и кнопки меню действий — белые с тёмно-синим текстом и значками.",
+    "en": "Marks, pinned entries, the search button and the actions menu buttons become white with dark blue text and icons.",
+    "de": "Marken, Angeheftete, Suchschaltfläche und Schaltflächen des Aktionsmenüs werden weiß mit dunkelblauem Text und Symbolen.",
+    "fr": "Marques, épinglées, bouton de recherche et boutons du menu d’actions deviennent blancs, avec texte et icônes bleu foncé.",
+    "ja": "マーク、ピン留め、検索ボタン、操作メニューのボタンが白くなり、文字とアイコンは濃い青になります。",
+    "ko": "표시, 고정 항목, 검색 버튼, 동작 메뉴 버튼이 흰색이 되고 글자와 아이콘은 짙은 파랑이 됩니다.",
+    "hi": "चिह्न, पिन किए गए, खोज बटन और क्रिया मेनू के बटन सफ़ेद हो जाते हैं, पाठ और आइकन गहरे नीले।",
+    "it": "Segni, fissati, pulsante di ricerca e pulsanti del menu azioni diventano bianchi con testo e icone blu scuro.",
+    "es": "Marcas, fijados, botón de búsqueda y botones del menú de acciones pasan a blanco con texto e iconos azul oscuro.",
+    "pt": "Marcas, fixados, botão de busca e botões do menu de ações ficam brancos, com texto e ícones azul-escuros.",
+    "tr": "İşaretler, sabitlenenler, arama düğmesi ve eylem menüsü düğmeleri koyu mavi metin ve simgelerle beyaz olur.",
+    "pl": "Znaczniki, przypięte, przycisk wyszukiwania i przyciski menu akcji stają się białe z ciemnoniebieskim tekstem i ikonami.",
+    "uk": "Позначки, закріплені, кнопка пошуку й кнопки меню дій — білі з темно-синім текстом і значками.",
+    "vi": "Dấu, mục ghim, nút tìm kiếm và các nút menu thao tác thành màu trắng, chữ và biểu tượng xanh đậm.",
+    "id": "Tanda, yang disematkan, tombol pencarian, dan tombol menu tindakan menjadi putih dengan teks dan ikon biru tua.",
+    "zh-Hans": "标记、固定项、搜索按钮和操作菜单按钮变为白色，文字和图标为深蓝色。",
+    "zh-Hant": "標記、固定項、搜尋按鈕和操作選單按鈕變為白色，文字和圖示為深藍色。"
+   },
    "tags": {
     "ru": [
      "белые метки",
@@ -240,59 +557,144 @@
      "depth"
     ]
    },
+   "file": "depthWhite.json",
+   "size": 687,
+   "added": "2026-10-04",
    "shots": [
-    "depthWhite-1.webp",
-    "depthWhite-2.webp"
+    "depthWhite-1.webp"
    ],
    "shotsPhone": [
-    "depthWhite-p1.webp",
-    "depthWhite-p2.webp"
+    "depthWhite-p1.webp"
    ]
   },
   {
    "id": "waveBase",
    "kind": "effect",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Волна и след — как в «Стандартном»",
+    "en": "Wave and trail — as in “Standard”",
+    "de": "Welle und Spur — wie in „Standard“",
+    "fr": "Vague et traînée — comme dans « Standard »",
+    "ja": "波と軌跡 — 「スタンダード」と同じ",
+    "ko": "물결과 자취 — “기본”처럼",
+    "hi": "लहर और निशान — «स्टैंडर्ड» जैसा",
+    "it": "Onda e scia — come in «Standard»",
+    "es": "Ola y estela — como en «Estándar»",
+    "pt": "Onda e rastro — como no “Padrão”",
+    "tr": "Dalga ve iz — “Standart”taki gibi",
+    "pl": "Fala i ślad — jak w „Standardowym”",
+    "uk": "Хвиля і слід — як у «Стандартному»",
+    "vi": "Sóng và vệt — như “Tiêu chuẩn”",
+    "id": "Gelombang dan jejak — seperti “Standar”",
+    "zh-Hans": "波浪与拖尾 —— 同“标准”",
+    "zh-Hant": "波浪與拖尾 —— 同「標準」"
+   },
+   "desc": {
+    "ru": "Всё про полоски и волну, кроме цветов, — как в «Стандартном»: толщина, длина, скругление, прозрачность, свечение, торцы, форма и сила волны, движение, ореол, переезд текущей полоски.",
+    "en": "Everything about the bars and wave except colours — as in “Standard”: thickness, length, rounding, opacity, glow, caps, wave shape and strength, motion, halo, the current bar’s travel.",
+    "de": "Alles an Strichen und Welle außer Farben — wie in „Standard“: Dicke, Länge, Rundung, Deckkraft, Leuchten, Enden, Form und Stärke der Welle, Bewegung, Schein, Wandern des aktuellen Strichs.",
+    "fr": "Tout sur les barres et la vague sauf les couleurs — comme dans « Standard » : épaisseur, longueur, arrondi, opacité, lueur, extrémités, forme et force de la vague, mouvement, halo, déplacement de la barre actuelle.",
+    "ja": "色以外のバーと波のすべてを「スタンダード」と同じに：太さ、長さ、角の丸み、不透明度、光彩、端、波の形と強さ、動き、ハロー、現在のバーの移動。",
+    "ko": "색을 뺀 막대와 물결의 모든 것 — “기본”처럼: 두께, 길이, 둥글기, 불투명도, 빛, 끝부분, 물결 모양과 세기, 움직임, 후광, 현재 막대의 이동.",
+    "hi": "रंगों को छोड़ पट्टियों और लहर की हर चीज़ — «स्टैंडर्ड» जैसी: मोटाई, लंबाई, गोलाई, अपारदर्शिता, चमक, सिरे, लहर का आकार और ताकत, गति, आभा, वर्तमान पट्टी का खिसकना।",
+    "it": "Tutto di barre e onda tranne i colori — come in «Standard»: spessore, lunghezza, arrotondamento, opacità, bagliore, estremità, forma e forza dell’onda, movimento, alone, spostamento della barra attuale.",
+    "es": "Todo lo de barras y ola salvo los colores — como en «Estándar»: grosor, longitud, redondeo, opacidad, brillo, extremos, forma y fuerza de la ola, movimiento, halo, desplazamiento de la barra actual.",
+    "pt": "Tudo das barras e da onda exceto as cores — como no “Padrão”: espessura, comprimento, arredondamento, opacidade, brilho, pontas, forma e força da onda, movimento, halo, deslocamento da barra atual.",
+    "tr": "Renkler dışında çubuk ve dalgaya dair her şey — “Standart”taki gibi: kalınlık, uzunluk, yuvarlaklık, opaklık, parıltı, uçlar, dalganın biçimi ve gücü, hareket, hale, geçerli çubuğun kayması.",
+    "pl": "Wszystko o paskach i fali poza kolorami — jak w „Standardowym”: grubość, długość, zaokrąglenie, krycie, poświata, końcówki, kształt i siła fali, ruch, aureola, przejazd bieżącego paska.",
+    "uk": "Усе про смужки й хвилю, крім кольорів, — як у «Стандартному»: товщина, довжина, заокруглення, прозорість, світіння, торці, форма й сила хвилі, рух, ореол, переїзд поточної смужки.",
+    "vi": "Mọi thứ của vạch và sóng trừ màu — như “Tiêu chuẩn”: độ dày, độ dài, bo góc, độ mờ, ánh sáng, đầu vạch, hình và độ mạnh của sóng, chuyển động, quầng sáng, sự di chuyển của vạch hiện tại.",
+    "id": "Semua tentang bilah dan gelombang kecuali warna — seperti “Standar”: ketebalan, panjang, kelengkungan, opasitas, cahaya, ujung, bentuk dan kekuatan gelombang, gerakan, halo, perpindahan bilah saat ini.",
+    "zh-Hans": "除颜色外横条与波浪的一切——同“标准”：粗细、长度、圆角、不透明度、发光、端点、波浪形状与力度、动态、光晕、当前横条的移动。",
+    "zh-Hant": "除顏色外橫條與波浪的一切——同「標準」：粗細、長度、圓角、不透明度、發光、端點、波浪形狀與力度、動態、光暈、目前橫條的移動。"
+   },
    "tags": {
     "ru": [
      "волна",
-     "стандарт"
+     "стандарт",
+     "след"
     ],
     "en": [
      "wave",
-     "standard"
+     "standard",
+     "trail"
     ]
    },
+   "file": "waveBase.json",
+   "size": 1934,
+   "added": "2026-10-04",
    "shots": [
-    "waveBase-1.webp",
-    "waveBase-2.webp"
+    "waveBase-1.webp"
    ],
    "shotsPhone": [
-    "waveBase-p1.webp",
-    "waveBase-p2.webp"
+    "waveBase-p1.webp"
    ]
   },
   {
    "id": "waveGraphite",
    "kind": "effect",
-   "builtin": true,
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Волна и след — как в «По-прикольней»",
+    "en": "Wave and trail — as in “Bit cooler”",
+    "de": "Welle und Spur — wie in „Bisschen cooler“",
+    "fr": "Vague et traînée — comme dans « Plus stylé »",
+    "ja": "波と軌跡 — 「ちょいイケてる」と同じ",
+    "ko": "물결과 자취 — “좀 더 힙한”처럼",
+    "hi": "लहर और निशान — «थोड़ा कूल वाला» जैसा",
+    "it": "Onda e scia — come in «Più figo»",
+    "es": "Ola y estela — como en «Más molón»",
+    "pt": "Onda e rastro — como no “Mais maneiro”",
+    "tr": "Dalga ve iz — “Daha havalı”daki gibi",
+    "pl": "Fala i ślad — jak w „Fajniejszym”",
+    "uk": "Хвиля і слід — як у «Прикольнішому»",
+    "vi": "Sóng và vệt — như “Chất hơn”",
+    "id": "Gelombang dan jejak — seperti “Lebih kece”",
+    "zh-Hans": "波浪与拖尾 —— 同“更带劲”",
+    "zh-Hant": "波浪與拖尾 —— 同「更帶勁」"
+   },
+   "desc": {
+    "ru": "Всё про полоски и волну, кроме цветов, — как в «По-прикольней»: толстые полоски, короче и резче волна, скругление, прозрачность, свечение, ореол, переезд текущей полоски.",
+    "en": "Everything about the bars and wave except colours — as in “Bit cooler”: thick bars, a shorter, sharper wave, rounding, opacity, glow, halo, the current bar’s travel.",
+    "de": "Alles an Strichen und Welle außer Farben — wie in „Bisschen cooler“: dicke Striche, kürzere, schärfere Welle, Rundung, Deckkraft, Leuchten, Schein, Wandern des aktuellen Strichs.",
+    "fr": "Tout sur les barres et la vague sauf les couleurs — comme dans « Plus stylé » : barres épaisses, vague plus courte et nette, arrondi, opacité, lueur, halo, déplacement de la barre actuelle.",
+    "ja": "色以外のバーと波のすべてを「ちょいイケてる」と同じに：太いバー、短く鋭い波、角の丸み、不透明度、光彩、ハロー、現在のバーの移動。",
+    "ko": "색을 뺀 막대와 물결의 모든 것 — “좀 더 힙한”처럼: 두꺼운 막대, 더 짧고 날카로운 물결, 둥글기, 불투명도, 빛, 후광, 현재 막대의 이동.",
+    "hi": "रंगों को छोड़ पट्टियों और लहर की हर चीज़ — «थोड़ा कूल वाला» जैसी: मोटी पट्टियाँ, छोटी और तेज़ लहर, गोलाई, अपारदर्शिता, चमक, आभा, वर्तमान पट्टी का खिसकना।",
+    "it": "Tutto di barre e onda tranne i colori — come in «Più figo»: barre spesse, onda più corta e netta, arrotondamento, opacità, bagliore, alone, spostamento della barra attuale.",
+    "es": "Todo lo de barras y ola salvo los colores — como en «Más molón»: barras gruesas, ola más corta y nítida, redondeo, opacidad, brillo, halo, desplazamiento de la barra actual.",
+    "pt": "Tudo das barras e da onda exceto as cores — como no “Mais maneiro”: barras grossas, onda mais curta e nítida, arredondamento, opacidade, brilho, halo, deslocamento da barra atual.",
+    "tr": "Renkler dışında çubuk ve dalgaya dair her şey — “Daha havalı”daki gibi: kalın çubuklar, daha kısa ve keskin dalga, yuvarlaklık, opaklık, parıltı, hale, geçerli çubuğun kayması.",
+    "pl": "Wszystko o paskach i fali poza kolorami — jak w „Fajniejszym”: grube paski, krótsza i ostrzejsza fala, zaokrąglenie, krycie, poświata, aureola, przejazd bieżącego paska.",
+    "uk": "Усе про смужки й хвилю, крім кольорів, — як у «Прикольнішому»: товсті смужки, коротша й різкіша хвиля, заокруглення, прозорість, світіння, ореол, переїзд поточної смужки.",
+    "vi": "Mọi thứ của vạch và sóng trừ màu — như “Chất hơn”: vạch dày, sóng ngắn và sắc hơn, bo góc, độ mờ, ánh sáng, quầng sáng, sự di chuyển của vạch hiện tại.",
+    "id": "Semua tentang bilah dan gelombang kecuali warna — seperti “Lebih kece”: bilah tebal, gelombang lebih pendek dan tajam, kelengkungan, opasitas, cahaya, halo, perpindahan bilah saat ini.",
+    "zh-Hans": "除颜色外横条与波浪的一切——同“更带劲”：粗横条、更短更锐利的波浪、圆角、不透明度、发光、光晕、当前横条的移动。",
+    "zh-Hant": "除顏色外橫條與波浪的一切——同「更帶勁」：粗橫條、更短更銳利的波浪、圓角、不透明度、發光、光暈、目前橫條的移動。"
+   },
    "tags": {
     "ru": [
      "волна",
-     "резкая"
+     "резкая",
+     "след"
     ],
     "en": [
      "wave",
-     "sharp"
+     "sharp",
+     "trail"
     ]
    },
+   "file": "waveGraphite.json",
+   "size": 1939,
+   "added": "2026-10-04",
    "shots": [
-    "waveGraphite-1.webp",
-    "waveGraphite-2.webp"
+    "waveGraphite-1.webp"
    ],
    "shotsPhone": [
-    "waveGraphite-p1.webp",
-    "waveGraphite-p2.webp"
+    "waveGraphite-p1.webp"
    ]
   },
   {
@@ -356,12 +758,150 @@
    "size": 169,
    "added": "2026-10-03",
    "shots": [
-    "calm-wave-1.webp",
-    "calm-wave-2.webp"
+    "calm-wave-1.webp"
    ],
    "shotsPhone": [
-    "calm-wave-p1.webp",
-    "calm-wave-p2.webp"
+    "calm-wave-p1.webp"
+   ]
+  },
+  {
+   "id": "level-higanbana",
+   "kind": "effect",
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Уровень как в «Хиганбане»",
+    "en": "Level as in “Higanbana”",
+    "de": "Ebene wie in „Higanbana“",
+    "fr": "Niveau comme dans « Higanbana »",
+    "ja": "「彼岸花」風のレベル表示",
+    "ko": "‘석산’ 스타일 레벨",
+    "hi": "“हिगनबाना” जैसा स्तर",
+    "it": "Livello come in «Higanbana»",
+    "es": "Nivel como en «Higanbana»",
+    "pt": "Nível como em “Higanbana”",
+    "tr": "“Higanbana” gibi seviye",
+    "pl": "Poziom jak w „Higanbanie”",
+    "uk": "Рівень як у «Хіганбані»",
+    "vi": "Cấp độ như “Higanbana”",
+    "id": "Tingkat seperti “Higanbana”",
+    "zh-Hans": "“彼岸花”式层级",
+    "zh-Hant": "「彼岸花」式層級"
+   },
+   "desc": {
+    "ru": "Шкала уровня в подсказке — шесть ячеек с номерами в ряд, скруглённые, текущая выделена. Только форма и размеры: цвета остаются от вашей сборки.",
+    "en": "The level scale on the preview card: six numbered cells in a row, rounded, the current one highlighted. Shape and sizes only — colours stay from your preset.",
+    "de": "Die Ebenenskala auf der Vorschau: sechs nummerierte Zellen in einer Reihe, abgerundet, die aktuelle hervorgehoben. Nur Form und Größen – die Farben bleiben von deinem Preset.",
+    "fr": "L’échelle de niveau de l’aperçu : six cases numérotées en ligne, arrondies, l’actuelle mise en avant. Seulement la forme et les tailles — les couleurs restent celles de votre préréglage.",
+    "ja": "プレビューのレベル目盛り：番号付きの 6 つのマスが横一列、角丸、現在のマスを強調。形と大きさだけで、色はお使いのプリセットのまま。",
+    "ko": "미리보기의 레벨 눈금: 번호가 붙은 칸 6개가 한 줄로, 둥근 모서리, 현재 칸 강조. 모양과 크기만 바꾸고 색은 지금 프리셋 그대로입니다.",
+    "hi": "पूर्वावलोकन पर स्तर पैमाना: एक पंक्ति में छह क्रमांकित खाने, गोल कोने, मौजूदा उभरा हुआ। केवल आकार और माप — रंग आपके प्रीसेट के ही रहते हैं।",
+    "it": "La scala di livello dell’anteprima: sei celle numerate in fila, arrotondate, quella corrente evidenziata. Solo forma e misure: i colori restano quelli del tuo preset.",
+    "es": "La escala de nivel de la vista previa: seis celdas numeradas en fila, redondeadas, la actual resaltada. Solo forma y tamaños: los colores siguen siendo los de tu preajuste.",
+    "pt": "A escala de nível da prévia: seis células numeradas em fila, arredondadas, a atual destacada. Só forma e tamanhos — as cores continuam as da sua predefinição.",
+    "tr": "Önizlemedeki seviye ölçeği: yan yana altı numaralı, yuvarlak köşeli hücre, geçerli olan vurgulu. Yalnızca biçim ve boyutlar — renkler hazır ayarındaki gibi kalır.",
+    "pl": "Skala poziomu w podglądzie: sześć numerowanych komórek w rzędzie, zaokrąglonych, bieżąca wyróżniona. Tylko kształt i rozmiary — kolory zostają z Twojego zestawu.",
+    "uk": "Шкала рівня в підказці — шість комірок із номерами в ряд, заокруглені, поточна виділена. Лише форма й розміри: кольори лишаються від вашої збірки.",
+    "vi": "Thang cấp độ trên thẻ xem trước: sáu ô đánh số xếp thành hàng, bo góc, ô hiện tại nổi bật. Chỉ thay hình dạng và kích thước — màu giữ theo cấu hình của bạn.",
+    "id": "Skala tingkat di pratinjau: enam sel bernomor sebaris, sudut membulat, yang aktif disorot. Hanya bentuk dan ukuran — warna tetap dari preset kamu.",
+    "zh-Hans": "预览卡上的层级刻度：一排六个带编号的圆角格子，当前格突出显示。只改形状和尺寸，颜色保留你的预设。",
+    "zh-Hant": "預覽卡上的層級刻度：一排六個帶編號的圓角格子，目前格子突出顯示。只改形狀和尺寸，顏色保留你的預設。"
+   },
+   "tags": {
+    "ru": [
+     "уровень",
+     "шкала",
+     "ячейки",
+     "хиганбана",
+     "подсказка"
+    ],
+    "en": [
+     "level",
+     "scale",
+     "cells",
+     "higanbana",
+     "preview"
+    ]
+   },
+   "file": "level-higanbana.json",
+   "size": 1020,
+   "added": "2026-10-04",
+   "shots": [
+    "level-higanbana-1.webp"
+   ],
+   "shotsPhone": [
+    "level-higanbana-p1.webp"
+   ]
+  },
+  {
+   "id": "level-depth",
+   "kind": "effect",
+   "ver": 1,
+   "author": "DAST",
+   "name": {
+    "ru": "Уровень как в «Глубине»",
+    "en": "Level as in “Depth”",
+    "de": "Ebene wie in „Tiefe“",
+    "fr": "Niveau comme dans « Profondeur »",
+    "ja": "「深海」風のレベル表示",
+    "ko": "‘심해’ 스타일 레벨",
+    "hi": "“गहराई” जैसा स्तर",
+    "it": "Livello come in «Profondità»",
+    "es": "Nivel como en «Profundidad»",
+    "pt": "Nível como em “Profundeza”",
+    "tr": "“Derinlik” gibi seviye",
+    "pl": "Poziom jak w „Głębi”",
+    "uk": "Рівень як у «Глибині»",
+    "vi": "Cấp độ như “Biển sâu”",
+    "id": "Tingkat seperti “Kedalaman”",
+    "zh-Hans": "“深海”式层级",
+    "zh-Hant": "「深海」式層級"
+   },
+   "desc": {
+    "ru": "Шкала уровня в подсказке — вертикальная, из широких ячеек, каждая следующая «глубже» темнее, под курсором ячейка подрастает. Только форма, размеры и отклик: цвета остаются от вашей сборки.",
+    "en": "The level scale on the preview card: vertical, wide cells, each next one “deeper” and darker, the cell under the cursor grows a little. Shape, sizes and response only — colours stay from your preset.",
+    "de": "Die Ebenenskala auf der Vorschau: senkrecht, breite Zellen, jede weitere „tiefer“ und dunkler, die Zelle unter dem Zeiger wächst etwas. Nur Form, Größen und Reaktion – die Farben bleiben von deinem Preset.",
+    "fr": "L’échelle de niveau de l’aperçu : verticale, cases larges, chacune plus « profonde » et plus sombre, la case sous le curseur grandit un peu. Seulement forme, tailles et réaction — les couleurs restent celles de votre préréglage.",
+    "ja": "プレビューのレベル目盛り：縦向きの幅広いマスで、下ほど「深く」暗くなり、カーソル下のマスが少し大きくなります。形・大きさ・反応だけで、色はお使いのプリセットのまま。",
+    "ko": "미리보기의 레벨 눈금: 세로로 놓인 넓은 칸, 아래 칸일수록 ‘깊고’ 어두워지며 커서 아래 칸이 살짝 커집니다. 모양·크기·반응만 바꾸고 색은 지금 프리셋 그대로입니다.",
+    "hi": "पूर्वावलोकन पर स्तर पैमाना: खड़ा, चौड़े खाने, हर अगला “गहरा” और गहरे रंग का, कर्सर के नीचे का खाना थोड़ा बढ़ता है। केवल आकार, माप और प्रतिक्रिया — रंग आपके प्रीसेट के ही रहते हैं।",
+    "it": "La scala di livello dell’anteprima: verticale, celle larghe, ognuna più «profonda» e scura, la cella sotto il cursore cresce un po’. Solo forma, misure e reazione: i colori restano quelli del tuo preset.",
+    "es": "La escala de nivel de la vista previa: vertical, celdas anchas, cada una más «profunda» y oscura, la celda bajo el cursor crece un poco. Solo forma, tamaños y respuesta: los colores siguen siendo los de tu preajuste.",
+    "pt": "A escala de nível da prévia: vertical, células largas, cada uma mais “funda” e escura, a célula sob o cursor cresce um pouco. Só forma, tamanhos e resposta — as cores continuam as da sua predefinição.",
+    "tr": "Önizlemedeki seviye ölçeği: dikey, geniş hücreler, her biri daha “derin” ve koyu, imlecin altındaki hücre biraz büyür. Yalnızca biçim, boyut ve tepki — renkler hazır ayarındaki gibi kalır.",
+    "pl": "Skala poziomu w podglądzie: pionowa, szerokie komórki, każda kolejna „głębiej” i ciemniej, komórka pod kursorem lekko rośnie. Tylko kształt, rozmiary i reakcja — kolory zostają z Twojego zestawu.",
+    "uk": "Шкала рівня в підказці — вертикальна, із широких комірок, кожна наступна «глибше» й темніша, під курсором комірка трохи підростає. Лише форма, розміри й відгук: кольори лишаються від вашої збірки.",
+    "vi": "Thang cấp độ trên thẻ xem trước: dọc, ô rộng, mỗi ô sau “sâu” và tối hơn, ô dưới con trỏ to ra một chút. Chỉ thay hình dạng, kích thước và phản hồi — màu giữ theo cấu hình của bạn.",
+    "id": "Skala tingkat di pratinjau: vertikal, sel lebar, tiap berikutnya lebih “dalam” dan gelap, sel di bawah kursor sedikit membesar. Hanya bentuk, ukuran, dan respons — warna tetap dari preset kamu.",
+    "zh-Hans": "预览卡上的层级刻度：竖排宽格，越往下越“深”越暗，光标下的格子会稍微变大。只改形状、尺寸和反馈，颜色保留你的预设。",
+    "zh-Hant": "預覽卡上的層級刻度：直排寬格，越往下越「深」越暗，游標下的格子會稍微變大。只改形狀、尺寸和回饋，顏色保留你的預設。"
+   },
+   "tags": {
+    "ru": [
+     "уровень",
+     "шкала",
+     "ячейки",
+     "глубина",
+     "вертикальная",
+     "подсказка"
+    ],
+    "en": [
+     "level",
+     "scale",
+     "cells",
+     "depth",
+     "vertical",
+     "preview"
+    ]
+   },
+   "file": "level-depth.json",
+   "size": 1020,
+   "added": "2026-10-04",
+   "shots": [
+    "level-depth-1.webp"
+   ],
+   "shotsPhone": [
+    "level-depth-p1.webp"
    ]
   }
  ]
