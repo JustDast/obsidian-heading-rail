@@ -298,7 +298,7 @@
   {
    "id": "higanbana",
    "kind": "preset",
-   "ver": 1,
+   "ver": 2,
    "author": "DAST",
    "name": {
     "ru": "Хиганбана",
@@ -359,7 +359,7 @@
     ]
    },
    "file": "higanbana.json",
-   "size": 342516,
+   "size": 343199,
    "added": "2026-10-04",
    "shots": [
     "higanbana-1.webp"
@@ -635,11 +635,11 @@
   {
    "id": "waveGraphite",
    "kind": "effect",
-   "ver": 1,
+   "ver": 2,
    "author": "DAST",
    "name": {
     "ru": "Волна и след — как в «По-прикольней»",
-    "en": "Wave and trail — as in “Bit cooler”",
+    "en": "Wave and trail — as in “Funkier”",
     "de": "Welle und Spur — wie in „Bisschen cooler“",
     "fr": "Vague et traînée — comme dans « Plus stylé »",
     "ja": "波と軌跡 — 「ちょいイケてる」と同じ",
@@ -658,7 +658,7 @@
    },
    "desc": {
     "ru": "Всё про полоски и волну, кроме цветов, — как в «По-прикольней»: толстые полоски, короче и резче волна, скругление, прозрачность, свечение, ореол, переезд текущей полоски.",
-    "en": "Everything about the bars and wave except colours — as in “Bit cooler”: thick bars, a shorter, sharper wave, rounding, opacity, glow, halo, the current bar’s travel.",
+    "en": "Everything about the bars and wave except colours — as in “Funkier”: thick bars, a shorter, sharper wave, rounding, opacity, glow, halo, the current bar’s travel.",
     "de": "Alles an Strichen und Welle außer Farben — wie in „Bisschen cooler“: dicke Striche, kürzere, schärfere Welle, Rundung, Deckkraft, Leuchten, Schein, Wandern des aktuellen Strichs.",
     "fr": "Tout sur les barres et la vague sauf les couleurs — comme dans « Plus stylé » : barres épaisses, vague plus courte et nette, arrondi, opacité, lueur, halo, déplacement de la barre actuelle.",
     "ja": "色以外のバーと波のすべてを「ちょいイケてる」と同じに：太いバー、短く鋭い波、角の丸み、不透明度、光彩、ハロー、現在のバーの移動。",
