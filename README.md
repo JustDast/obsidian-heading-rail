@@ -7,6 +7,11 @@ open into a full outline, search and edit.
 </p>
 
 <p align="center">
+🌐 <b>Now in 17 languages</b> — the whole interface, the settings and the catalog:<br>
+English · Deutsch · Français · Русский · 日本語 · 한국어 · हिन्दी · Italiano · Español · Português · Türkçe · Polski · Українська · Tiếng Việt · Bahasa Indonesia · 简体中文 · 繁體中文
+</p>
+
+<p align="center">
 <a href="https://github.com/JustDast/obsidian-heading-rail/blob/main/GUIDE.md"><b>📘 Guide</b></a>
 &nbsp;·&nbsp;
 <a href="https://github.com/JustDast/obsidian-heading-rail/blob/main/SETTINGS.md"><b>⚙️ Every setting</b></a>
@@ -195,10 +200,6 @@ The rail, the outline, the actions menu, dragging sections, pins and the history
 </tr>
 </table>
 
-### In 17 languages
-
-English · Deutsch · Français · Русский · 日本語 · 한국어 · हिन्दी · Italiano · Español · Português · Türkçe · Polski · Українська · Tiếng Việt · Bahasa Indonesia · 简体中文 · 繁體中文
-
 ➡️ Every feature step by step: **[Guide](https://github.com/JustDast/obsidian-heading-rail/blob/main/GUIDE.md)**. Every setting with its default: **[Every setting](https://github.com/JustDast/obsidian-heading-rail/blob/main/SETTINGS.md)**.
 
 ---
@@ -211,100 +212,47 @@ By hand: download `main.js`, `manifest.json` and `styles.css` from the [latest r
 
 ## Compatibility
 
-Desktop (Windows, macOS, Linux) and mobile (Android, iOS). macOS keys (⌘ Cmd, ⌥ Option) are supported and checked in testing, but the plugin has not yet been tried on real Apple devices — reports are very welcome.
+Obsidian 1.6 or newer. Desktop (Windows, macOS, Linux) and mobile (Android, iOS). macOS keys (⌘ Cmd, ⌥ Option) are supported and checked in testing, but the plugin has not yet been tried on real Apple devices — reports are very welcome.
 
 ---
 
 ## What's new
 
-### 10.5.1
+### 10.5.2
 
-- **Phone keyboard and search.** Opening the keyboard to type in the outline search no longer collapses the results: the list stays, stretches down to the keyboard and follows what you type; when the keyboard hides, the outline grows back. The same in every preset.
-- **Higanbana on the phone:** the floating button sits lower, clear of Obsidian's top bar (the catalog offers it as an update).
-- **Depth on the phone:** the search box has the same blue as on the desktop.
-- **Guide** and **What's new** in the settings open the guide and this page on GitHub.
-- The English name of the effect *Wave and trail — as in “Funkier”* is fixed (it said “Bit cooler”); hints in the settings now say that checked presets go into the catalog, without a plugin update.
-- New README and guide with fresh screenshots of every part of the plugin; catalog screenshots in English.
+- The plugin now asks for Obsidian 1.6 or newer (it already relied on features of newer versions).
+- A [Privacy and network](#privacy-and-network) section in this README: when the plugin goes online and what it never sends.
 
-### 10.5
+### 10.5.1 — the big update after 8.3
 
-- **Everything is in the catalog now.** The plugin itself carries only *Standard*; every other preset and effect downloads from the catalog when you want it — the plugin is lighter and new looks arrive without an update. What you already use downloads by itself.
-- New effects: **Level as in “Higanbana”** and **Level as in “Depth”** — the level scale of the preview card, everything except colours.
-- **Terminal** reworked: green pinned entries and marks, the level as just “H3” on a green tile, a calm green search icon.
-- **Higanbana** on the phone: the floating button sits top left and the outline, a quarter smaller, opens downward.
-- New settings for the floating button: **Outline size at the button** and **Button position** (where it stands until you drag it).
-- The preview card no longer grows over the bars when the outline stands at the floating button.
+Everything below is new since 8.3.0.
 
-### 10.4
-
-- **GIF backgrounds** for the outline, the preview, the search box and the floating button: add a GIF (up to 20 MB) like any picture. It is kept as a file in the plugin's folder, so the settings stay light. GIFs are never blurred. **Animate GIFs** can be turned off per device — then the first frame stays still.
-- **Phone screenshots in the catalog**: choose *Mobile* and every card shows the outline, the preview and the bars on a phone screen.
-
-### 10.3
-
-- **The catalog** — presets, effects and CSS add-ons in their own window, with screenshots, descriptions, search and filters; **Download** and **Apply** right there.
-- **The preview never lies over the bars**, with two or three columns too.
-- *Thick bars* and *Very thick bars* are gone — the wave effects replace them.
-- 10.3.1: catalog screenshots load in every case and open full size with arrows; the *Downloaded* filter shows what you can remove.
-
-<details>
-<summary><b>Earlier versions</b></summary>
-
-### 10.2
-
-- **Depth**: a long smooth arc-shaped wave, the search box, search button, pinned entries and actions menu buttons in the colour of the marks. New effect **Depth: white marks**.
-- **Higanbana**: the hover fill and the Ctrl slider are light, so they show on the scarlet current entry.
-
-### 10.1
-
-- In a narrow window the outline stays by the floating button, and the preview goes on the other side. The preview never lies over the bars.
-- **Bar gradient by place in the note** — from a top colour to a bottom colour. **Cells with depth** for the level scale.
-- **Depth** reworked: a low smooth wave, bars from light to dark blue, a vertical level scale of wide cells.
-- **Higanbana**: the preview's picture works like in Depth; a light, visible outline scrollbar.
-
-### 10.0
-
-- **Depth** — a new preset: deep blue water with light from above; one picture runs across the outline, the search box and the preview.
-- **The preview's picture**: it can follow the card's movement, share one picture with the outline, or share one backdrop below / above the outline.
-- **Bar columns**: at most 3 on the desktop and 2 on the phone; if the bars still don't fit, only the outline works.
-- **Blur** for your background picture; **Delete** next to the picture choice.
-- New settings for marks, pinned entries and the floating button. New effect **Higanbana: dark marks**. Version numbers restart at 10.0.
-
-### 9.17
-
-- In a narrow window and on the phone the preview goes **below or above** the outline; the actions menu turns into a **column** when it doesn't fit beside the outline.
-- **Higanbana** reworked; the actions menu gets your own button colours on hover. Ready-made styles are now called **presets**.
-
-### 9.16
-
-- **Higanbana** — a new preset: Eastern dark fantasy in anthracite, scarlet and ivory.
-- **History in the sidebar**; your background image can be anchored to an edge or a corner; *Eastern serif (Mincho)* in every font list.
-
-### 9.15
-
-- **Settings in the sidebar** — the same settings next to the note; change something and see it at once.
-
-### 9.14
-
-- **Custom CSS, images and fonts**; **paste any code into the settings search**; five ready-made presets; wave and trail effects; a history of presets, effects and pastes.
-
-### 9.7–9.13
-
-- The level mark rebuilt (number, cells or both, every state adjustable); settings regrouped; **Colours in use right now** — change one colour and every setting with it changes; bars in the neighbouring notes; bar shape; mouse wheel and touchpad told apart.
-
-### 9.0–9.6
-
-- The **scale** look for the heading level; gradient backgrounds; settings search that understands you in every language; bar thickness by the distance between bars.
-
-### 8.5–8.10
-
-- The outline became a tool for the structure: the actions menu, dragging sections, keyboard moves and level changes.
-- Smooth scrolling everywhere; the floating button; undo for everything and the history window; Back and Reset next to every setting; search inside sections; the Ctrl slider; pinned sections, word counts and tasks; full phone support; a preview card you can work with.
-- New languages: Italian, Spanish, Portuguese, Turkish, Polish, Ukrainian, Vietnamese, Indonesian, Chinese (Simplified and Traditional).
-
-</details>
+- **17 interface languages.** Ten new ones: Italiano, Español, Português, Türkçe, Polski, Українська, Tiếng Việt, Bahasa Indonesia, 简体中文, 繁體中文 — next to English, Deutsch, Français, Русский, 日本語, 한국어 and हिन्दी.
+- **Seven looks and a catalog.** Standard is built in; Funkier, Racer, Terminal, Paper, Higanbana and Depth download from a catalog inside the plugin, with screenshots for desktop and phone. Effects go on top of any look and come off cleanly. New looks arrive without updating the plugin.
+- **The outline became an editor.** Drag whole sections, change heading levels, rename, duplicate, copy a link, move a section into its own note, delete — with the mouse, the keyboard or a finger.
+- **Undo anything.** One button takes back every action of the plugin and returns you to where you were before a jump. The history keeps deleted and copied sections, outline changes, typing, presets and every settings change.
+- **The floating button** — open the outline from a button you can put anywhere, resize the outline by its corner and edges.
+- **Search inside the text** of the sections, not only the headings; the found word is highlighted in the note and the preview.
+- **Ctrl + hover slider** inside every outline entry: land at any point of a section, or sweep through the note.
+- **Pinned sections, word counts and open tasks** next to every entry.
+- **A preview card you can work with:** it stays while you read it, glides from section to section, shows the heading level and changes it with a click.
+- **Smooth everywhere** — the note, the outline and the preview glide instead of jumping.
+- **Settings you can always take back:** Back and Reset next to every slider, number and colour; search that understands you in every language; settings in the sidebar next to the note; paste a theme, an effect or CSS straight into the settings search.
+- **Your own CSS, background pictures (GIFs too) and any font**, shared together with your look.
+- **Works fully on the phone:** its own profile, touch gestures, long-press menus, and the search keeps its results while the keyboard is open.
 
 ---
+
+## Privacy and network
+
+Heading Rail works offline. It goes online only for the catalog:
+
+- when you open the catalog, or download or update a preset, an effect or a CSS add-on;
+- a few seconds after Obsidian starts, but only if a look you applied on another device hasn't been downloaded on this one yet.
+
+It then reads files from this repository — `raw.githubusercontent.com` or its mirror `cdn.jsdelivr.net`. Nothing about you, your notes or your vault is sent anywhere. There is no tracking and no analytics.
+
+**Report a bug or suggest an idea** and **Share your own preset** only open your own mail app with a letter you can read before sending; nothing is sent by itself. The plugin reads the list of your notes only to count links to a heading you rename, and uses the clipboard only for its Copy and Paste buttons.
 
 ## Feedback
 

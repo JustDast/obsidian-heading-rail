@@ -7,7 +7,7 @@ const FALLBACK_CSS = `/* ============ Heading Rail ============ */
 /* Номер версии стилей. Плагин сверяет его со своим: если styles.css остался
    от старой версии, подключается встроенная копия. Менять вместе с HR_CSS_VER. */
 .hr-css-probe {
-  --hr-css-ver: "10.5.1";
+  --hr-css-ver: "10.5.2";
 }
 
 .hr-host {
@@ -37513,7 +37513,7 @@ const HR_SITE_URL = 'https://SITE-PLACEHOLDER.github.io/heading-rail/';   // (н
 const HR_REPO_URL = 'https://github.com/JustDast/obsidian-heading-rail';
 const HR_GUIDE_URL = HR_REPO_URL + '/blob/main/GUIDE.md';
 const HR_NEW_URL = HR_REPO_URL + '#whats-new';
-const HR_VERSION = '10.5.1';
+const HR_VERSION = '10.5.2';
 // 9.9.0: доля разницы скруглений крайней ячейки, на которую число уходит к её плоскому концу (оптическая середина)
 const SEG_OPTICAL_SHIFT = 0.07;
 // 9.9.1: путь жеста тачпада (пкс), который двигает ползунок Ctrl + колесо на одну точку
@@ -37538,7 +37538,7 @@ function wheelIsPad(e, memo) {
   return pad;
 }
 // Номер версии стилей: должен совпадать с --hr-css-ver в styles.css
-const HR_CSS_VER = '10.5.1';
+const HR_CSS_VER = '10.5.2';
 // 8.4.13: на сколько пикселей вокруг уголка и полоски высоты касание ещё попадает в них
 const HANDLE_TOUCH_PAD = 20;
 
